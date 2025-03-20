@@ -1,31 +1,37 @@
-import { Routes, Route, Link } from 'react-router-dom'
-import Home from './Home'
-import Chat from './Chat'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Chatbot from './Chatbot';
+import './App.css'; 
+import './index.css';
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Barre de navigation */}
-      <nav className="bg-indigo-700 text-white p-4 flex justify-between">
-        <h1 className="text-2xl font-bold">Root AI</h1>
-        <div>
-          <Link to="/" className="mr-4 hover:underline">Accueil</Link>
-          <Link to="/chat" className="hover:underline">Chatbot</Link>
-        </div>
-      </nav>
+    <div className="app-container">
+      <BrowserRouter>
+        {/* Navigation en haut */}
+        <header className="navbar">
+          <div className="container">
+            <h1 className="logo">Root:_</h1>
+            <nav>
+              <a href="/" className="nav-link">Accueil</a>
+              <a href="/chat" className="nav-link">Chatbot</a>
+            </nav>
+          </div>
+        </header>
 
-      {/* Contenu de la page */}
-      <div className="flex-1">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
-        </Routes>
-      </div>
+        {/* Contenu principal */}
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/chat" element={<Chatbot />} />
+          </Routes>
+        </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white text-center p-4">
-        Développé par Luc - © {new Date().getFullYear()}
-      </footer>
+        {/* Footer */}
+        <footer className="footer">
+          <p>© {new Date().getFullYear()} Root AI | Développé par Luc</p>
+        </footer>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
