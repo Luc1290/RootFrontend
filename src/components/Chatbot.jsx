@@ -1,17 +1,16 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-export default function Chatbot() {
+export default function Chat() {
   const [message, setMessage] = useState('')
   const [conversation, setConversation] = useState([])
   const [loading, setLoading] = useState(false)
-  const chatEndRef = useRef(null)
+  const endOfMessages = useRef(null)
 
   const sendMessage = async () => {
-    if (!message) return
-    setLoading(true)
+    if (!message.trim()) return
 
-    const newConversation = [...conversation, { sender: 'Toi', text: message }]
-    setConversation(newConversation)
+    setLoading(true)
+    setConversation(prev => [...prev, { from: 'user', text: message }])
     setMessage('')
 
     try {
@@ -22,48 +21,54 @@ export default function Chatbot() {
       })
 
       const data = await res.json()
-      setConversation([...newConversation, { sender: 'Claude', text: data.reply }])
-    } catch (error) {
-        console.error(error);
-      setConversation([...newConversation, { sender: 'Claude', text: 'Erreur serveur.' }])
+      setConversation(prev => [...prev, { from: 'claude', text: data.reply }])
+    } catch {
+      setConversation(prev => [...prev, { from: 'error', text: "Erreur serveur" }])
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    endOfMessages.current?.scrollIntoView({ behavior: 'smooth' })
   }, [conversation])
 
   return (
-    <div className="min-h-screen bg-gray-800 flex flex-col items-center p-4">
-      <div className="flex-1 w-full max-w-2xl overflow-auto mb-20">
-        {conversation.map((msg, index) => (
-          <div key={index} className={`my-2 ${msg.sender === 'Claude' ? 'text-left' : 'text-right'}`}>
-            <span className={`inline-block px-4 py-2 rounded-lg ${msg.sender === 'Claude' ? 'bg-gray-700 text-white' : 'bg-blue-500 text-white'}`}>
-              <b>{msg.sender}:</b> {msg.text}
-            </span>
-          </div>
-        ))}
-        <div ref={chatEndRef} />
-      </div>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="flex flex-col bg-white rounded-xl shadow-lg w-full max-w-4xl h-[80vh] md:h-[90vh]">
+        <div className="p-4 border-b">
+          <h2 className="text-xl font-semibold text-indigo-800">Conversation avec Root</h2>
+        </div>
 
-      <div className="fixed bottom-0 left-0 w-full flex justify-center bg-gray-900 p-4">
-        <input
-          className="w-full max-w-xl p-2 rounded-lg shadow-inner"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Tape ton message ici..."
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          disabled={loading}
-        />
-        <button
-          className="ml-2 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg"
-          onClick={sendMessage}
-          disabled={loading}
-        >
-          {loading ? '...' : 'Envoyer'}
-        </button>
+        <div className="flex-1 p-4 overflow-auto space-y-3">
+          {conversation.map((msg, idx) => (
+            <div key={idx} className={`rounded-lg px-4 py-2 max-w-[75%] ${
+                msg.from === 'user' ? 'bg-indigo-500 text-white ml-auto' :
+                msg.from === 'claude' ? 'bg-gray-200 text-gray-800 mr-auto' :
+                'bg-red-400 text-white mx-auto'
+              }`}>
+              <strong>{msg.from === 'user' ? 'Toi' : msg.from === 'claude' ? 'Claude' : 'Erreur'} :</strong> {msg.text}
+            </div>
+          ))}
+          <div ref={endOfMessages}></div>
+        </div>
+
+        <div className="p-4 border-t flex gap-2">
+          <input
+            className="flex-1 p-2 border rounded-lg focus:outline-indigo-500"
+            placeholder="Écris ton message ici..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          />
+          <button
+            onClick={sendMessage}
+            className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg"
+            disabled={loading}
+          >
+            {loading ? '...' : 'Envoyer'}
+          </button>
+        </div>
       </div>
     </div>
   )
