@@ -2,25 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* Reset explicite pour surcharger les styles de App.css */
+#root {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important; /* Très important pour éviter le centrage automatique */
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Typographie spéciale */
 .font-tech {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-/* Effets de flou */
-.blur-3xl {
-  --tw-blur: blur(64px);
-  filter: var(--tw-blur);
 }
 
 /* Animations */
@@ -31,15 +39,4 @@
 
 .animate-blink {
   animation: blink 1s step-end infinite;
-}
-
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 5s ease infinite;
 }
