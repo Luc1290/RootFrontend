@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import Chatbot from './components/Chatbot.jsx';
-import Admin from './components/Admin.jsx'; // ajoute cette ligne en haut
+import Admin from './components/AdminDashboard.jsx'; // ajoute cette ligne en haut
+import AdminDashboard from './components/AdminDashboard.jsx';
 
 // Le composant StartChatButton doit être défini à l'intérieur du routeur pour utiliser useNavigate
 const App = () => {
@@ -62,7 +63,7 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
             </div>
           } />
           <Route path="/chatbot" element={<Chatbot />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/projets" element={<div className="page-container"><h2>Mes Projets</h2><p>Page en construction...</p></div>} />
           <Route path="/competences" element={<div className="page-container"><h2>Mes Compétences</h2><p>Page en construction...</p></div>} />
           <Route path="/contact" element={<div className="page-container"><h2>Contact</h2><p>Page en construction...</p></div>} />

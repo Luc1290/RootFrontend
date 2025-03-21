@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Admin = () => {
+const AdminDashboard = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [messages, setMessages] = useState([
     { id: 1, text: "Bienvenue Luc. Interface AGI Root:_ activée.", sender: 'bot', timestamp: new Date() }
   ]);
+  const [logs, setLogs] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isError, setIsError] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const CORRECT_PASSWORD = 'rootadmin'; // ✨ Tu peux changer ça facilement
+  const CORRECT_PASSWORD = 'rootadmin';
 
   const handleAuth = () => {
     if (passwordInput === CORRECT_PASSWORD) {
@@ -21,13 +22,34 @@ const Admin = () => {
     }
   };
 
-  const sendMessageToAPI = async (message) => {
+  const saveMessageToDB = async (msg) => {
+    try {
+      await fetch('https://rootapi-production.up.railway.app/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(msg),
+      });
+    } catch (err) {
+      console.error("Erreur enregistrement message dans PostgreSQL:", err);
+    }
+  };
+
+  const sendMessageToAPI = async (newMessage) => {
     try {
       setIsError(false);
+
+      const formattedHistory = messages
+        .filter((m) => m.sender === 'user' || m.sender === 'bot')
+        .map((m) => {
+          const role = m.sender === 'user' ? 'user' : 'assistant';
+          return { role, content: m.text };
+        });
+      formattedHistory.push({ role: 'user', content: newMessage });
+
       const response = await fetch('https://rootapi-production.up.railway.app/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: `[ADMIN MODE - LUC]\n${message}` }),
+        body: JSON.stringify({ message: JSON.stringify(formattedHistory) }),
       });
 
       if (!response.ok) throw new Error(`Erreur API: ${response.status}`);
@@ -51,20 +73,44 @@ const Admin = () => {
       sender: 'user',
       timestamp: new Date()
     };
+
     setMessages(prev => [...prev, userMessage]);
+    logEvent("USER", inputMessage);
     setInputMessage('');
     setIsTyping(true);
 
+    const dbUser = {
+      sender: 'user',
+      source: 'admin',
+      content: inputMessage,
+      type: 'text',
+      attachmentUrl: null
+    };
+    await saveMessageToDB(dbUser);
+
     const botReply = await sendMessageToAPI(inputMessage);
+
     const botMessage = {
       id: messages.length + 2,
       text: botReply,
       sender: 'bot',
       timestamp: new Date()
     };
+
     setMessages(prev => [...prev, botMessage]);
+    logEvent("BOT", botReply);
+
+    const dbBot = { ...dbUser, sender: 'bot', content: botReply };
+    await saveMessageToDB(dbBot);
+
     setIsTyping(false);
   };
+
+  const logEvent = (source, content) => {
+    setLogs(prev => [...prev, `[${source}] > ${content}`]);
+  };
+
+  const clearLogs = () => setLogs([]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -91,7 +137,7 @@ const Admin = () => {
     <div className="chatbot-container">
       <div className="chatbot-header">
         <h2>Root:_ / Admin</h2>
-        <p>Mode personnel activé</p>
+        <p>Mode personnel + console de logs</p>
         {isError && <div className="connection-error">Erreur de connexion</div>}
       </div>
 
@@ -124,8 +170,18 @@ const Admin = () => {
         />
         <button type="submit" disabled={isTyping || inputMessage.trim() === ''}>Envoyer</button>
       </form>
+
+      <div className="chatbot-suggestions">
+        <p>Logs Root:_</p>
+        <div style={{ backgroundColor: '#222', color: '#0f0', padding: '1rem', borderRadius: '8px', maxHeight: '200px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+          {logs.map((log, index) => (
+            <div key={index}>{log}</div>
+          ))}
+        </div>
+        <button onClick={clearLogs} className="btn" style={{ marginTop: '1rem' }}>Vider les logs</button>
+      </div>
     </div>
   );
 };
 
-export default Admin;
+export default AdminDashboard;
