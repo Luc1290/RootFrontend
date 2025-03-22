@@ -902,7 +902,7 @@ footer {
     margin: 0;
     border-radius: 0;
     margin-bottom: 0;
-    height: calc(100vh - 60px);
+    height: auto;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -937,17 +937,14 @@ footer {
   
   /* Formulaire de saisie */
   .message-input-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0;
+    right: 0;
+    z-index: 999;
     background-color: var(--darker-bg);
     border-top: 1px solid rgba(12, 227, 255, 0.2);
-    position: sticky;
-    bottom: 0;
-    z-index: 100;
-    width: 100%;
+    padding: 8px;
     box-sizing: border-box;
   }
   
@@ -959,6 +956,10 @@ footer {
     border-radius: 4px;
     padding: 8px 12px;
     font-size: 14px;
+  }
+
+  body.keyboard-open .messages-container {
+    max-height: calc(100vh - 220px);
   }
   
   .message-input-form button {
@@ -1126,7 +1127,8 @@ footer {
 
 /* S'assurer que l'espace pour la saisie de texte est adéquat */
 .messages-container {
-  max-height: calc(100vh - 170px);
+  max-height: calc(100vh - 125px);
+  padding-bottom: 4px !important;
 }
 
 /* Ajouter une transition pour un comportement plus fluide */
