@@ -11,6 +11,8 @@ const AdminDashboard = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isError, setIsError] = useState(false);
   const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null); // tout en haut avec les autres
+
 
   const CORRECT_PASSWORD = 'rootadmin';
 
@@ -113,8 +115,52 @@ const AdminDashboard = () => {
   const clearLogs = () => setLogs([]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   }, [messages]);
+
+  useEffect(() => {
+    const messagesContainer = messagesContainerRef.current;
+    if (!messagesContainer) return;
+  
+    const codeBackground = document.createElement('div');
+    codeBackground.className = 'code-background';
+    messagesContainer.appendChild(codeBackground);
+  
+    const codeSnippets = [
+      'function analyzeInput(text) {',
+      'return semanticEngine.process(text);',
+      'const response = await neuralNetwork.generate();',
+      'class NeuralPathway extends Synapse {',
+      'const memory = new ShortTermMemory();',
+      'async function processIntent(userInput) {',
+      'if (sentiment.analyze(text) > 0.7) {',
+      'for (let node of knowledgeGraph) {',
+      'const entities = NER.extract(message);',
+      'memory.store(conversation.context);',
+      'return new Response(generated, context);'
+    ];
+  
+    for (let i = 0; i < 15; i++) {
+      const codeLine = document.createElement('div');
+      codeLine.className = 'code-line';
+      codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+      codeLine.style.left = `${Math.random() * 100}%`;
+      codeLine.style.animationDuration = `${10 + Math.random() * 20}s`;
+      codeLine.style.animationDelay = `${Math.random() * 5}s`;
+      codeBackground.appendChild(codeLine);
+    }
+  
+    return () => {
+      if (messagesContainer.contains(codeBackground)) {
+        messagesContainer.removeChild(codeBackground);
+      }
+    };
+  }, []);
 
   const formatTime = (date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -122,12 +168,12 @@ const AdminDashboard = () => {
     return (
       <div className="page-container text-center">
         <h2>Accès Administrateur</h2>
-        <input
-          type="password"
-          value={passwordInput}
-          onChange={(e) => setPasswordInput(e.target.value)}
-          placeholder="Mot de passe"
-        />
+         <input
+               type="password"
+               value={passwordInput}
+               onChange={(e) => setPasswordInput(e.target.value)}
+               placeholder="Mot de passe"
+         />
         <button onClick={handleAuth} className="btn">Entrer</button>
       </div>
     );
@@ -141,7 +187,7 @@ const AdminDashboard = () => {
         {isError && <div className="connection-error">Erreur de connexion</div>}
       </div>
 
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesContainerRef}>
         {messages.map((m) => (
           <div key={m.id} className={`message ${m.sender === 'user' ? 'user-message' : 'bot-message'}`}>
             <div className="message-content">
