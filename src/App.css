@@ -1168,3 +1168,12 @@ html, body {
 html {
   scroll-padding-top: 80px;
 }
+
+.page-wrapper {
+  padding-top: 80px;
+}
+body::before {
+  content: '';
+  display: block;
+  height: 80px;
+}
