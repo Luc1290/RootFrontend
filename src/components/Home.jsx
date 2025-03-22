@@ -125,8 +125,6 @@ const Home = () => {
         </div>
       </section>
       <section className="chat-invitation">
-        <h2>Prêt à discuter avec moi ?</h2>
-        <p>J'attends avec impatience notre prochaine conversation.</p>
         <Link to="/chatbot" className="btn start-chat-btn">Commencer une conversation</Link>
       </section>
       
