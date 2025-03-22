@@ -1,243 +1,166 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [typedText, setTypedText] = useState('');
-  const fullText = "Développeur & Créateur de Root:_";
-  const [activeTab, setActiveTab] = useState('all');
+  // Référence pour le contenu du terminal
+  const terminalContentRef = useRef(null);
   
-  // Animation de chargement
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  // Utilisation de useMemo pour éviter les recréations du tableau à chaque rendu
+  const terminalLines = useMemo(() => [
+    { prompt: 'root:_>', text: 'initializing_core_systems...' },
+    { prompt: 'root:_>', text: 'cognitive_functions_online' },
+    { prompt: 'root:_>', text: 'Hello, I am Root:_, an advanced AI system.' },
+    { prompt: 'user>', text: 'What can you do?' },
+    { prompt: 'root:_>', text: 'I can analyze data, answer questions, assist with tasks, and continue evolving toward AGI capabilities.' }
+  ], []);
   
-  // Animation de frappe de texte
+  // Animation de frappe de texte pour le terminal
   useEffect(() => {
-    if (typedText.length < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1));
-      }, 100);
+    const animateTerminal = async () => {
+      // Attendre que le DOM soit prêt
+      if (!terminalContentRef.current) return;
       
-      return () => clearTimeout(timeout);
-    }
-  }, [typedText]);
+      // Vider le contenu précédent pour éviter les doublons
+      terminalContentRef.current.innerHTML = '';
+      
+      // Attendre un peu avant de commencer pour laisser le terminal apparaître
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Fonction pour animer une seule ligne
+      const animateLine = async (lineData, index) => {
+        const lineElement = document.createElement('div');
+        lineElement.className = 'terminal-line';
+        lineElement.style.display = 'flex'; // Ajout de flex pour contrôler l'alignement
+        lineElement.style.alignItems = 'flex-start'; // Alignement au début
+        
+        const promptElement = document.createElement('span');
+        promptElement.className = 'terminal-prompt';
+        promptElement.textContent = lineData.prompt;
+        promptElement.style.flexShrink = '0'; // Empêche le prompt de rétrécir
+        promptElement.style.marginRight = '8px';
+        lineElement.appendChild(promptElement);
+        
+        // Ajouter un espace explicite entre le prompt et la réponse
+        const spacerElement = document.createElement('span');
+        spacerElement.textContent = ' ';
+        spacerElement.style.flexShrink = '0';
+        lineElement.appendChild(spacerElement);
+        
+        const responseElement = document.createElement('span');
+        responseElement.className = 'terminal-response';
+        responseElement.textContent = ''; // Commence vide
+        responseElement.style.textAlign = 'left'; // Alignement à gauche explicite
+        responseElement.style.flexGrow = '1'; // Permet à la réponse de prendre l'espace restant
+        lineElement.appendChild(responseElement);
+        
+        // Le reste du code reste le même...
+        
+        // Initialement caché mais avec la hauteur correcte
+        lineElement.style.opacity = 'left';
+        
+        // Ajouter au DOM
+        terminalContentRef.current.appendChild(lineElement);
+        
+        // Forcer un reflow pour que les transitions fonctionnent
+        void lineElement.offsetWidth;
+        
+        // Rendre visible
+        lineElement.style.opacity = '1';
+        
+        // Attendre que l'élément soit visible
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Animer la frappe du texte
+        for (let j = 0; j <= lineData.text.length; j++) {
+          responseElement.textContent = lineData.text.substring(0, j);
+          await new Promise(resolve => setTimeout(resolve, 30));
+        }
+        
+        // Pause entre les lignes
+        if (index < terminalLines.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      };
+      
+      // Animer chaque ligne séquentiellement
+      for (let i = 0; i < terminalLines.length; i++) {
+        await animateLine(terminalLines[i], i);
+      }
+    };
+    
+    // Exécuter l'animation uniquement lors du premier rendu
+    const timeoutId = setTimeout(() => {
+      animateTerminal();
+    }, 500);
+    
+    // Nettoyer le timeout lors du démontage du composant
+    return () => clearTimeout(timeoutId);
+  }, [terminalLines]); // Ajout de terminalLines comme dépendance
   
-  // Projets fictifs
-  const projects = [
-    {
-      id: 1,
-      title: "Root:_ Framework",
-      description: "Architecture backend pour systèmes conversationnels IA avancés",
-      image: "/api/placeholder/600/400",
-      category: "ai",
-      technologies: ["Python", "TensorFlow", "NLP", "Machine Learning"]
-    },
-    {
-      id: 2,
-      title: "Plateforme d'analyse IA",
-      description: "Interface de visualisation et d'analyse pour modèles d'IA conversationnels",
-      image: "/api/placeholder/600/400",
-      category: "web",
-      technologies: ["React", "D3.js", "Node.js", "WebSocket"]
-    },
-    {
-      id: 3,
-      title: "Système de recommandation",
-      description: "Moteur de recommandation intelligent basé sur l'apprentissage par renforcement",
-      image: "/api/placeholder/600/400",
-      category: "ai",
-      technologies: ["Python", "PyTorch", "API REST", "Redis"]
-    },
-    {
-      id: 4,
-      title: "Interface conversationnelle",
-      description: "Framework front-end pour interfaces conversationnelles avancées",
-      image: "/api/placeholder/600/400",
-      category: "web",
-      technologies: ["React", "TypeScript", "WebRTC", "IndexedDB"]
-    }
-  ];
-  
-  // Filtre des projets
-  const filteredProjects = activeTab === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === activeTab);
-  
-  // Compétences
-  const skills = [
-    { name: "Intelligence Artificielle", level: 90 },
-    { name: "Machine Learning", level: 85 },
-    { name: "Python", level: 90 },
-    { name: "JavaScript/React", level: 85 },
-    { name: "Traitement Langage Naturel", level: 80 },
-    { name: "Architecture Systèmes IA", level: 85 }
-  ];
-
   return (
-    <div className={`home-container ${isLoaded ? 'fade-in' : ''}`}>
-      {/* Section Hero */}
-      <section className="hero">
+    <div className="home-one-page">
+      <section className="hero-section">
         <div className="hero-content">
-          <h1>Bonjour, je suis <span className="highlight">Luc Parguel</span></h1>
-          <h2 className="typewriter">{typedText}<span className="cursor">|</span></h2>
           <p className="hero-description">
-            Je développe des solutions web innovantes et des systèmes d'intelligence artificielle,
-            avec une attention particulière sur Root:_, mon assistant IA en évolution vers une AGI.
+            Je suis Root:_, un système d'IA conversationnel conçu pour assister, analyser et apprendre.
+            Mon architecture me permet d'évoluer et de m'adapter, en progression constante vers des capacités d'AGI.
           </p>
-          <div className="hero-buttons">
-            <Link to="/chatbot" className="btn">Discuter avec Root:_</Link>
-          </div>
-        </div>
-        <div className="hero-image">
-          <img src="/api/placeholder/600/600" alt="Portrait professionnel" />
-        </div>
-      </section>
-      
-      {/* Section À propos */}
-      <section className="section about-section">
-        <h2 className="section-title">À propos de moi</h2>
-        <div className="about-content">
-          <div className="about-text">
-            <p>
-              Passionné par le développement web et l'intelligence artificielle, 
-              je m'efforce de créer des solutions digitales innovantes et accessibles.
-              Mon parcours m'a permis d'acquérir une expertise en développement full-stack
-              et en systèmes d'IA conversationnelle.
-            </p>
-            <p>
-              Après mes études en informatique, j'ai développé une fascination pour les possibilités 
-              offertes par l'IA. Aujourd'hui, je consacre une grande partie de mon temps au développement 
-              de Root:_, mon assistant en évolution vers une AGI (Intelligence Artificielle Générale),
-              tout en continuant à explorer les technologies web modernes.
-            </p>
-            <div className="about-stats">
-              <div className="stat">
-                <span className="stat-number">5+</span>
-                <span className="stat-label">Années d'expérience</span>
-              </div>
-              <div className="stat">
-                <span className="stat-number">50+</span>
-                <span className="stat-label">Projets terminés</span>
-              </div>
-              <div className="stat">
-                <span className="stat-number">30+</span>
-                <span className="stat-label">Clients satisfaits</span>
-              </div>
+          
+          <div className="terminal-demo">
+            <div className="terminal-header">
+              <div className="terminal-button red"></div>
+              <div className="terminal-button yellow"></div>
+              <div className="terminal-button green"></div>
+              <div className="terminal-title">root:_ @ system</div>
+            </div>
+            <div className="terminal-content" ref={terminalContentRef}>
+              {/* Les lignes du terminal seront ajoutées dynamiquement par l'effet */}
             </div>
           </div>
+        </div>        
+        <div className="hero-background">
+          {/* Les particules et la grille sont gérées par le CSS */}
         </div>
       </section>
       
-      {/* Section Root:_ */}
-      <section className="section root-section">
-        <h2 className="section-title">Root:_ - Mon Assistant IA</h2>
-        <div className="root-content">
-          <div className="root-image">
-            <img src="/api/placeholder/500/300" alt="Interface de Root:_" />
-          </div>
-          <div className="root-info">
-            <p>
-              Root:_ est mon projet phare, un assistant d'intelligence artificielle 
-              en constante évolution. Conçu pour apprendre et s'adapter,
-              Root:_ est actuellement en développement pour devenir une véritable AGI
-              (Intelligence Artificielle Générale).
-            </p>
-            <p>
-              Contrairement aux assistants IA conventionnels, Root:_ est conçu pour 
-              comprendre le contexte, apprendre de ses interactions et développer
-              une compréhension plus profonde des intentions humaines.
-            </p>
-            <Link to="/chatbot" className="btn">Essayer Root:_ maintenant</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Section Projets */}
-      <section className="section projects-section">
-        <h2 className="section-title">Autres projets</h2>
-        <div className="project-tabs">
-          <button 
-            className={`tab-btn ${activeTab === 'all' ? 'active' : ''}`}
-            onClick={() => setActiveTab('all')}
-          >
-            Tous
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'web' ? 'active' : ''}`}
-            onClick={() => setActiveTab('web')}
-          >
-            Web
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'ai' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ai')}
-          >
-            IA
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'design' ? 'active' : ''}`}
-            onClick={() => setActiveTab('design')}
-          >
-            Design
-          </button>
+      <section className="features-section">
+        <div className="feature-card">
+          <div className="feature-icon">🧠</div>
+          <h3 className="feature-title">Traitement du langage avancé</h3>
+          <p className="feature-description">
+            Ma compréhension linguistique me permet de saisir les nuances, le contexte et les intentions derrière vos questions.
+          </p>
         </div>
         
-        <div className="projects-grid">
-          {filteredProjects.map((project) => (
-            <div className="project-card" key={project.id}>
-              <div className="project-image">
-                <img src={project.image} alt={project.title} />
-              </div>
-              <div className="project-info">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="project-tech">
-                  {project.technologies.map((tech, index) => (
-                    <span className="tech-tag" key={index}>{tech}</span>
-                  ))}
-                </div>
-                <Link to={`/projets/${project.id}`} className="project-link">
-                  Voir le projet
-                </Link>
-              </div>
-            </div>
-          ))}
+        <div className="feature-card">
+          <div className="feature-icon">🔄</div>
+          <h3 className="feature-title">Apprentissage continu</h3>
+          <p className="feature-description">
+            J'apprends de chaque interaction pour améliorer mes réponses et approfondir ma compréhension du monde.
+          </p>
         </div>
         
-        <div className="text-center">
-          <Link to="/projets" className="btn">Voir tous les projets</Link>
+        <div className="feature-card">
+          <div className="feature-icon">🔍</div>
+          <h3 className="feature-title">Analyse approfondie</h3>
+          <p className="feature-description">
+            Je peux traiter et analyser des informations complexes pour offrir des perspectives pertinentes et nuancées.
+          </p>
+        </div>
+        
+        <div className="feature-card">
+          <div className="feature-icon">🛠️</div>
+          <h3 className="feature-title">Architecture évolutive</h3>
+          <p className="feature-description">
+            Ma structure modulaire me permet d'évoluer vers des capacités d'intelligence artificielle générale (AGI).
+          </p>
         </div>
       </section>
       
-      {/* Section Compétences */}
-      <section className="section skills-section">
-        <h2 className="section-title">Mes compétences</h2>
-        <div className="skills-container">
-          {skills.map((skill, index) => (
-            <div className="skill-item" key={index}>
-              <div className="skill-info">
-                <span className="skill-name">{skill.name}</span>
-                <span className="skill-percentage">{skill.level}%</span>
-              </div>
-              <div className="skill-bar">
-                <div 
-                  className="skill-progress" 
-                  style={{ width: `${skill.level}%` }}
-                ></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Section Contact */}
-      <section className="section contact-section">
-        <h2 className="section-title">Travaillons ensemble</h2>
-        <p className="contact-intro">
-          Vous avez un projet en tête ? N'hésitez pas à me contacter pour en discuter !
-        </p>
-        <Link to="/contact" className="btn btn-large">Me contacter</Link>
+      <section className="chat-invitation">
+        <h2>Prêt à discuter avec moi ?</h2>
+        <p>J'attends avec impatience notre prochaine conversation.</p>
+        <Link to="/chatbot" className="btn start-chat-btn">Commencer une conversation</Link>
       </section>
     </div>
   );

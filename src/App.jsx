@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import Chatbot from './components/Chatbot.jsx';
-import Admin from './components/AdminDashboard.jsx'; // ajoute cette ligne en haut
+import Admin from './components/AdminDashboard.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
+import AnimatedBackground from './components/AnimatedBackground.jsx';
 
-// Le composant StartChatButton doit être défini à l'intérieur du routeur pour utiliser useNavigate
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   
@@ -28,10 +28,12 @@ const App = () => {
 const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
   return (
     <div className="app-container dark-mode">
+      <AnimatedBackground />
+      
       <header>
         <div className="logo-container">
           <div className="logo title-logo">
-            <Link to="/" className="logo-text">Root:_</Link>
+            <Link to="/" className="logo-text">Root:</Link>
           </div>
         </div>
         
@@ -48,20 +50,11 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
             <li><Link to="/chatbot" onClick={() => setMenuOpen(false)} className="chatbot-link">Discuter avec Root:_</Link></li>
           </ul>
         </nav>
-        
-        {/* Suppression du bouton toggle mode sombre/clair */}
       </header>
       
       <main>
         <Routes>
-          <Route path="/" element={
-            <div className="home-with-cta">
-              <Home />
-              <div className="chat-cta">
-                <StartChatButton />
-              </div>
-            </div>
-          } />
+          <Route path="/" element={<Home />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/projets" element={<div className="page-container"><h2>Mes Projets</h2><p>Page en construction...</p></div>} />
@@ -82,21 +75,6 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
         </div>
       </footer>
     </div>
-  );
-};
-
-// Composant StartChatButton en utilisant useNavigate
-const StartChatButton = () => {
-  const navigate = useNavigate();
-  
-  const handleStartChat = () => {
-    navigate('/chatbot');
-  };
-  
-  return (
-    <button onClick={handleStartChat} className="start-chat-btn pulse-animation">
-      Démarrer une conversation avec Root:_
-    </button>
   );
 };
 
