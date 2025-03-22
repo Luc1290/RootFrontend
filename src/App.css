@@ -543,7 +543,7 @@ footer {
 }
 
 .hero-section {
-  padding-top: 80px;
+  padding-top: 80px !important;
   margin-top: 2rem !important; /* Correction de l'erreur "2rm" */
   height: auto !important;
   min-height: auto; 
@@ -1172,8 +1172,4 @@ html {
 .page-wrapper {
   padding-top: 80px;
 }
-body::before {
-  content: '';
-  display: block;
-  height: 80px;
-}
+
