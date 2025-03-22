@@ -1158,3 +1158,13 @@ html, body {
     hyphens: auto;
   }
 }
+
+/* ✅ Fix menu coupé en haut sur mobile */
+.hero-section {
+  padding-top: 80px !important;
+}
+
+/* ✅ Fix scroll automatique sous header sticky */
+html {
+  scroll-padding-top: 80px;
+}
