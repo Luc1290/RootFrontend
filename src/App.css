@@ -682,23 +682,164 @@ footer {
   display: inline-block;
 }
 
-/* Responsive */
+/* ===== CORRECTIONS RESPONSIVE POUR MOBILE ===== */
+
+/* Ajoutez ces styles à la fin de votre fichier App.css */
+
+/* Optimisations pour mobile */
 @media (max-width: 768px) {
-  /* Ajustements pour mobile */
-  header {
+  /* Conteneur du chatbot */
+  .chatbot-container {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    height: calc(100vh - 60px); /* Hauteur d'écran moins la hauteur de l'en-tête */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* En-tête du chatbot */
+  .chatbot-header {
     padding: 0.75rem 1rem;
-    justify-content: flex-end; /* Pousser le menu à droite */
   }
   
-  .hero-title {
-    font-size: 2.25rem; /* Plus petit sur mobile */
-    margin-top: 1rem;
+  .chatbot-header h2 {
+    font-size: 1.75rem;
   }
   
-  .hero-subtitle {
-    font-size: 1.1rem;
+  .chatbot-header p {
+    font-size: 0.85rem;
   }
   
+  /* Zone des messages */
+  .messages-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Pour rendre le défilement plus fluide sur iOS */
+  }
+  
+  /* Messages */
+  .message {
+    max-width: 85%;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Formulaire de saisie */
+  .message-input-form {
+    position: sticky;
+    bottom: 0;
+    padding: 0.75rem;
+    z-index: 10;
+  }
+  
+  .message-input-form input {
+    height: 42px;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .message-input-form button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Suggestions */
+  .chatbot-suggestions {
+    padding: 0.5rem;
+  }
+  
+  .suggestion-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .suggestion-buttons button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    white-space: nowrap;
+  }
+}
+
+/* Correction du viewport pour mobile */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+/* Code background et particules pour mobile */
+@media (max-width: 768px) {
+  .code-line {
+    font-size: 0.6rem; /* Texte plus petit sur mobile */
+  }
+  
+  .particle {
+    width: 1px !important; /* Particules plus petites sur mobile */
+    height: 1px !important;
+  }
+}
+
+/* Animation de la ligne de code - optimisation pour mobile */
+@media (max-width: 768px) {
+  .code-background {
+    opacity: 0.4; /* Réduire l'opacité sur mobile pour que le texte soit plus lisible */
+  }
+}
+
+/* Styles spécifiques pour petits écrans */
+@media (max-width: 480px) {
+  .chatbot-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .message {
+    max-width: 90%;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .suggestion-buttons button {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+/* Empêcher le défilement horizontal sur mobile */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Fix pour iOS Safari viewport height */
+.chatbot-container {
+  height: 100%; /* Fallback */
+  height: -webkit-fill-available;
+}
+
+/* Gestion des messages longs sur mobile */
+@media (max-width: 768px) {
+  .message-content p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+/* Solution au problème de viewport sur mobile */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
   main {
     padding: 0 0.75rem; /* Marge plus petite sur mobile */
   }
@@ -956,23 +1097,3 @@ footer {
   }
 }
 
-/* Media queries pour l'adaptation responsive */
-@media (max-width: 768px) {
-  .glitch-title {
-    font-size: 3rem;
-  }
-  
-  .underscore-blink {
-    font-size: 3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .glitch-title {
-    font-size: 2.5rem;
-  }
-  
-  .underscore-blink {
-    font-size: 2.5rem;
-  }
-}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import Chatbot from './components/Chatbot.jsx';
 import Admin from './components/AdminDashboard.jsx';
@@ -12,6 +12,31 @@ const App = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  // Fermer le menu si l'écran est redimensionné
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [menuOpen]);
+
+  // Empêcher le défilement du corps lorsque le menu est ouvert sur mobile
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   return (
     <Router>
@@ -26,31 +51,52 @@ const App = () => {
 
 // Composant séparé pour le contenu de l'app qui a accès au contexte du Router
 const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
+  // Fermer le menu lors de la navigation
+  const closeMenu = () => {
+    if (menuOpen) setMenuOpen(false);
+  };
+
   return (
     <div className="app-container dark-mode">
       <AnimatedBackground />
       
       <header>
         <div className="logo-container">
-          {/* Suppression du logo ici */}
+          {/* Section pour le logo si nécessaire */}
         </div>
         
-        <button className="menu-toggle" onClick={toggleMenu}>
+        <button className="menu-toggle" onClick={toggleMenu} aria-label="Menu de navigation">
           <span className="menu-icon">{menuOpen ? '✕' : '☰'}</span>
         </button>
         
         <nav className={`main-nav ${menuOpen ? 'open' : ''}`}>
           <ul>
-            <li><Link to="/" onClick={() => setMenuOpen(false)}>Accueil</Link></li>
-            <li><Link to="/projets" onClick={() => setMenuOpen(false)}>Projets</Link></li>
-            <li><Link to="/competences" onClick={() => setMenuOpen(false)}>Compétences</Link></li>
-            <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link></li>
-            <li><Link to="/chatbot" onClick={() => setMenuOpen(false)} className="chatbot-link">Discuter avec Root:_</Link></li>
+            <li><Link to="/" onClick={closeMenu}>Accueil</Link></li>
+            <li><Link to="/projets" onClick={closeMenu}>Projets</Link></li>
+            <li><Link to="/competences" onClick={closeMenu}>Compétences</Link></li>
+            <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
+            <li><Link to="/chatbot" onClick={closeMenu} className="chatbot-link">Discuter avec Root:_</Link></li>
           </ul>
         </nav>
+        
+        {/* Overlay pour fermer le menu en cliquant à l'extérieur sur mobile */}
+        {menuOpen && (
+          <div 
+            className="menu-overlay" 
+            onClick={closeMenu}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              zIndex: 998
+            }}
+          />
+        )}
       </header>
       
-      {/* Le reste du composant reste inchangé */}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />

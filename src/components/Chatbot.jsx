@@ -55,6 +55,36 @@ const Chatbot = () => {
     };
   }, []);
 
+  // Détection si l'appareil est mobile
+  const isMobile = window.innerWidth <= 768;
+  
+  // Optimisation pour mobile - ajustement automatique de la hauteur du conteneur de messages
+  useEffect(() => {
+    const adjustHeight = () => {
+      if (messagesContainerRef.current && isMobile) {
+        const viewHeight = window.innerHeight;
+        const headerHeight = document.querySelector('.chatbot-header')?.offsetHeight || 0;
+        const formHeight = document.querySelector('.message-input-form')?.offsetHeight || 0;
+        const suggestionsHeight = document.querySelector('.chatbot-suggestions')?.offsetHeight || 0;
+        
+        // Calculer la hauteur disponible
+        const availableHeight = viewHeight - headerHeight - formHeight - suggestionsHeight - 20; // 20px pour marges
+        
+        // Définir la hauteur du conteneur de messages
+        messagesContainerRef.current.style.height = `${Math.max(300, availableHeight)}px`;
+      }
+    };
+    
+    // Ajuster la hauteur initialement et lors du redimensionnement
+    adjustHeight();
+    window.addEventListener('resize', adjustHeight);
+    
+    // Nettoyer l'écouteur d'événements lors du démontage
+    return () => {
+      window.removeEventListener('resize', adjustHeight);
+    };
+  }, [isMobile]);
+
   const sendMessageToClaude = async (message) => {
     try {
       setIsError(false);
@@ -147,7 +177,10 @@ const Chatbot = () => {
       techParticles.className = 'tech-particles';
       document.body.appendChild(techParticles);
 
-      for (let i = 0; i < 30; i++) {
+      // Réduire le nombre de particules sur mobile pour la performance
+      const particleCount = isMobile ? 15 : 30;
+
+      for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         
@@ -184,7 +217,13 @@ const Chatbot = () => {
     
     const cleanup = createParticles();
     return cleanup;
-  }, []);
+  }, [isMobile]);
+
+  // Fonction pour gérer les clics sur les suggestions
+  const handleSuggestionClick = (text) => {
+    setInputMessage(text);
+    setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100);
+  };
 
   return (
     <div className="chatbot-container">
@@ -199,7 +238,6 @@ const Chatbot = () => {
           <div key={message.id} className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
             <div className="message-content">
               <p>{message.text}</p>
-              {/* Suppression des horodatages comme demandé */}
             </div>
           </div>
         ))}
@@ -229,10 +267,10 @@ const Chatbot = () => {
       <div className="chatbot-suggestions">
         <p>Suggestions:</p>
         <div className="suggestion-buttons">
-          <button onClick={() => { setInputMessage("Qui es-tu ?"); setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100); }}>À propos de moi</button>
-          <button onClick={() => { setInputMessage("Que peux-tu faire ?"); setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100); }}>Mes capacités</button>
-          <button onClick={() => { setInputMessage("Comment fonctionnes-tu ?"); setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100); }}>Mon fonctionnement</button>
-          <button onClick={() => { setInputMessage("Parle-moi de l'AGI"); setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100); }}>L'AGI</button>
+          <button onClick={() => handleSuggestionClick("Qui es-tu ?")}>À propos de moi</button>
+          <button onClick={() => handleSuggestionClick("Que peux-tu faire ?")}>Mes capacités</button>
+          <button onClick={() => handleSuggestionClick("Comment fonctionnes-tu ?")}>Mon fonctionnement</button>
+          <button onClick={() => handleSuggestionClick("Parle-moi de l'AGI")}>L'AGI</button>
         </div>
       </div>
     </div>
