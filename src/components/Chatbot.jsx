@@ -100,7 +100,7 @@ useEffect(() => {
         messagesContainerRef.current.style.height = `${Math.max(300, availableHeight)}px`;
       }
     };
-    
+
     const handleBlur = () => {
       // Le clavier est probablement fermé
       document.body.classList.remove('keyboard-open');
@@ -309,7 +309,6 @@ useEffect(() => {
   };
 
   
-
   return (
     <div className="chatbot-container">
       <div className="chatbot-header">
@@ -338,8 +337,6 @@ useEffect(() => {
         {/* Élément invisible utilisé pour le défilement */}
         <div ref={messagesEndRef} className="scroll-anchor" />
       </div>
-
-      // Remplacez votre formulaire de saisie actuel par celui-ci dans Chatbot.jsx
 
 <form className="message-input-form" onSubmit={handleSendMessage}>
   <input
