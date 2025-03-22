@@ -543,7 +543,7 @@ footer {
 }
 
 .hero-section {
-  padding-top: 40px;
+  padding-top: 80px;
   margin-top: 2rem !important; /* Correction de l'erreur "2rm" */
   height: auto !important;
   min-height: auto; 
