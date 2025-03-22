@@ -59,7 +59,33 @@ const Chatbot = () => {
   }, []);
   
   // Optimisation pour mobile - ajustement automatique de la hauteur du conteneur de messages
-  useEffect(() => {
+// Ajoutez ce code dans votre composant Chatbot.jsx, dans la section des useEffect
+
+// Détection du clavier virtuel pour iOS et Android
+useEffect(() => {
+  // Pour les appareils mobiles seulement
+  if (!isMobile) return;
+  
+  const detectKeyboard = () => {
+    // Une façon approximative de détecter si le clavier virtuel est ouvert
+    // en comparant la hauteur de la fenêtre avant et après la mise au point de l'entrée
+    const windowHeight = window.innerHeight;
+    
+    const handleFocus = () => {
+      // Attendre un peu que le clavier apparaisse
+      setTimeout(() => {
+        if (window.innerHeight < windowHeight * 0.8) {
+          // Le clavier est probablement ouvert
+          document.body.classList.add('keyboard-open');
+          
+          // Ajuster la hauteur du conteneur de messages
+          if (messagesContainerRef.current) {
+            messagesContainerRef.current.style.maxHeight = 'calc(100vh - 120px)';
+          }
+        }
+      }, 300);
+    };
+    
     const adjustHeight = () => {
       if (messagesContainerRef.current && isMobile) {
         const viewHeight = window.innerHeight;
@@ -75,19 +101,39 @@ const Chatbot = () => {
       }
     };
     
-    // Ajuster la hauteur initialement et lors du redimensionnement
-    adjustHeight();
-    window.addEventListener('resize', adjustHeight);
-    
-    // Réajuster lorsque le clavier virtuel apparaît/disparaît sur mobile
-    window.addEventListener('orientationchange', adjustHeight);
-    
-    // Nettoyer les écouteurs d'événements lors du démontage
-    return () => {
-      window.removeEventListener('resize', adjustHeight);
-      window.removeEventListener('orientationchange', adjustHeight);
+    const handleBlur = () => {
+      // Le clavier est probablement fermé
+      document.body.classList.remove('keyboard-open');
+      
+      // Réajuster la hauteur du conteneur de messages
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.style.maxHeight = '';
+        // Forcer un réajustement de la hauteur
+        adjustHeight();
+      }
+      
+      // Défiler vers le bas après la fermeture du clavier
+      setTimeout(scrollToBottom, 300);
     };
-  }, [isMobile]);
+    
+    // Sélectionner l'élément d'entrée
+    const inputElement = document.querySelector('.message-input-form input');
+    if (inputElement) {
+      inputElement.addEventListener('focus', handleFocus);
+      inputElement.addEventListener('blur', handleBlur);
+    }
+    
+    return () => {
+      if (inputElement) {
+        inputElement.removeEventListener('focus', handleFocus);
+        inputElement.removeEventListener('blur', handleBlur);
+      }
+    };
+  };
+  
+  const cleanup = detectKeyboard();
+  return cleanup;
+}, [isMobile]);
 
   const sendMessageToClaude = async (message) => {
     try {
@@ -262,6 +308,8 @@ const Chatbot = () => {
     setTimeout(() => handleSendMessage(), 100);
   };
 
+  
+
   return (
     <div className="chatbot-container">
       <div className="chatbot-header">
@@ -291,16 +339,25 @@ const Chatbot = () => {
         <div ref={messagesEndRef} className="scroll-anchor" />
       </div>
 
-      <form className="message-input-form" onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          placeholder="Saisissez votre message..."
-          disabled={isTyping}
-        />
-        <button type="submit" disabled={isTyping || inputMessage.trim() === ''}>Envoyer</button>
-      </form>
+      // Remplacez votre formulaire de saisie actuel par celui-ci dans Chatbot.jsx
+
+<form className="message-input-form" onSubmit={handleSendMessage}>
+  <input
+    type="text"
+    value={inputMessage}
+    onChange={(e) => setInputMessage(e.target.value)}
+    placeholder="Saisissez votre message..."
+    disabled={isTyping}
+    onFocus={() => isMobile && scrollToBottom()}
+  />
+  <button 
+    type="submit" 
+    disabled={isTyping || inputMessage.trim() === ''}
+    className="send-button" // Ajout d'une classe pour cibler le bouton
+  >
+    {isMobile ? "➤" : "Envoyer"} {/* Icône plus petite sur mobile */}
+  </button>
+</form>
 
       <div className="chatbot-suggestions">
         <p>Suggestions:</p>

@@ -707,6 +707,7 @@ footer {
     max-width: 100%;
     margin: 0;
     border-radius: 0;
+    margin-bottom: 0;
     height: calc(100vh - 60px); /* Hauteur d'écran moins la hauteur de l'en-tête */
     display: flex;
     flex-direction: column;
@@ -729,41 +730,59 @@ footer {
   /* Zone des messages */
   .messages-container {
     min-height: 0; /* Important pour la flexbox et le scroll */
+    padding: 8px 10px;
+    padding-bottom: 4px !important;
   }
   
   /* Messages */
   .message {
+    padding: 8px 10px;
+    margin-bottom: 6px !important;
     max-width: 85%;
-    padding: 0.65rem 0.85rem;
-    margin-bottom: 0.5rem;
   }
   
   /* Formulaire de saisie */
   .message-input-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: var(--darker-bg);
+    border-top: 1px solid rgba(12, 227, 255, 0.2);
     position: sticky;
     bottom: 0;
-    padding: 0.75rem;
-    z-index: 10;
+    z-index: 100;
+    width: 100%;
+    box-sizing: border-box;
   }
   
-  .message-input-form {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--darker-bg);
-    z-index: 10;
-    border-top: 1px solid rgba(12, 227, 255, 0.2);
+  .message-input-form input {
+    flex: 1;
+    min-width: 0; /* Important pour que l'input puisse rétrécir */
+    margin-right: 8px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
   }
   
   .message-input-form button {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
+    width: auto;
+    min-width: 60px; /* Largeur minimale pour le bouton */
+    white-space: nowrap;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
   }
   
   /* Suggestions */
   .chatbot-suggestions {
-    padding: 0.5rem;
+    padding: 8px;
   }
-  
+
   .suggestion-buttons {
     flex-wrap: wrap;
     justify-content: center;
@@ -775,6 +794,34 @@ footer {
     padding: 0.4rem 0.75rem;
     white-space: nowrap;
   }
+
+  .send-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+    border-radius: 50% !important; /* Bouton rond */
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.2rem !important;
+    padding: 0 !important;
+    min-width: 40px !important;
+  }
+  
+
+  @media (max-height: 600px) {
+    .chatbot-header p {
+      display: none; /* Cacher la description en cas d'écran très petit */
+    }
+    
+    .chatbot-header {
+      padding: 5px;
+    }
+    
+    .chatbot-header h2 {
+      font-size: 1.4rem;
+    }
 
   input:focus {
     position: relative;
@@ -793,8 +840,12 @@ footer {
 }
 
 @supports (-webkit-touch-callout: none) {
-  .chatbot-container {
-    height: -webkit-fill-available;
+  body.keyboard-open .chatbot-suggestions {
+    display: none;
+  }
+  
+  body.keyboard-open .messages-container {
+    max-height: calc(100vh - 120px);
   }
 }
 
@@ -833,6 +884,35 @@ footer {
     padding: 0.35rem 0.6rem;
   }
 }
+
+@media (max-height: 500px) {
+  .chatbot-suggestions {
+    display: none; /* Cacher les suggestions quand l'espace est limité */
+  }
+  
+  .messages-container {
+    max-height: calc(100vh - 120px);
+  }
+}
+
+/* Correction pour iOS */
+.message-input-form input,
+.message-input-form button {
+  -webkit-appearance: none; /* Supprime l'apparence par défaut sur iOS */
+  appearance: none;
+}
+
+/* S'assurer que l'espace pour la saisie de texte est adéquat */
+.messages-container {
+  max-height: calc(100vh - 170px); /* Hauteur d'écran moins les zones d'en-tête, de saisie et de suggestions */
+}
+
+/* Ajouter une transition pour un comportement plus fluide */
+.chatbot-container {
+  transition: height 0.3s ease;
+}
+}
+
 
 /* Empêcher le défilement horizontal sur mobile */
 html, body {
