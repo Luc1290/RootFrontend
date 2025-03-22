@@ -9,9 +9,8 @@ const Home = () => {
   const terminalLines = useMemo(() => [
     { prompt: 'root:_>', text: 'initializing_core_systems...' },
     { prompt: 'root:_>', text: 'cognitive_functions_online' },
-    { prompt: 'root:_>', text: 'Hello, I am Root:_, an advanced AI system.' },
-    { prompt: 'user>', text: 'What can you do?' },
-    { prompt: 'root:_>', text: 'I can analyze data, answer questions, assist with tasks, and continue evolving toward AGI capabilities.' }
+    { prompt: 'user>', text: 'Quelles sont tes capacités ?' },
+    { prompt: 'root:_>', text: 'Je suis Root:_, un système d\'IA conversationnel conçu pour assister, analyser et apprendre. Mon architecture me permet d\'évoluer et de m\'adapter, en progression constante vers des capacités d\'AGI.' }
   ], []);
   
   // Animation de frappe de texte pour le terminal
@@ -101,10 +100,13 @@ const Home = () => {
     <div className="home-one-page">
       <section className="hero-section">
         <div className="hero-content">
-          <p className="hero-description">
-            Je suis Root:_, un système d'IA conversationnel conçu pour assister, analyser et apprendre.
-            Mon architecture me permet d'évoluer et de m'adapter, en progression constante vers des capacités d'AGI.
-          </p>
+        <div className="cyber-title">
+  <h1 className="glitch-title" style={{ textTransform: 'none' }}>
+    <span className="glitch-text" data-text="Root:">Root:</span>
+    <span className="underscore-blink">_</span>
+  </h1>
+  <div className="neon-glow"></div>
+</div>
           
           <div className="terminal-demo">
             <div className="terminal-header">

@@ -85,7 +85,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem; /* Réduit padding vertical */
+  padding: 1rem 2rem;
   background-color: rgba(10, 14, 23, 0.8);
   backdrop-filter: blur(10px);
   position: sticky;
@@ -95,7 +95,6 @@ header {
   max-width: 1440px;
   margin: 0 auto;
 }
-
 .chatbot-link {
   color: var(--primary-color) !important;
   font-weight: bold !important;
@@ -164,11 +163,8 @@ header {
 }
 
 .logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: none; /* Cacher complètement au lieu de flex */
 }
-
 .title-logo {
   margin: 0 auto;
   text-align: center;
@@ -231,6 +227,11 @@ header {
 .main-nav a:hover::after {
   width: 100%;
 }
+
+header .main-nav {
+  margin-left: auto; /* Pousse la navigation à droite */
+}
+
 
 /* Contenu principal - Ajustement du centrage et padding */
 main {
@@ -543,14 +544,47 @@ footer {
 }
 
 .hero-title {
-  font-size: 3rem; /* Réduit taille */
+  font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 0.75rem; /* Réduit marge */
+  margin-bottom: 0.75rem;
   background: linear-gradient(120deg, var(--primary-color), #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
+  font-family: var(--font-mono);
+  position: relative;
+  display: inline-block; /* Important pour que ::after fonctionne bien */
+}
+
+/* Suppression des règles conflictuelles */
+.hero-title span,
+.hero-title > span:last-child {
+  display: none;
+}
+
+/* Règle claire et simple pour ajouter le underscore clignotant */
+.hero-title::after {
+  content: '_';
+  display: inline-block;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--primary-color); /* Couleur cyan électrique */
+  position: relative;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-section .hero-title::after {
+  content: '_';
+  display: inline-block;
+  animation: blink 1s infinite;
+  font-weight: bold;
+  color: var(--primary-color);
 }
 
 .hero-subtitle {
@@ -652,7 +686,8 @@ footer {
 @media (max-width: 768px) {
   /* Ajustements pour mobile */
   header {
-    padding: 0.75rem 1rem; /* Réduit encore plus sur mobile */
+    padding: 0.75rem 1rem;
+    justify-content: flex-end; /* Pousser le menu à droite */
   }
   
   .hero-title {
@@ -778,4 +813,166 @@ footer {
 .hero-section, .features-section, .chat-invitation {
   position: relative;
   width: 100%;
+}
+
+/* Ajoutez ces styles à votre fichier App.css */
+
+/* Styles pour le titre cyberpunk */
+.cyber-title {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  perspective: 500px;
+}
+
+.glitch-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  color: var(--primary-color);
+  text-shadow: 
+    0 0 5px rgba(12, 227, 255, 0.8),
+    0 0 10px rgba(12, 227, 255, 0.5),
+    0 0 15px rgba(12, 227, 255, 0.3);
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.glitch-text::before {
+  color: rgba(255, 56, 100, 0.7);
+  animation: glitch-animation-1 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  color: rgba(86, 3, 173, 0.7);
+  animation: glitch-animation-2 2s infinite linear alternate-reverse;
+}
+
+.underscore-blink {
+  display: inline-block;
+  color: var(--primary-color);
+  font-weight: bold;
+  animation: blink 1s infinite;
+  margin-left: 5px;
+  font-size: 4.5rem;
+  text-shadow: 
+    0 0 5px rgba(12, 227, 255, 0.8),
+    0 0 10px rgba(12, 227, 255, 0.5),
+    0 0 15px rgba(12, 227, 255, 0.3);
+}
+
+.neon-glow {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(12, 227, 255, 0) 0%,
+    rgba(12, 227, 255, 0.8) 50%,
+    rgba(12, 227, 255, 0) 100%);
+  bottom: -10px;
+  left: 0;
+  filter: blur(3px);
+  animation: pulse-line 3s infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(5deg);
+  }
+}
+
+@keyframes glitch-animation-1 {
+  0% {
+    transform: translate(-2px, 0);
+  }
+  25% {
+    transform: translate(2px, 2px);
+  }
+  50% {
+    transform: translate(-2px, 1px);
+  }
+  75% {
+    transform: translate(3px, -2px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitch-animation-2 {
+  0% {
+    transform: translate(2px, -2px);
+  }
+  25% {
+    transform: translate(-2px, -1px);
+  }
+  50% {
+    transform: translate(1px, 2px);
+  }
+  75% {
+    transform: translate(-3px, 1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes pulse-line {
+  0%, 100% {
+    opacity: 0.5;
+    width: 90%;
+    left: 5%;
+  }
+  50% {
+    opacity: 1;
+    width: 100%;
+    left: 0%;
+  }
+}
+
+/* Media queries pour l'adaptation responsive */
+@media (max-width: 768px) {
+  .glitch-title {
+    font-size: 3rem;
+  }
+  
+  .underscore-blink {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch-title {
+    font-size: 2.5rem;
+  }
+  
+  .underscore-blink {
+    font-size: 2.5rem;
+  }
 }

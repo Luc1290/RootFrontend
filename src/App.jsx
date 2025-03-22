@@ -32,9 +32,7 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
       
       <header>
         <div className="logo-container">
-          <div className="logo title-logo">
-            <Link to="/" className="logo-text">Root:</Link>
-          </div>
+          {/* Suppression du logo ici */}
         </div>
         
         <button className="menu-toggle" onClick={toggleMenu}>
@@ -52,6 +50,7 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
         </nav>
       </header>
       
+      {/* Le reste du composant reste inchangé */}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
