@@ -307,6 +307,7 @@ main {
 }
 
 .messages-container {
+  flex: 1;
   height: 500px;
   overflow-y: auto;
   padding: 1.25rem; /* Réduit padding */
@@ -315,7 +316,11 @@ main {
   gap: 0.75rem; /* Réduit espace entre messages */
   position: relative;
   background: rgba(10, 14, 23, 0.3);
+  padding-bottom: 10px; /* Ajoute un peu d'espace en bas */
+  scroll-behavior: smooth; /* Assure des défilements fluides */
+  -webkit-overflow-scrolling: touch; /* Pour le défilement fluide sur iOS */
 }
+
 
 /* Scroll personnalisé */
 .messages-container::-webkit-scrollbar {
@@ -461,6 +466,7 @@ main {
   text-align: center;
   background-color: var(--darker-bg);
   border-top: 1px solid rgba(12, 227, 255, 0.1);
+  flex-shrink: 0; /* Ne pas rétrécir ces éléments */
 }
 
 .suggestion-buttons {
@@ -480,6 +486,14 @@ main {
   font-size: 0.9rem;
   transition: all 0.3s ease;
 }
+
+/* Positionnement de l'élément invisible qui sert de point de défilement */
+.scroll-anchor {
+  height: 1px;
+  width: 100%;
+  margin-top: 15px;
+}
+
 
 .suggestion-buttons button:hover {
   background-color: rgba(12, 227, 255, 0.2);
@@ -714,9 +728,7 @@ footer {
   
   /* Zone des messages */
   .messages-container {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Pour rendre le défilement plus fluide sur iOS */
+    min-height: 0; /* Important pour la flexbox et le scroll */
   }
   
   /* Messages */
@@ -734,10 +746,12 @@ footer {
     z-index: 10;
   }
   
-  .message-input-form input {
-    height: 42px;
-    font-size: 1rem;
-    padding: 0.5rem 0.75rem;
+  .message-input-form {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--darker-bg);
+    z-index: 10;
+    border-top: 1px solid rgba(12, 227, 255, 0.2);
   }
   
   .message-input-form button {
@@ -761,6 +775,11 @@ footer {
     padding: 0.4rem 0.75rem;
     white-space: nowrap;
   }
+
+  input:focus {
+    position: relative;
+    z-index: 15;
+
 }
 
 /* Correction du viewport pour mobile */
@@ -771,6 +790,12 @@ footer {
 
 @-ms-viewport {
   width: device-width;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .chatbot-container {
+    height: -webkit-fill-available;
+  }
 }
 
 /* Code background et particules pour mobile */

@@ -12,6 +12,9 @@ const Chatbot = () => {
   // Référence pour la zone des messages
   const messagesContainerRef = useRef(null);
   
+  // Détection si l'appareil est mobile
+  const isMobile = window.innerWidth <= 768;
+  
   // Effet pour l'animation des particules de code
   useEffect(() => {
     // Création de l'effet code en arrière-plan
@@ -54,9 +57,6 @@ const Chatbot = () => {
       }
     };
   }, []);
-
-  // Détection si l'appareil est mobile
-  const isMobile = window.innerWidth <= 768;
   
   // Optimisation pour mobile - ajustement automatique de la hauteur du conteneur de messages
   useEffect(() => {
@@ -79,9 +79,13 @@ const Chatbot = () => {
     adjustHeight();
     window.addEventListener('resize', adjustHeight);
     
-    // Nettoyer l'écouteur d'événements lors du démontage
+    // Réajuster lorsque le clavier virtuel apparaît/disparaît sur mobile
+    window.addEventListener('orientationchange', adjustHeight);
+    
+    // Nettoyer les écouteurs d'événements lors du démontage
     return () => {
       window.removeEventListener('resize', adjustHeight);
+      window.removeEventListener('orientationchange', adjustHeight);
     };
   }, [isMobile]);
 
@@ -121,16 +125,42 @@ const Chatbot = () => {
     }
   };
 
+  // Fonction de défilement améliorée pour mobile
+  const scrollToBottom = () => {
+    // Assurez-vous que le défilement se produit après le rendu
+    setTimeout(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'end', 
+          inline: 'nearest' 
+        });
+      }
+    }, 100);
+  };
+
+  // Défilement après chargement initial et après ajout de messages
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  
+  // Défilement supplémentaire lorsque la réponse du bot est complète
+  useEffect(() => {
+    // Défilement forcé lorsque isTyping passe de true à false (fin de réponse)
+    if (!isTyping && messages.length > 1 && messages[messages.length - 1].sender === 'bot') {
+      scrollToBottom();
+      
+      // Double vérification pour s'assurer que le défilement a bien eu lieu (particulièrement important sur mobile)
+      setTimeout(scrollToBottom, 300);
+      setTimeout(scrollToBottom, 1000);
+    }
+  }, [isTyping, messages]);
 
   const handleSendMessage = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    
     if (inputMessage.trim() === '') return;
 
     const userMessage = {
@@ -143,6 +173,9 @@ const Chatbot = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
+    
+    // Défiler immédiatement après l'envoi du message utilisateur
+    scrollToBottom();
 
     const dbUser = {
       sender: 'user',
@@ -168,6 +201,9 @@ const Chatbot = () => {
     await saveMessageToDB(dbBot);
 
     setIsTyping(false);
+    
+    // Défiler à nouveau après réception de la réponse
+    scrollToBottom();
   };
 
   // Effet pour simuler les particules tech
@@ -222,7 +258,8 @@ const Chatbot = () => {
   // Fonction pour gérer les clics sur les suggestions
   const handleSuggestionClick = (text) => {
     setInputMessage(text);
-    setTimeout(() => handleSendMessage({ preventDefault: () => {} }), 100);
+    // Petit délai pour s'assurer que le state est mis à jour
+    setTimeout(() => handleSendMessage(), 100);
   };
 
   return (
@@ -250,7 +287,8 @@ const Chatbot = () => {
           </div>
         )}
 
-        <div ref={messagesEndRef} />
+        {/* Élément invisible utilisé pour le défilement */}
+        <div ref={messagesEndRef} className="scroll-anchor" />
       </div>
 
       <form className="message-input-form" onSubmit={handleSendMessage}>
