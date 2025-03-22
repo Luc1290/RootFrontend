@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import AnimatedBackground from './AnimatedBackground.jsx'; // adapte le chemin si besoin
+
 
 const AdminDashboard = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -123,47 +125,6 @@ const AdminDashboard = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    const messagesContainer = messagesContainerRef.current;
-    if (!messagesContainer) return;
-  
-    const codeBackground = document.createElement('div');
-    codeBackground.className = 'code-background';
-    messagesContainer.appendChild(codeBackground);
-  
-    const codeSnippets = [
-      'function analyzeInput(text) {',
-      'return semanticEngine.process(text);',
-      'const response = await neuralNetwork.generate();',
-      'class NeuralPathway extends Synapse {',
-      'const memory = new ShortTermMemory();',
-      'async function processIntent(userInput) {',
-      'if (sentiment.analyze(text) > 0.7) {',
-      'for (let node of knowledgeGraph) {',
-      'const entities = NER.extract(message);',
-      'memory.store(conversation.context);',
-      'return new Response(generated, context);'
-    ];
-  
-    for (let i = 0; i < 15; i++) {
-      const codeLine = document.createElement('div');
-      codeLine.className = 'code-line';
-      codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      codeLine.style.left = `${Math.random() * 100}%`;
-      codeLine.style.animationDuration = `${10 + Math.random() * 20}s`;
-      codeLine.style.animationDelay = `${Math.random() * 5}s`;
-      codeBackground.appendChild(codeLine);
-    }
-  
-    return () => {
-      if (messagesContainer.contains(codeBackground)) {
-        messagesContainer.removeChild(codeBackground);
-      }
-    };
-  }, []);
-
-  const formatTime = (date) => date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
   if (!authenticated) {
     return (
       <div className="page-container text-center">
@@ -174,7 +135,7 @@ const AdminDashboard = () => {
                onChange={(e) => setPasswordInput(e.target.value)}
                placeholder="Mot de passe"
          />
-        <button onClick={handleAuth} className="btn">Entrer</button>
+        <button onClick={handleAuth} className="start-chat-btn">Entrer</button>
       </div>
     );
   }
@@ -192,7 +153,6 @@ const AdminDashboard = () => {
           <div key={m.id} className={`message ${m.sender === 'user' ? 'user-message' : 'bot-message'}`}>
             <div className="message-content">
               <p>{m.text}</p>
-              <span className="message-time">{formatTime(m.timestamp)}</span>
             </div>
           </div>
         ))}

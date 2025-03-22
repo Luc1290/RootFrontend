@@ -10,7 +10,7 @@ const Home = () => {
     { prompt: 'root:_>', text: 'initializing_core_systems...' },
     { prompt: 'root:_>', text: 'cognitive_functions_online' },
     { prompt: 'user>', text: 'Quelles sont tes capacités ?' },
-    { prompt: 'root:_>', text: 'Je suis Root:_, un système d\'IA conversationnel conçu pour assister, analyser et apprendre. Mon architecture me permet d\'évoluer et de m\'adapter, en progression constante vers des capacités d\'AGI.' }
+    { prompt: 'root:_>', text: 'Je suis Root:_, une intelligence artificielle évolutive conçue pour interagir, apprendre et résoudre des problèmes complexes en temps réel.' }
   ], []);
   
   // Animation de frappe de texte pour le terminal

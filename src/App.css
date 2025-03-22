@@ -95,6 +95,11 @@ header {
   max-width: 1440px;
   margin: 0 auto;
 }
+
+header .main-nav {
+  margin-left: auto; /* Pousse la navigation à droite */
+}
+
 .chatbot-link {
   color: var(--primary-color) !important;
   font-weight: bold !important;
@@ -113,21 +118,15 @@ header {
   animation: pulse-line 2s infinite;
 }
 
-@keyframes pulse-line {
-  0% { opacity: 0.4; }
-  50% { opacity: 1; }
-  100% { opacity: 0.4; }
-}
-
 .start-chat-btn {
   display: inline-block;
-  padding: 0.75rem 1.5rem; /* Réduit padding */
+  padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   font-weight: bold;
   border-radius: var(--border-radius);
   font-size: 1.1rem;
-  margin: 1.5rem auto; /* Réduit marge verticale */
+  margin: 1.5rem auto;
   box-shadow: 0 4px 14px rgba(12, 227, 255, 0.3);
   transition: all 0.3s ease;
   border: none;
@@ -159,12 +158,13 @@ header {
 .chat-cta {
   display: flex;
   justify-content: center;
-  margin: 1rem 0; /* Réduit marge verticale */
+  margin: 1rem 0;
 }
 
 .logo-container {
   display: none; /* Cacher complètement au lieu de flex */
 }
+
 .title-logo {
   margin: 0 auto;
   text-align: center;
@@ -179,7 +179,7 @@ header {
   position: relative;
 }
 
-/* Nouveau style pour faire clignoter uniquement le underscore dans Root:_ */
+/* Style pour faire clignoter uniquement le underscore */
 .logo-text::after {
   content: '_' !important;
   display: inline-block !important;
@@ -189,6 +189,12 @@ header {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes pulse-line {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
 }
 
 .menu-toggle {
@@ -228,11 +234,6 @@ header {
   width: 100%;
 }
 
-header .main-nav {
-  margin-left: auto; /* Pousse la navigation à droite */
-}
-
-
 /* Contenu principal - Ajustement du centrage et padding */
 main {
   flex: 1;
@@ -245,12 +246,11 @@ main {
 /* Style spécifique pour la page chatbot */
 .chatbot-container {
   max-width: 800px;
-  margin: 1.5rem auto; /* Réduit marge verticale */
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  border: 1px solid rgba(12, 227, 255, 0.1);
+  margin: 1.5rem auto;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
   position: relative;
 }
 
@@ -261,16 +261,13 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 30% 20%, rgba(12, 227, 255, 0.05), transparent 25%),
-    radial-gradient(circle at 70% 60%, rgba(86, 3, 173, 0.05), transparent 25%);
-  z-index: -1;
+    z-index: -1;
 }
 
 .chatbot-header {
-  background: linear-gradient(90deg, var(--secondary-color), var(--dark-bg));
+  background: transparent;
   color: white;
-  padding: 1.25rem; /* Réduit padding */
+  padding: 1.25rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -310,17 +307,22 @@ main {
   flex: 1;
   height: 500px;
   overflow-y: auto;
-  padding: 1.25rem; /* Réduit padding */
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* Réduit espace entre messages */
+  gap: 0.75rem;
   position: relative;
-  background: rgba(10, 14, 23, 0.3);
-  padding-bottom: 10px; /* Ajoute un peu d'espace en bas */
-  scroll-behavior: smooth; /* Assure des défilements fluides */
-  -webkit-overflow-scrolling: touch; /* Pour le défilement fluide sur iOS */
+  z-index: 1;
+  background: transparent;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
+.message-content {
+  position: relative;
+  z-index: 2;
+}
 
 /* Scroll personnalisé */
 .messages-container::-webkit-scrollbar {
@@ -342,7 +344,7 @@ main {
 
 .message {
   max-width: 80%;
-  padding: 0.75rem 1rem; /* Réduit padding */
+  padding: 0.75rem 1rem;
   border-radius: 12px;
   position: relative;
   animation: fadeIn 0.3s ease-out;
@@ -364,7 +366,7 @@ main {
 }
 
 .bot-message {
-  background-color: var(--chat-bubble-bot);
+  background-color: rgba(13, 27, 48, 0.4);
   color: var(--text-color);
   align-self: flex-start;
   border-bottom-left-radius: 0;
@@ -373,7 +375,7 @@ main {
 }
 
 .user-message {
-  background-color: var(--chat-bubble-user);
+  background-color: rgba(22, 39, 66, 0.4);;
   color: var(--text-color);
   align-self: flex-end;
   border-bottom-right-radius: 0;
@@ -419,18 +421,16 @@ main {
 
 .message-input-form {
   display: flex;
-  padding: 0.75rem; /* Réduit padding */
+  padding: 0.75rem;
   gap: 0.5rem;
-  background-color: var(--darker-bg);
   border-top: 1px solid rgba(12, 227, 255, 0.1);
 }
 
 .message-input-form input {
   flex: 1;
-  padding: 0.7rem 1rem; /* Réduit padding */
+  padding: 0.7rem 1rem;
   border: 1px solid rgba(12, 227, 255, 0.3);
   border-radius: var(--border-radius);
-  background-color: rgba(10, 14, 23, 0.8);
   color: var(--text-color);
   font-family: var(--font-main);
   transition: all 0.3s ease;
@@ -443,7 +443,7 @@ main {
 }
 
 .message-input-form button {
-  padding: 0.7rem 1.25rem; /* Réduit padding */
+  padding: 0.7rem 1.25rem;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   border-radius: var(--border-radius);
@@ -462,11 +462,9 @@ main {
 }
 
 .chatbot-suggestions {
-  padding: 0.75rem; /* Réduit padding */
+  padding: 0.75rem;
   text-align: center;
-  background-color: var(--darker-bg);
-  border-top: 1px solid rgba(12, 227, 255, 0.1);
-  flex-shrink: 0; /* Ne pas rétrécir ces éléments */
+  flex-shrink: 0;
 }
 
 .suggestion-buttons {
@@ -478,7 +476,7 @@ main {
 }
 
 .suggestion-buttons button {
-  padding: 0.4rem 0.9rem; /* Réduit padding */
+  padding: 0.4rem 0.9rem;
   background-color: rgba(12, 227, 255, 0.08);
   color: var(--text-color);
   border: 1px solid rgba(12, 227, 255, 0.3);
@@ -494,7 +492,6 @@ main {
   margin-top: 15px;
 }
 
-
 .suggestion-buttons button:hover {
   background-color: rgba(12, 227, 255, 0.2);
   transform: translateY(-2px);
@@ -503,7 +500,7 @@ main {
 /* Pied de page */
 footer {
   background-color: var(--darker-bg);
-  padding: 1rem; /* Réduit padding */
+  padding: 1rem;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   width: 100%;
@@ -539,22 +536,22 @@ footer {
 .home-one-page {
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Réduit l'espace entre les sections */
-  min-height: auto; /* Supprime la hauteur minimum fixe */
+  gap: 2rem;
+  min-height: auto;
   padding-bottom: 1rem;
 }
 
 .hero-section {
-  padding-top: 2.5rem 0; /* Réduit padding */
-  margin-top: 2rm !important;
+  padding-top: 2.5rem 0;
+  margin-top: 2rem !important; /* Correction de l'erreur "2rm" */
   height: auto !important;
   min-height: auto; 
-  margin-bottom: 1rem;/* Réduit hauteur minimale */
+  margin-bottom: 1rem;
 }
 
 .hero-content {
-  margin-top: 0rem; /* Ajusté pour réduire l'espace */
-  text-align: center; /* Centrage du contenu */
+  margin-top: 0rem;
+  text-align: center;
 }
 
 .hero-title {
@@ -568,7 +565,7 @@ footer {
   line-height: 1.2;
   font-family: var(--font-mono);
   position: relative;
-  display: inline-block; /* Important pour que ::after fonctionne bien */
+  display: inline-block;
 }
 
 /* Suppression des règles conflictuelles */
@@ -577,79 +574,66 @@ footer {
   display: none;
 }
 
-/* Règle claire et simple pour ajouter le underscore clignotant */
+/* Correction pour le underscore clignotant */
 .hero-title::after {
   content: '_';
   display: inline-block;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: var(--primary-color); /* Couleur cyan électrique */
+  -webkit-text-fill-color: var(--primary-color);
   position: relative;
   animation: blink 1s infinite;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.hero-section .hero-title::after {
-  content: '_';
-  display: inline-block;
-  animation: blink 1s infinite;
-  font-weight: bold;
-  color: var(--primary-color);
-}
-
 .hero-subtitle {
-  font-size: 1.25rem; /* Réduit taille */
-  margin-bottom: 1.5rem; /* Réduit marge */
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
   color: var(--secondary-text);
   font-family: var(--font-mono);
 }
 
 .hero-description {
-  font-size: 1.1rem; /* Réduit taille */
+  font-size: 1.1rem;
   max-width: 700px;
-  margin: 0 auto 2rem; /* Réduit marge inférieure */
+  margin: 0 auto 2rem;
   line-height: 1.6;
 }
 
 /* Terminal demo */
 .terminal-demo {
   max-width: 600px;
-  margin: 1.5rem auto; /* Réduit marge */
-  margin-top: 0.75rem !important; /* Réduit espace supérieur */
+  margin: 1.5rem auto;
+  margin-top: 0.75rem !important;
   background-color: var(--darker-bg);
   border-radius: var(--border-radius);
-  padding: 0.75rem; /* Réduit padding */
+  padding: 0.75rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(12, 227, 255, 0.3);
   font-family: var(--font-mono);
-  height: 220px; /* Réduit hauteur */
+  height: 255px;
   overflow-y: auto;
 }
 
 .terminal-header {
   display: flex;
   align-items: center;
-  margin-bottom: 0.75rem; /* Réduit marge */
-  padding-bottom: 0.4rem; /* Réduit padding */
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
   border-bottom: 1px solid rgba(12, 227, 255, 0.2);
 }
 
 .terminal-content {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem; /* Réduit espace */
+  gap: 0.6rem;
 }
 
 /* Section des fonctionnalités */
 .features-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem; /* Réduit espace */
-  padding: 0; /* Réduit padding */
+  gap: 1rem;
+  padding: 0;
   max-width: 1200px;
   margin: 1rem 0;
 }
@@ -657,7 +641,7 @@ footer {
 .feature-card {
   background-color: rgba(17, 22, 32, 0.5);
   border-radius: var(--border-radius);
-  padding: 1.25rem; /* Réduit padding */
+  padding: 1.25rem;
   text-align: center;
   transition: all 0.3s ease;
   border: 1px solid rgba(12, 227, 255, 0.1);
@@ -667,401 +651,34 @@ footer {
 }
 
 .feature-icon {
-  font-size: 2.25rem; /* Réduit taille */
-  margin-bottom: 1.25rem; /* Réduit marge */
+  font-size: 2.25rem;
+  margin-bottom: 1.25rem;
   color: var(--primary-color);
 }
 
 /* Pages génériques */
 .page-container {
-  padding: 1.5rem; /* Réduit padding */
+  padding: 1.5rem;
   background-color: var(--card-bg);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   max-width: 1000px;
-  margin: 1.5rem auto; /* Réduit marge */
+  margin: 1.5rem auto;
   border: 1px solid rgba(12, 227, 255, 0.1);
 }
 
 /* Utilitaires */
 .section {
-  margin: 1.5rem 0; /* Réduit marge entre sections */
+  margin: 1.5rem 0;
 }
 
 .section-title {
-  font-size: 1.75rem; /* Réduit taille */
-  margin-bottom: 1.5rem; /* Réduit marge */
-  text-align: center; /* Centrage des titres */
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
   position: relative;
   display: inline-block;
 }
-
-/* ===== CORRECTIONS RESPONSIVE POUR MOBILE ===== */
-
-/* Ajoutez ces styles à la fin de votre fichier App.css */
-
-/* Optimisations pour mobile */
-@media (max-width: 768px) {
-  /* Conteneur du chatbot */
-  .chatbot-container {
-    max-width: 100%;
-    margin: 0;
-    border-radius: 0;
-    margin-bottom: 0;
-    height: calc(100vh - 60px); /* Hauteur d'écran moins la hauteur de l'en-tête */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  
-  /* En-tête du chatbot */
-  .chatbot-header {
-    padding: 0.75rem 1rem;
-  }
-  
-  .chatbot-header h2 {
-    font-size: 1.75rem;
-  }
-  
-  .chatbot-header p {
-    font-size: 0.85rem;
-  }
-  
-  /* Zone des messages */
-  .messages-container {
-    min-height: 0; /* Important pour la flexbox et le scroll */
-    padding: 8px 10px;
-    padding-bottom: 4px !important;
-  }
-  
-  /* Messages */
-  .message {
-    padding: 8px 10px;
-    margin-bottom: 6px !important;
-    max-width: 85%;
-  }
-  
-  /* Formulaire de saisie */
-  .message-input-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px;
-    background-color: var(--darker-bg);
-    border-top: 1px solid rgba(12, 227, 255, 0.2);
-    position: sticky;
-    bottom: 0;
-    z-index: 100;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .message-input-form input {
-    flex: 1;
-    min-width: 0; /* Important pour que l'input puisse rétrécir */
-    margin-right: 8px;
-    height: 40px;
-    border-radius: 4px;
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-  
-  .message-input-form button {
-    width: auto;
-    min-width: 60px; /* Largeur minimale pour le bouton */
-    white-space: nowrap;
-    height: 40px;
-    padding: 0 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    flex-shrink: 0; /* Empêche le bouton de rétrécir */
-  }
-  
-  /* Suggestions */
-  .chatbot-suggestions {
-    padding: 8px;
-  }
-
-  .suggestion-buttons {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  
-  .suggestion-buttons button {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.75rem;
-    white-space: nowrap;
-  }
-
-  .send-button {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-    color: white !important;
-    border-radius: 50% !important; /* Bouton rond */
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 1.2rem !important;
-    padding: 0 !important;
-    min-width: 40px !important;
-  }
-  
-
-  @media (max-height: 600px) {
-    .chatbot-header p {
-      display: none; /* Cacher la description en cas d'écran très petit */
-    }
-    
-    .chatbot-header {
-      padding: 5px;
-    }
-    
-    .chatbot-header h2 {
-      font-size: 1.4rem;
-    }
-
-  input:focus {
-    position: relative;
-    z-index: 15;
-
-}
-
-/* Correction du viewport pour mobile */
-@viewport {
-  width: device-width;
-  zoom: 1.0;
-}
-
-@-ms-viewport {
-  width: device-width;
-}
-
-@supports (-webkit-touch-callout: none) {
-  body.keyboard-open .chatbot-suggestions {
-    display: none;
-  }
-  
-  body.keyboard-open .messages-container {
-    max-height: calc(100vh - 120px);
-  }
-}
-
-/* Code background et particules pour mobile */
-@media (max-width: 768px) {
-  .code-line {
-    font-size: 0.6rem; /* Texte plus petit sur mobile */
-  }
-  
-  .particle {
-    width: 1px !important; /* Particules plus petites sur mobile */
-    height: 1px !important;
-  }
-}
-
-/* Animation de la ligne de code - optimisation pour mobile */
-@media (max-width: 768px) {
-  .code-background {
-    opacity: 0.4; /* Réduire l'opacité sur mobile pour que le texte soit plus lisible */
-  }
-}
-
-/* Styles spécifiques pour petits écrans */
-@media (max-width: 480px) {
-  .chatbot-header h2 {
-    font-size: 1.5rem;
-  }
-  
-  .message {
-    max-width: 90%;
-    padding: 0.5rem 0.75rem;
-  }
-  
-  .suggestion-buttons button {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.6rem;
-  }
-}
-
-@media (max-height: 500px) {
-  .chatbot-suggestions {
-    display: none; /* Cacher les suggestions quand l'espace est limité */
-  }
-  
-  .messages-container {
-    max-height: calc(100vh - 120px);
-  }
-}
-
-/* Correction pour iOS */
-.message-input-form input,
-.message-input-form button {
-  -webkit-appearance: none; /* Supprime l'apparence par défaut sur iOS */
-  appearance: none;
-}
-
-/* S'assurer que l'espace pour la saisie de texte est adéquat */
-.messages-container {
-  max-height: calc(100vh - 170px); /* Hauteur d'écran moins les zones d'en-tête, de saisie et de suggestions */
-}
-
-/* Ajouter une transition pour un comportement plus fluide */
-.chatbot-container {
-  transition: height 0.3s ease;
-}
-}
-
-
-/* Empêcher le défilement horizontal sur mobile */
-html, body {
-  overflow-x: hidden;
-  position: relative;
-  width: 100%;
-}
-
-/* Fix pour iOS Safari viewport height */
-.chatbot-container {
-  height: 100%; /* Fallback */
-  height: -webkit-fill-available;
-}
-
-/* Gestion des messages longs sur mobile */
-@media (max-width: 768px) {
-  .message-content p {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-}
-
-/* Solution au problème de viewport sur mobile */
-@viewport {
-  width: device-width;
-  zoom: 1.0;
-}
-
-@-ms-viewport {
-  width: device-width;
-}
-  main {
-    padding: 0 0.75rem; /* Marge plus petite sur mobile */
-  }
-  
-  .hero-section {
-    padding-top: 3rem !important; /* Un peu moins d'espace sur mobile */
-    margin-top: 1.5rem !important;
-  }
-  
-  .terminal-demo {
-    height: 180px; /* Plus petit sur mobile */
-    margin: 1rem auto;
-  }
-  
-  .features-section {
-    gap: 1rem;
-    padding: 1.5rem 0.75rem;
-  }
-  
-  .feature-card {
-    padding: 1.25rem;
-  }
-  
-  .page-container {
-    padding: 1.25rem;
-    margin: 1rem auto;
-  }
-}
-
-/* Ajout centrage pour Home component */
-.home-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Réduction espaces dans composant Home */
-.section {
-  margin: 2rem 0;
-  padding: 1rem 0;
-}
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 1.5rem;
-}
-
-/* Ajout pour centrer la section "Prêt à discuter avec moi" */
-.chat-invitation {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-.chat-invitation h2 {
-  font-size: 1.75rem;
-  margin-bottom: 0.75rem;
-  text-align: center;
-  width: 100%;
-}
-
-.chat-invitation p {
-  margin-bottom: 1.5rem;
-  max-width: 600px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.chat-invitation .btn,
-.chat-invitation .start-chat-btn {
-  margin: 0 auto;
-  display: block;
-}
-
-/* Ajout pour centrer les boutons au bas de la page */
-[class*="conversation avec Root"],
-[class*="Démarrer une conversation"] {
-  display: block;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  text-align: center;
-}
-
-.about-section, .root-section, .projects-section, .skills-section, .contact-section {
-  margin: 2rem 0;
-  padding: 1.5rem 0;
-}
-
-.about-content, .root-content, .projects-grid {
-  gap: 1.5rem;
-}
-
-.project-card {
-  margin-bottom: 1.25rem;
-}
-
-.skill-item {
-  margin-bottom: 0.75rem;
-}
-
-.hero-section, .features-section, .chat-invitation {
-  position: relative;
-  width: 100%;
-}
-
-/* Ajoutez ces styles à votre fichier App.css */
 
 /* Styles pour le titre cyberpunk */
 .cyber-title {
@@ -1189,16 +806,354 @@ html, body {
   }
 }
 
-@keyframes pulse-line {
-  0%, 100% {
-    opacity: 0.5;
-    width: 90%;
-    left: 5%;
+/* Home component */
+.home-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section {
+  margin: 2rem 0;
+  padding: 1rem 0;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+/* Chat invitation section */
+.chat-invitation {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.chat-invitation h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  width: 100%;
+}
+
+.chat-invitation p {
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chat-invitation .btn,
+.chat-invitation .start-chat-btn {
+  margin: 0 auto;
+  display: block;
+}
+
+/* Boutons au bas de la page */
+[class*="conversation avec Root"],
+[class*="Démarrer une conversation"] {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center;
+}
+
+.about-section, .root-section, .projects-section, .skills-section, .contact-section {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+}
+
+.about-content, .root-content, .projects-grid {
+  gap: 1.5rem;
+}
+
+.project-card {
+  margin-bottom: 1.25rem;
+}
+
+.skill-item {
+  margin-bottom: 0.75rem;
+}
+
+.hero-section, .features-section, .chat-invitation {
+  position: relative;
+  width: 100%;
+}
+
+/* ===== MEDIA QUERIES ===== */
+
+/* Optimisations pour mobile */
+@media (max-width: 768px) {
+  /* Conteneur du chatbot */
+  .chatbot-container {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  50% {
-    opacity: 1;
+  
+  /* En-tête du chatbot */
+  .chatbot-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .chatbot-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .chatbot-header p {
+    font-size: 0.85rem;
+  }
+  
+  /* Zone des messages */
+  .messages-container {
+    min-height: 0;
+    padding: 8px 10px;
+    padding-bottom: 4px !important;
+  }
+  
+  /* Messages */
+  .message {
+    padding: 8px 10px;
+    margin-bottom: 6px !important;
+    max-width: 85%;
+  }
+  
+  /* Formulaire de saisie */
+  .message-input-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: var(--darker-bg);
+    border-top: 1px solid rgba(12, 227, 255, 0.2);
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
     width: 100%;
-    left: 0%;
+    box-sizing: border-box;
+  }
+  
+  .message-input-form input {
+    flex: 1;
+    min-width: 0;
+    margin-right: 8px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .message-input-form button {
+    width: auto;
+    min-width: 60px;
+    white-space: nowrap;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  
+  /* Suggestions */
+  .chatbot-suggestions {
+    padding: 8px;
+  }
+
+  .suggestion-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .suggestion-buttons button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  .send-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.2rem !important;
+    padding: 0 !important;
+    min-width: 40px !important;
+  }
+  
+  /* Ajustements pour petits écrans en hauteur */
+  @media (max-height: 600px) {
+    .chatbot-header p {
+      display: none;
+    }
+    
+    .chatbot-header {
+      padding: 5px;
+    }
+    
+    .chatbot-header h2 {
+      font-size: 1.4rem;
+    }
+  }
+
+  input:focus {
+    position: relative;
+    z-index: 15;
+  }
+
+  /* Autres ajustements pour mobile */
+  main {
+    padding: 0 0.75rem;
+  }
+  
+  .hero-section {
+    padding-top: 3rem !important;
+    margin-top: 1.5rem !important;
+  }
+  
+  .terminal-demo {
+    height: 180px;
+    margin: 1rem auto;
+  }
+  
+  .features-section {
+    gap: 1rem;
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .feature-card {
+    padding: 1.25rem;
+  }
+  
+  .page-container {
+    padding: 1.25rem;
+    margin: 1rem auto;
   }
 }
 
+/* Correction du viewport pour mobile */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+@supports (-webkit-touch-callout: none) {
+  body.keyboard-open .chatbot-suggestions {
+    display: none;
+  }
+  
+  body.keyboard-open .messages-container {
+    max-height: calc(100vh - 120px);
+  }
+}
+
+/* Code background et particules pour mobile */
+@media (max-width: 768px) {
+  .code-line {
+    font-size: 0.6rem;
+  }
+  
+  .particle {
+    width: 1px !important;
+    height: 1px !important;
+  }
+  
+  /* Animation de la ligne de code - optimisation pour mobile */
+  .code-background {
+    opacity: 0.4;
+  }
+}
+
+/* Styles spécifiques pour petits écrans */
+@media (max-width: 480px) {
+  .chatbot-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .message {
+    max-width: 90%;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .suggestion-buttons button {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .chatbot-suggestions {
+    display: none;
+  }
+  
+  .messages-container {
+    max-height: calc(100vh - 120px);
+  }
+}
+
+/* Correction pour iOS */
+.message-input-form input,
+.message-input-form button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* S'assurer que l'espace pour la saisie de texte est adéquat */
+.messages-container {
+  max-height: calc(100vh - 170px);
+}
+
+/* Ajouter une transition pour un comportement plus fluide */
+.chatbot-container {
+  transition: height 0.3s ease;
+}
+
+/* Empêcher le défilement horizontal sur mobile */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Fix pour iOS Safari viewport height */
+.chatbot-container {
+  height: 100%;
+  height: -webkit-fill-available;
+}
+
+/* Gestion des messages longs sur mobile */
+@media (max-width: 768px) {
+  .message-content p {
+    position: relative;
+    z-index: 2;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}

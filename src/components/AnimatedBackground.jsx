@@ -16,7 +16,7 @@ const AnimatedBackground = () => {
       particles.className = 'tech-particles';
       
       // Génération des particules
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 80; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.top = `${Math.random() * 100}vh`;
@@ -65,39 +65,47 @@ const AnimatedBackground = () => {
       codeBackground.style.width = '100%';
       codeBackground.style.height = '100%';
       codeBackground.style.overflow = 'hidden';
-      codeBackground.style.opacity = '0.07';
+      codeBackground.style.opacity = '0.25';
       codeBackground.style.zIndex = '-2';
       codeBackground.style.pointerEvents = 'none';
       
       const codeSnippets = [
-        'function analyzeInput(text) {',
-        'return semanticEngine.process(text);',
-        'const response = await neuralNetwork.generate();',
-        'class NeuralPathway extends Synapse {',
-        'const memory = new ShortTermMemory();',
-        'async function processIntent(userInput) {',
-        'if (sentiment.analyze(text) > 0.7) {',
-        'for (let node of knowledgeGraph) {',
-        'const entities = NER.extract(message);',
-        'memory.store(conversation.context);',
-        'return new Response(generated, context);'
+        'const agent = new AGI("Root");',
+        'if (input === "question") respond();',
+        'fetch("/api/chat")',
+        'try { connect(); } catch(e) {}',
+        'while(true) { process(); }',
+        'async function getResponse() { ... }',
+        'console.log("Boot sequence complete");',
+        '[INFO] Connected to LLM instance',
+        '<Chatbot status="active" />',
+        'def analyse(data): return result',
+        'System.Diagnostics.Debug.WriteLine("OK");',
+        'root_ai.listen(input);',
+        '// Initialising Root Core',
+        '# include <root_ai.h>',
+        'public class RootAgent : AI {}',
+        'npm start --silent',
+        'pip install root-ai',
+        'export ROOT_MODE=prod',
+        'Connection established at port 443',
       ];
       
       // Création des lignes de code
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 80; i++) {
         const codeLine = document.createElement('div');
         codeLine.className = 'code-line';
         codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
         codeLine.style.position = 'absolute';
         codeLine.style.fontFamily = 'var(--font-mono, monospace)';
-        codeLine.style.fontSize = '0.75rem';
+        codeLine.style.fontSize = '0.65rem';
         codeLine.style.color = 'var(--primary-color, #0ce3ff)';
         codeLine.style.whiteSpace = 'nowrap';
         codeLine.style.left = `${Math.random() * 100}%`;
         
         // Animation
         codeLine.style.animation = 'code-scroll linear infinite';
-        codeLine.style.animationDuration = `${10 + Math.random() * 20}s`;
+        codeLine.style.animationDuration = `${8 + Math.random() * 10}s`;
         codeLine.style.animationDelay = `${Math.random() * 5}s`;
         
         codeBackground.appendChild(codeLine);

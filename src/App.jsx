@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import Chatbot from './components/Chatbot.jsx';
-import Admin from './components/AdminDashboard.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import AnimatedBackground from './components/AnimatedBackground.jsx';
 

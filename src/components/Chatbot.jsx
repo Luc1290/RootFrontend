@@ -14,53 +14,7 @@ const Chatbot = () => {
   
   // Détection si l'appareil est mobile
   const isMobile = window.innerWidth <= 768;
-  
-  // Effet pour l'animation des particules de code
-  useEffect(() => {
-    // Création de l'effet code en arrière-plan
-    const messagesContainer = messagesContainerRef.current;
-    if (!messagesContainer) return;
-    
-    const codeBackground = document.createElement('div');
-    codeBackground.className = 'code-background';
-    messagesContainer.appendChild(codeBackground);
-    
-    const codeSnippets = [
-      'function analyzeInput(text) {',
-      'return semanticEngine.process(text);',
-      'const response = await neuralNetwork.generate();',
-      'class NeuralPathway extends Synapse {',
-      'const memory = new ShortTermMemory();',
-      'async function processIntent(userInput) {',
-      'if (sentiment.analyze(text) > 0.7) {',
-      'for (let node of knowledgeGraph) {',
-      'const entities = NER.extract(message);',
-      'memory.store(conversation.context);',
-      'return new Response(generated, context);'
-    ];
-    
-    // Création des lignes de code en arrière-plan
-    for (let i = 0; i < 15; i++) {
-      const codeLine = document.createElement('div');
-      codeLine.className = 'code-line';
-      codeLine.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-      codeLine.style.left = `${Math.random() * 100}%`;
-      codeLine.style.animationDuration = `${10 + Math.random() * 20}s`;
-      codeLine.style.animationDelay = `${Math.random() * 5}s`;
-      codeBackground.appendChild(codeLine);
-    }
-    
-    // Nettoyage de l'effet
-    return () => {
-      if (messagesContainer.contains(codeBackground)) {
-        messagesContainer.removeChild(codeBackground);
-      }
-    };
-  }, []);
-  
-  // Optimisation pour mobile - ajustement automatique de la hauteur du conteneur de messages
-// Ajoutez ce code dans votre composant Chatbot.jsx, dans la section des useEffect
-
+ 
 // Détection du clavier virtuel pour iOS et Android
 useEffect(() => {
   // Pour les appareils mobiles seulement
@@ -252,55 +206,6 @@ useEffect(() => {
     scrollToBottom();
   };
 
-  // Effet pour simuler les particules tech
-  useEffect(() => {
-    const createParticles = () => {
-      const techParticles = document.createElement('div');
-      techParticles.className = 'tech-particles';
-      document.body.appendChild(techParticles);
-
-      // Réduire le nombre de particules sur mobile pour la performance
-      const particleCount = isMobile ? 15 : 30;
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        
-        // Position aléatoire
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        
-        // Animation
-        particle.style.animation = `
-          fadeInOut ${5 + Math.random() * 10}s infinite alternate,
-          float ${10 + Math.random() * 20}s infinite alternate
-        `;
-        
-        // Délai d'animation
-        particle.style.animationDelay = `${Math.random() * 5}s`;
-        
-        // Taille aléatoire
-        const size = Math.random() * 3 + 1;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        
-        // Opacité aléatoire
-        particle.style.opacity = Math.random() * 0.5 + 0.2;
-        
-        techParticles.appendChild(particle);
-      }
-      
-      return () => {
-        if (document.body.contains(techParticles)) {
-          document.body.removeChild(techParticles);
-        }
-      };
-    };
-    
-    const cleanup = createParticles();
-    return cleanup;
-  }, [isMobile]);
-
   // Fonction pour gérer les clics sur les suggestions
   const handleSuggestionClick = (text) => {
     setInputMessage(text);
@@ -312,9 +217,8 @@ useEffect(() => {
   return (
     <div className="chatbot-container">
       <div className="chatbot-header">
-        <h2>Root:_</h2>
-        <p>Intelligence Artificielle Avancée | v2.5.0</p>
-        {isError && <div className="connection-error">Problème de connexion à l'API</div>}
+        <h2>Root:</h2>
+          {isError && <div className="connection-error">Problème de connexion à l'API</div>}
       </div>
 
       <div className="messages-container" ref={messagesContainerRef}>
