@@ -68,7 +68,7 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
           <span className="menu-icon">{menuOpen ? '✕' : '☰'}</span>
         </button>
         
-        <nav className={`main-nav ${menuOpen ? 'open' : ''}`}>
+        <nav className={`main-nav ${menuOpen ? 'show' : ''}`}>
           <ul>
             <li><Link to="/" onClick={closeMenu}>Accueil</Link></li>
             <li><Link to="/projets" onClick={closeMenu}>Projets</Link></li>
