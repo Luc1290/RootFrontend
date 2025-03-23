@@ -1077,27 +1077,30 @@ footer {
   
   /* Espacement entre le menu et le titre */
   .hero-section {
-    padding-top: 10px !important;
+    padding-top: 1px !important;
     margin-top: 0 !important;
   }
 
   /* Réduction de la taille du titre Root */
   .hero-title {
     font-size: 2.2rem !important;
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 0.05rem !important;
   }
 
   /* Espacement entre titre et terminal */
   .terminal-demo {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.25rem !important;
+    margin-top: 0.05rem !important;
+    margin-bottom: 0.05rem !important;
     padding: 0.5rem !important;
+    height: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   /* Espacement entre terminal et bouton */
   .start-chat-btn {
-    margin-top: 0.25rem !important;
-    margin-bottom: 1rem !important;
+    margin-top: 0.05rem !important;
+    margin-bottom: 0.05rem !important;
     font-size: 1rem !important;
     padding: 0.6rem 1.2rem !important;
   }
