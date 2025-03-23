@@ -1023,7 +1023,33 @@ footer {
     display: flex;
   }
 
-  
+  .main-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .main-nav li {
+    text-align: right;
+  }
+
+  .main-nav a {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .main-nav a:last-child {
+    border-bottom: none;
+  }
+
+
   /* Ajustements pour petits écrans en hauteur */
   @media (max-height: 600px) {
     .chatbot-header p {
@@ -1050,20 +1076,24 @@ footer {
   }
   
   .hero-section {
-    padding-top: 1rem !important;
+    padding-top: 0.3rem !important;
     margin-top: 0 !important;
   }
 
   .hero-content {
     margin-top: 0 !important;
-    gap: 0.5rem !important;
+    gap: 0.2rem !important;
   }
   
   .terminal-demo {
     height: auto !important;
     max-height: none !important;
     overflow: visible !important;
+    margin-bottom: 0.5rem !important;
   }
+  
+  .start-chat-btn {
+    margin-top: 0.5rem !important
   
   .features-section {
     gap: 1rem;
