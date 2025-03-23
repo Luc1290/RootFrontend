@@ -1076,7 +1076,7 @@ footer {
   }
   
   .hero-section {
-    padding-top: 40px !important;
+    padding-top: 10px !important;
     margin-top: 0 !important;
   }
 
@@ -1089,11 +1089,11 @@ footer {
     height: auto !important;
     max-height: none !important;
     overflow: visible !important;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0 !important;
   }
 
   .start-chat-btn {
-    margin-top: 0.5rem !important
+    margin-top: 0 !important
   
   .features-section {
     gap: 1rem;
@@ -1219,7 +1219,7 @@ html, body {
 
 /* ✅ Fix menu coupé en haut sur mobile */
 .hero-section {
-  padding-top: 40px !important;
+  padding-top: 10px !important;
 }
 
 /* ✅ Fix scroll automatique sous header sticky */
