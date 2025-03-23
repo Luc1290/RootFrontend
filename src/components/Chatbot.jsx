@@ -225,7 +225,9 @@ useEffect(() => {
         {messages.map((message) => (
           <div key={message.id} className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
             <div className="message-content">
-              <p>{message.text}</p>
+            <div
+                className="formatted-response"
+                dangerouslySetInnerHTML={{ __html: message.text }}/>
             </div>
           </div>
         ))}

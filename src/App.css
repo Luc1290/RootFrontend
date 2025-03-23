@@ -1302,3 +1302,30 @@ html, body {
   background-color: #40c86d;
 }
 
+.formatted-response p {
+  margin-bottom: 0.75rem;
+}
+
+.formatted-response ol, 
+.formatted-response ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.formatted-response li {
+  margin-bottom: 0.5rem;
+}
+
+.formatted-response strong {
+  color: var(--primary-color);
+}
+
+.formatted-response pre {
+  background: rgba(12, 227, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-left: 3px solid var(--primary-color);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+}
+
+
