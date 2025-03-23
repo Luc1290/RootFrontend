@@ -1075,25 +1075,27 @@ footer {
     padding: 0 0.75rem;
   }
   
-  .hero-section {
-    padding-top: 10px !important;
-    margin-top: 0 !important;
-  }
+/* Espacement entre le menu et le titre */
+.hero-section {
+  padding-top: 10px !important;
+  margin-top: 0 !important;
+}
 
-  .hero-content {
-    margin-top: 0 !important;
-    gap: 0.2rem !important;
-  }
-  
-  .terminal-demo {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    margin-bottom: 0 !important;
-  }
 
-  .start-chat-btn {
-    margin-top: 0 !important
+/* Espacement entre titre et terminal */
+.terminal-demo {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+  padding: 0.5rem !important;
+}
+
+/* Espacement entre terminal et bouton */
+.start-chat-btn {
+  margin-top: 0.75rem !important;
+  margin-bottom: 1rem !important;
+  font-size: 1rem !important;
+  padding: 0.6rem 1.2rem !important;
+}
   
   .features-section {
     gap: 1rem;
@@ -1217,17 +1219,4 @@ html, body {
   }
 }
 
-/* ✅ Fix menu coupé en haut sur mobile */
-.hero-section {
-  padding-top: 10px !important;
-}
-
-/* ✅ Fix scroll automatique sous header sticky */
-html {
-  scroll-padding-top: 80px;
-}
-
-.page-wrapper {
-  padding-top: 80px;
-}
 
