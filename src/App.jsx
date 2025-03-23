@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import Chatbot from './components/Chatbot.jsx';
+import Projets from './components/Projets.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import AnimatedBackground from './components/AnimatedBackground.jsx';
 
@@ -72,8 +73,6 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
           <ul>
             <li><Link to="/" onClick={closeMenu}>Accueil</Link></li>
             <li><Link to="/projets" onClick={closeMenu}>Projets</Link></li>
-            <li><Link to="/competences" onClick={closeMenu}>Compétences</Link></li>
-            <li><Link to="/contact" onClick={closeMenu}>Contact</Link></li>
             <li><Link to="/chatbot" onClick={closeMenu} className="chatbot-link">Discuter avec Root:_</Link></li>
           </ul>
         </nav>
@@ -101,16 +100,14 @@ const AppContent = ({ menuOpen, toggleMenu, setMenuOpen }) => {
           <Route path="/" element={<Home />} />
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/projets" element={<div className="page-container"><h2>Mes Projets</h2><p>Page en construction...</p></div>} />
-          <Route path="/competences" element={<div className="page-container"><h2>Mes Compétences</h2><p>Page en construction...</p></div>} />
-          <Route path="/contact" element={<div className="page-container"><h2>Contact</h2><p>Page en construction...</p></div>} />
+          <Route path="/projets" element={<Projets/>} />
           <Route path="*" element={<div className="page-container"><h2>Page introuvable</h2><p>La page demandée n'existe pas.</p></div>} />
         </Routes>
       </main>
       
       <footer>
         <div className="footer-content">
-          <p>&copy; {new Date().getFullYear()} Luc Parguel | Root:_ - Tous droits réservés</p>
+          <p>&copy; {new Date().getFullYear()} Luc Parguel | Root:_ - RootIA1290@gmail.com -  Tous droits réservés</p>
           <div className="social-links">
             <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
