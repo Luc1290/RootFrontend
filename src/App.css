@@ -1075,27 +1075,33 @@ footer {
     padding: 0 0.75rem;
   }
   
-/* Espacement entre le menu et le titre */
-.hero-section {
-  padding-top: 10px !important;
-  margin-top: 0 !important;
-}
+  /* Espacement entre le menu et le titre */
+  .hero-section {
+    padding-top: 20px !important;
+    margin-top: 0 !important;
+  }
 
+  /* Réduction de la taille du titre Root */
+  .hero-title {
+    font-size: 2.2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
 
-/* Espacement entre titre et terminal */
-.terminal-demo {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.75rem !important;
-  padding: 0.5rem !important;
-}
+  /* Espacement entre titre et terminal */
+  .terminal-demo {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+    padding: 0.5rem !important;
+  }
 
-/* Espacement entre terminal et bouton */
-.start-chat-btn {
-  margin-top: 0.75rem !important;
-  margin-bottom: 1rem !important;
-  font-size: 1rem !important;
-  padding: 0.6rem 1.2rem !important;
-}
+  /* Espacement entre terminal et bouton */
+  .start-chat-btn {
+    margin-top: 0.75rem !important;
+    margin-bottom: 1rem !important;
+    font-size: 1rem !important;
+    padding: 0.6rem 1.2rem !important;
+  }
+
   
   .features-section {
     gap: 1rem;
