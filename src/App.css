@@ -1118,6 +1118,7 @@ footer {
 
   .chat-cta {
     margin: 0 !important;
+    margin-top: 0.2rem !important; /* si tu veux coller un peu mais respirer */
     padding: 0 !important;
     height: auto !important;
   }
