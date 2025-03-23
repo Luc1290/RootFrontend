@@ -187,6 +187,8 @@ useEffect(() => {
     await saveMessageToDB(dbUser);
 
     const botResponse = await sendMessageToClaude(inputMessage);
+    console.log("🔍 Root a répondu :", botResponse);
+
 
     const botMessage = {
       id: messages.length + 2,
@@ -194,6 +196,7 @@ useEffect(() => {
       sender: 'bot',
       timestamp: new Date()
     };
+    console.log("🔍 Root a répondu :", botResponse);
 
     setMessages(prev => [...prev, botMessage]);
 
@@ -225,10 +228,16 @@ useEffect(() => {
         {messages.map((message) => (
           <div key={message.id} className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
             <div className="message-content">
-            <div
-                className="formatted-response"
-                dangerouslySetInnerHTML={{ __html: message.text }}/>
-            </div>
+                 {message.sender === 'bot' ? (
+                    <div
+                      className="formatted-response"
+                      dangerouslySetInnerHTML={{ __html: message.text || '' }}
+                    />
+                   ) : (
+                    <p>{message.text}</p>
+                   )}  
+                </div>
+
           </div>
         ))}
 
