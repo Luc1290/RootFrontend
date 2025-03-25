@@ -21,31 +21,43 @@ const Chatbot = () => {
   const isMobile = window.innerWidth <= 768;
  
 // Détection du clavier virtuel pour iOS et Android
+
 useEffect(() => {
   if (!isMobile) return;
 
-  const input = document.querySelector('input');
-  const initialHeight = window.innerHeight;
+  // Référence à l'élément input et au conteneur de messages
+  const input = inputRef.current;
+  const messagesContainer = messagesContainerRef.current;
 
+  // Fonction pour gérer le focus sur l'input
   const handleFocus = () => {
+    // Petit délai pour laisser le clavier s'ouvrir
     setTimeout(() => {
-      if (window.innerHeight < initialHeight * 0.8) {
-        document.body.classList.add('keyboard-open');
-        window.scrollTo(0, 0); // empêche le saut d’écran
+      // Défilement vers le bas du conteneur de messages
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
       }
-    }, 300);
+      
+      // Défiler la page vers l'input
+      if (input) {
+        input.scrollIntoView({ block: 'center' });
+      }
+    }, 200);
   };
 
+  // Fonction pour gérer la perte de focus
   const handleBlur = () => {
-    document.body.classList.remove('keyboard-open');
+    // Défiler vers le dernier message après fermeture du clavier
     setTimeout(scrollToBottom, 300);
   };
 
+  // Ajouter les écouteurs d'événements
   if (input) {
     input.addEventListener('focus', handleFocus);
     input.addEventListener('blur', handleBlur);
   }
 
+  // Nettoyage
   return () => {
     if (input) {
       input.removeEventListener('focus', handleFocus);
@@ -53,6 +65,8 @@ useEffect(() => {
     }
   };
 }, [isMobile]);
+
+
 
 
   const sendMessageToClaude = async (message) => {
@@ -227,30 +241,26 @@ useEffect(() => {
         <div ref={messagesEndRef} className={styles.scrollAnchor} />
       </div>
   
-           <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
-             <input
-                ref={inputRef}
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Saisissez votre message..."
-                disabled={isTyping}
-                onFocus={() => {
-                  if (isMobile && inputRef.current) {
-                    inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }
-                }}
-              />
-
-        <button
-          type="submit"
-          disabled={isTyping || inputMessage.trim() === ''}
-          className={styles.sendButton}
-          aria-label="Envoyer"
-        >
-          {isMobile ? '➤' : <span className={styles.sendIcon}>&#10148;</span>}
-        </button>
-      </form>
+      <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
+  <input
+    ref={inputRef}
+    type="text"
+    value={inputMessage}
+    onChange={(e) => setInputMessage(e.target.value)}
+    placeholder="Saisissez votre message..."
+    disabled={isTyping}
+    autoComplete="off" // Éviter les suggestions qui peuvent perturber
+    // Pas besoin de gestionnaires supplémentaires ici
+  />
+  <button
+    type="submit"
+    disabled={isTyping || inputMessage.trim() === ''}
+    className={styles.sendButton}
+    aria-label="Envoyer"
+  >
+    {isMobile ? '➤' : <span className={styles.sendIcon}>&#10148;</span>}
+  </button>
+</form>
   
       <div className="chatbot-suggestions">
         <p>Suggestions:</p>
