@@ -9,7 +9,7 @@
   }
   
   /* Styles pour les particules */
-  .tech-particles {
+  .techParticles {
     position: fixed;
     top: 0;
     left: 0;
@@ -30,7 +30,7 @@
   }
   
   /* Styles pour l'arrière-plan de code */
-  .code-background-global {
+  .codeBackgroundGlobal {
     position: fixed;
     top: 0;
     left: 0;
@@ -42,7 +42,7 @@
     pointer-events: none;
   }
   
-  .code-line {
+  .codeLine {
     position: absolute;
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -69,12 +69,12 @@
   }
   
   /* Suppression du fond quadrillé précédent */
-  .app-container::before {
+  .appContainer::before {
     content: none !important;
   }
   
   /* Amélioration de l'apparence des conteneurs pour mieux s'intégrer au nouveau fond */
-  .page-container, .chatbot-container {
+  .pageContainer, .chatbotContainer {
     background-color: rgba(17, 22, 32, 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(12, 227, 255, 0.1);
@@ -93,6 +93,6 @@
     }
   }
   
-  .pulse-animation {
+  .pulseAnimation {
     animation: pulse 2s infinite;
   }

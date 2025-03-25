@@ -1,0 +1,240 @@
+/* === Fichier Responsive.css === */
+/* Media queries organisées par contexte pour une meilleure maintenance */
+
+/* ===== MOBILE (max-width: 768px) ===== */
+@media (max-width: 768px) {
+  /* ----- Chatbot Container ----- */
+  .chatbotContainer {
+    padding: 0.5rem;
+    margin: 0;
+    max-width: 100%;
+    border-radius: 0;
+  }
+  
+  .chatbotHeader h2 {
+    font-size: 1.75rem;
+  }
+  
+  /* ----- Messages ----- */
+  .messagesContainer {
+    padding: 0.5rem;
+    height: auto;
+    max-height: calc(100vh - 240px);
+  }
+  
+  .message {
+    max-width: 85%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .botMessage, .userMessage {
+    max-width: 90%;
+  }
+  
+  /* ----- Message Input ----- */
+  .messageInputForm {
+    flex-direction: row; /* Gardé en row pour éviter des problèmes de mise en page */
+    padding: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--darker-bg);
+    z-index: 10;
+    
+    /* Important pour éviter que le clavier ne cache la zone de saisie */
+    transition: bottom 0.3s;
+  }
+  
+  /* Technique pour éviter que le clavier cache l'input */
+  .keyboard-open .messageInputForm {
+    position: absolute;
+    bottom: 0;
+  }
+  
+  .messageInputForm input {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    flex-grow: 1;
+  }
+  
+  .messageInputForm button,
+  .send-button {
+    height: 40px;
+    font-size: 1rem;
+    border-radius: 50%;
+    width: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  /* ----- Suggestions ----- */
+  .chatbotSuggestions {
+    padding: 0.75rem;
+    margin-bottom: 60px; /* Espace pour la zone de saisie fixée */
+  }
+  
+  .suggestionButtons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .suggestionButtons button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+  }
+  
+  /* ----- Navigation Menu ----- */
+  .menu-toggle {
+    display: flex;
+    font-size: 2rem;
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+  }
+  
+  /* Styles pour l'icône hamburger */
+  .menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Animation de l'icône hamburger */
+  .menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+  
+  .main-nav {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: var(--darker-bg);
+    flex-direction: column;
+    padding: 80px 20px 20px;
+    transition: right 0.3s;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+  }
+  
+  .main-nav.open {
+    right: 0;
+  }
+  
+  .main-nav a {
+    margin: 0 0 15px 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .main-nav a:last-child {
+    border-bottom: none;
+  }
+  
+  /* ----- Titre et éléments d'interface ----- */
+  .glitchTitle {
+    font-size: 2.5rem;
+  }
+  
+  .underscoreBlink {
+    font-size: 2.5rem;
+  }
+  
+  .adminTag {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  /* ----- Admin Dashboard ----- */
+  .logsContainer {
+    max-height: 150px;
+  }
+}
+
+/* ===== DESKTOP (min-width: 768px) ===== */
+@media (min-width: 768px) {
+  /* ----- Footer ----- */
+  .footerContent {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  /* ----- Footer Cyberpunk Style ----- */
+  .footer {
+    position: relative;
+  }
+  
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00c6ff, transparent);
+  }
+  
+  /* ----- Menu Desktop ----- */
+  .menu-toggle {
+    display: none;
+  }
+  
+  .main-nav {
+    display: flex;
+    position: static;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    flex-direction: row;
+    padding: 0;
+    box-shadow: none;
+  }
+  
+  .main-nav a {
+    margin: 0 1rem;
+    width: auto;
+    border-bottom: none;
+  }
+}
+
+/* ===== DETECTION CLAVIER VIRTUEL (important pour iOS/Android) ===== */
+@media screen and (max-width: 768px) {
+  body.keyboard-open {
+    /* Ajustement quand le clavier est ouvert */
+    height: calc(100% - 60px); /* Valeur approximative à ajuster */
+    overflow: hidden;
+  }
+  
+  body.keyboard-open .messagesContainer {
+    max-height: calc(100vh - 300px); /* Réduire l'espace disponible pour les messages */
+  }
+  
+  /* Permet à la zone de saisie de rester visible */
+  body.keyboard-open .app-container {
+    padding-bottom: 60px; /* Espace pour l'input */
+  }
+}

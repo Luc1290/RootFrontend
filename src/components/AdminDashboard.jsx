@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AnimatedBackground from './AnimatedBackground.jsx'; // adapte le chemin si besoin
-
+import styles from './AdminDashboard.module.css';
 
 const AdminDashboard = () => {
+  // Détection si l'appareil est mobile
+  const isMobile = window.innerWidth <= 768;
+  
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [messages, setMessages] = useState([
@@ -13,8 +15,9 @@ const AdminDashboard = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isError, setIsError] = useState(false);
   const messagesEndRef = useRef(null);
-    const messagesContainerRef = useRef(null); // tout en haut avec les autres
+  const messagesContainerRef = useRef(null);
 
+  // L'arrière-plan avec code est géré ailleurs
 
   const CORRECT_PASSWORD = 'rootadmin';
 
@@ -67,6 +70,33 @@ const AdminDashboard = () => {
     }
   };
 
+  // Fonction de défilement améliorée
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'end', 
+          inline: 'nearest' 
+        });
+      }
+    }, 100);
+  };
+
+  // Défilement après chargement initial et après ajout de messages
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+  
+  // Défilement supplémentaire lorsque la réponse du bot est complète
+  useEffect(() => {
+    if (!isTyping && messages.length > 1 && messages[messages.length - 1].sender === 'bot') {
+      scrollToBottom();
+      setTimeout(scrollToBottom, 300);
+      setTimeout(scrollToBottom, 1000);
+    }
+  }, [isTyping, messages]);
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim() === '') return;
@@ -82,6 +112,9 @@ const AdminDashboard = () => {
     logEvent("USER", inputMessage);
     setInputMessage('');
     setIsTyping(true);
+    
+    // Défiler immédiatement après l'envoi du message utilisateur
+    scrollToBottom();
 
     const dbUser = {
       sender: 'user',
@@ -108,6 +141,9 @@ const AdminDashboard = () => {
     await saveMessageToDB(dbBot);
 
     setIsTyping(false);
+    
+    // Défiler à nouveau après réception de la réponse
+    scrollToBottom();
   };
 
   const logEvent = (source, content) => {
@@ -116,75 +152,130 @@ const AdminDashboard = () => {
 
   const clearLogs = () => setLogs([]);
 
+  // Effet pour s'assurer que la hauteur du conteneur de messages est correcte
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+
+    // Détection du clavier virtuel pour mobile
+    if (isMobile && authenticated) {
+      const adjustHeight = () => {
+        if (messagesContainerRef.current) {
+          const viewHeight = window.innerHeight;
+          const headerHeight = 100; // Estimation de la hauteur de l'en-tête
+          const formHeight = 80;    // Estimation de la hauteur du formulaire
+          const logsHeight = 240;   // Estimation de la hauteur des logs
+          
+          // Calculer la hauteur disponible
+          const availableHeight = viewHeight - headerHeight - formHeight - logsHeight;
+          
+          // Définir la hauteur du conteneur de messages
+          messagesContainerRef.current.style.height = `${Math.max(300, availableHeight)}px`;
+        }
+      };
+      
+      window.addEventListener('resize', adjustHeight);
+      adjustHeight();
+      
+      return () => window.removeEventListener('resize', adjustHeight);
+    }
+  }, [authenticated, isMobile]); // 
 
   if (!authenticated) {
     return (
-      <div className="page-container text-center">
-        <h2>Accès Administrateur</h2>
-         <input
-               type="password"
-               value={passwordInput}
-               onChange={(e) => setPasswordInput(e.target.value)}
-               placeholder="Mot de passe"
-         />
-        <button onClick={handleAuth} className="start-chat-btn">Entrer</button>
+      <div className={styles.loginContainer}>
+        <div className={styles.cyberTitle}>
+          <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
+            <span className={styles.glitchText} data-text="Root:">Root:</span>
+            <span className={styles.underscoreBlink}>_</span>
+          </h1>
+          <div className={styles.neonGlow}></div>
+        </div>
+        <div className={styles.loginBox}>
+          <h2>Accès Administrateur</h2>
+          <input
+            type="password"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+            placeholder="Mot de passe"
+            className={styles.passwordInput}
+          />
+          <button onClick={handleAuth} className={styles.loginBtn}>Entrer</button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="chatbot-container">
-      <div className="chatbot-header">
-        <h2>Root:_ / Admin</h2>
-        <p>Mode personnel + console de logs</p>
-        {isError && <div className="connection-error">Erreur de connexion</div>}
+    <div className={styles.chatbotContainer}>      
+      <div className={styles.cyberTitle}>
+        <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
+          <span className={styles.glitchText} data-text="Root:">Root:</span>
+          <span className={styles.underscoreBlink}>_</span>
+          <span className={styles.adminTag}>ADMIN</span>
+        </h1>
+        <div className={styles.neonGlow}></div>
+        {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
       </div>
 
-      <div className="messages-container" ref={messagesContainerRef}>
+      <div className={styles.messagesContainer} ref={messagesContainerRef}>
         {messages.map((m) => (
-          <div key={m.id} className={`message ${m.sender === 'user' ? 'user-message' : 'bot-message'}`}>
-            <div className="message-content">
-              <p>{m.text}</p>
+          <div 
+            key={m.id} 
+            className={`${styles.message} ${m.sender === 'user' ? styles.userMessage : styles.botMessage}`}
+          >
+            <div className={styles.messageContent}>
+              {m.sender === 'bot' ? (
+                <div
+                  className="formatted-response"
+                  dangerouslySetInnerHTML={{ __html: m.text || '' }}
+                />
+              ) : (
+                <p>{m.text}</p>
+              )}
             </div>
           </div>
         ))}
         {isTyping && (
-          <div className="message bot-message">
-            <div className="message-content typing-indicator">
+          <div className={`${styles.message} ${styles.botMessage}`}>
+            <div className={`${styles.messageContent} ${styles.typingIndicator}`}>
               <span></span><span></span><span></span>
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} className={styles.scrollAnchor} />
       </div>
 
-      <form className="message-input-form" onSubmit={handleSendMessage}>
+      <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           placeholder="Commande ou question Root:_"
           disabled={isTyping}
+          onFocus={() => isMobile && scrollToBottom()}
         />
-        <button type="submit" disabled={isTyping || inputMessage.trim() === ''}>Envoyer</button>
+        <button
+          type="submit"
+          disabled={isTyping || inputMessage.trim() === ''}
+          className={styles.sendButton}
+          aria-label="Envoyer"
+        >
+          {isMobile ? '➤' : <span className={styles.sendIcon}>&#10148;</span>}
+        </button>
       </form>
 
-      <div className="chatbot-suggestions">
-        <p>Logs Root:_</p>
-        <div style={{ backgroundColor: '#222', color: '#0f0', padding: '1rem', borderRadius: '8px', maxHeight: '200px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.9rem' }}>
+      <div className={styles.logsSection}>
+        <div className={styles.logsHeader}>
+          <p>Logs Root:_</p>
+          <button onClick={clearLogs} className={styles.clearLogsBtn}>Vider les logs</button>
+        </div>
+        <div className={styles.logsContainer}>
           {logs.map((log, index) => (
-            <div key={index}>{log}</div>
+            <div key={index} className={styles.logEntry}>{log}</div>
           ))}
         </div>
-        <button onClick={clearLogs} className="btn" style={{ marginTop: '1rem' }}>Vider les logs</button>
       </div>
     </div>
   );

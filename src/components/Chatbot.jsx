@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styles from './Chatbot.module.css';
+
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
@@ -218,70 +220,79 @@ useEffect(() => {
 
   
   return (
-    <div className="chatbot-container">
-      <div className="chatbot-header">
-        <h2>Root:</h2>
-          {isError && <div className="connection-error">Problème de connexion à l'API</div>}
+    <div className={styles.chatbotContainer}>
+        <div className={styles.cyberTitle}>
+          <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
+            <span className={styles.glitchText} data-text="Root:">Root:</span>
+            <span className={styles.underscoreBlink}>_</span>
+          </h1>
+          <div className={styles.neonGlow}></div>
+        
+        {isError && <div className="connection-error">Problème de connexion à l'API</div>}
       </div>
-
-      <div className="messages-container" ref={messagesContainerRef}>
+  
+      <div className={styles.messagesContainer} ref={messagesContainerRef}>
         {messages.map((message) => (
-          <div key={message.id} className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}>
-            <div className="message-content">
-                 {message.sender === 'bot' ? (
-                    <div
-                      className="formatted-response"
-                      dangerouslySetInnerHTML={{ __html: message.text || '' }}
-                    />
-                   ) : (
-                    <p>{message.text}</p>
-                   )}  
-                </div>
-
+          <div
+            key={message.id}
+            className={`${styles.message} ${
+              message.sender === 'user' ? styles.userMessage : styles.botMessage
+            }`}
+          >
+            <div className={styles.messageContent}>
+              {message.sender === 'bot' ? (
+                <div
+                  className="formatted-response"
+                  dangerouslySetInnerHTML={{ __html: message.text || '' }}
+                />
+              ) : (
+                <p>{message.text}</p>
+              )}
+            </div>
           </div>
         ))}
-
+  
         {isTyping && (
-          <div className="message bot-message">
-            <div className="message-content typing-indicator">
+          <div className={`${styles.message} ${styles.botMessage}`}>
+            <div className={`${styles.messageContent} ${styles.typingIndicator}`}>
               <span></span><span></span><span></span>
             </div>
           </div>
         )}
-
-        {/* Élément invisible utilisé pour le défilement */}
-        <div ref={messagesEndRef} className="scroll-anchor" />
+  
+        <div ref={messagesEndRef} className={styles.scrollAnchor} />
       </div>
-
-<form className="message-input-form" onSubmit={handleSendMessage}>
-  <input
-    type="text"
-    value={inputMessage}
-    onChange={(e) => setInputMessage(e.target.value)}
-    placeholder="Saisissez votre message..."
-    disabled={isTyping}
-    onFocus={() => isMobile && scrollToBottom()}
-  />
-  <button 
-    type="submit" 
-    disabled={isTyping || inputMessage.trim() === ''}
-    className="send-button" // Ajout d'une classe pour cibler le bouton
-  >
-    {isMobile ? "➤" : "Envoyer"} {/* Icône plus petite sur mobile */}
-  </button>
-</form>
-
+  
+      <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          placeholder="Saisissez votre message..."
+          disabled={isTyping}
+          onFocus={() => isMobile && scrollToBottom()}
+        />
+        <button
+          type="submit"
+          disabled={isTyping || inputMessage.trim() === ''}
+          className={styles.sendButton}
+          aria-label="Envoyer"
+        >
+          {isMobile ? '➤' : <span className={styles.sendIcon}>&#10148;</span>}
+        </button>
+      </form>
+  
       <div className="chatbot-suggestions">
         <p>Suggestions:</p>
         <div className="suggestion-buttons">
-          <button onClick={() => handleSuggestionClick("Qui es-tu ?")}>À propos de moi</button>
-          <button onClick={() => handleSuggestionClick("Que peux-tu faire ?")}>Mes capacités</button>
-          <button onClick={() => handleSuggestionClick("Comment fonctionnes-tu ?")}>Mon fonctionnement</button>
+          <button onClick={() => handleSuggestionClick('Qui es-tu ?')}>À propos de moi</button>
+          <button onClick={() => handleSuggestionClick('Que peux-tu faire ?')}>Mes capacités</button>
+          <button onClick={() => handleSuggestionClick('Comment fonctionnes-tu ?')}>Mon fonctionnement</button>
           <button onClick={() => handleSuggestionClick("Parle-moi de l'AGI")}>L'AGI</button>
         </div>
       </div>
     </div>
   );
-};
+}  
 
 export default Chatbot;

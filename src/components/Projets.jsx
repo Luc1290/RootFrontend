@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './Projets.module.css';
 
 const About = () => {
   return (
-    <div className="about-container">
+    <div className={styles.aboutContainer}>
       <h2>ROOT — Plus qu'un assistant, un projet vivant</h2>
 
       <p><strong>Root</strong> est un assistant conversationnel personnel, en ligne, évolutif. Développé de zéro en <strong>React (.jsx)</strong> pour le front-end, avec un back-end en <strong>C# .NET</strong>, il est connecté à l’IA Claude via API, et stocke les conversations dans une base de données <strong>PostgreSQL</strong>.</p>
@@ -64,11 +65,11 @@ const About = () => {
         <li>Si vous appréciez l’expérience, si vous croyez dans ce projet ou si vous voulez l’aider à grandir, vous pouvez m’aider à le soutenir.</li>
         </ul>
 
-        <a className="donate-button" href="https://tonlienversdons.fr" target="_blank" rel="noopener noreferrer">
+        <a className={styles.donateButton} href="https://tonlienversdons.fr" target="_blank" rel="noopener noreferrer">
         → Soutenir Root
       </a>
-      <ul></ul>
-      <a className="donate-button" href="mailto:RootIA1290@gmail.com" target="_blank" rel="noopener noreferrer">
+      <br />
+      <a className={styles.donateButton} href="mailto:RootIA1290@gmail.com" target="_blank" rel="noopener noreferrer">
         → Contactez moi pour plus d'informations
       </a>
     </div>
