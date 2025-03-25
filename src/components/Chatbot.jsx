@@ -13,6 +13,9 @@ const Chatbot = () => {
   
   // Référence pour la zone des messages
   const messagesContainerRef = useRef(null);
+  const inputRef = useRef(null);
+
+
   
   // Détection si l'appareil est mobile
   const isMobile = window.innerWidth <= 768;
@@ -28,6 +31,7 @@ useEffect(() => {
     setTimeout(() => {
       if (window.innerHeight < initialHeight * 0.8) {
         document.body.classList.add('keyboard-open');
+        window.scrollTo(0, 0); // empêche le saut d’écran
       }
     }, 300);
   };
@@ -223,15 +227,21 @@ useEffect(() => {
         <div ref={messagesEndRef} className={styles.scrollAnchor} />
       </div>
   
-      <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          placeholder="Saisissez votre message..."
-          disabled={isTyping}
-          onFocus={() => isMobile && scrollToBottom()}
-        />
+           <form className={styles.messageInputForm} onSubmit={handleSendMessage}>
+             <input
+                ref={inputRef}
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder="Saisissez votre message..."
+                disabled={isTyping}
+                onFocus={() => {
+                  if (isMobile && inputRef.current) {
+                    inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }}
+              />
+
         <button
           type="submit"
           disabled={isTyping || inputMessage.trim() === ''}
