@@ -27,7 +27,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: auto; /* Autoriser le défilement vertical */
 }
 
@@ -37,7 +37,7 @@ html {
 }
 
 .app-container {
-  min-height: 100vh; /* Utiliser min-height au lieu de height */
+  min-height: 100dvh; /* Utiliser min-height au lieu de height */
   display: flex;
   flex-direction: column;
   position: relative;

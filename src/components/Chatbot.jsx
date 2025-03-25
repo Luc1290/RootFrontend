@@ -19,77 +19,37 @@ const Chatbot = () => {
  
 // Détection du clavier virtuel pour iOS et Android
 useEffect(() => {
-  // Pour les appareils mobiles seulement
   if (!isMobile) return;
-  
-  const detectKeyboard = () => {
-    // Une façon approximative de détecter si le clavier virtuel est ouvert
-    // en comparant la hauteur de la fenêtre avant et après la mise au point de l'entrée
-    const windowHeight = window.innerHeight;
-    
-    const handleFocus = () => {
-      // Attendre un peu que le clavier apparaisse
-      setTimeout(() => {
-        if (window.innerHeight < windowHeight * 0.8) {
-          // Le clavier est probablement ouvert
-          document.body.classList.add('keyboard-open');
-          
-          // Ajuster la hauteur du conteneur de messages
-          if (messagesContainerRef.current) {
-            messagesContainerRef.current.style.maxHeight = 'calc(100vh - 120px)';
-          }
-        }
-      }, 300);
-    };
-    
-    const adjustHeight = () => {
-      if (messagesContainerRef.current && isMobile) {
-        const viewHeight = window.innerHeight;
-        const headerHeight = document.querySelector('.chatbot-header')?.offsetHeight || 0;
-        const formHeight = document.querySelector('.message-input-form')?.offsetHeight || 0;
-        const suggestionsHeight = document.querySelector('.chatbot-suggestions')?.offsetHeight || 0;
-        
-        // Calculer la hauteur disponible
-        const availableHeight = viewHeight - headerHeight - formHeight - suggestionsHeight - 20; // 20px pour marges
-        
-        // Définir la hauteur du conteneur de messages
-        messagesContainerRef.current.style.height = `${Math.max(300, availableHeight)}px`;
-      }
-    };
 
-    const handleBlur = () => {
-      // Le clavier est probablement fermé
-      document.body.classList.remove('keyboard-open');
-      
-      // Réajuster la hauteur du conteneur de messages
-      if (messagesContainerRef.current) {
-        messagesContainerRef.current.style.maxHeight = '';
-        // Forcer un réajustement de la hauteur
-        adjustHeight();
+  const input = document.querySelector('input');
+  const initialHeight = window.innerHeight;
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      if (window.innerHeight < initialHeight * 0.8) {
+        document.body.classList.add('keyboard-open');
       }
-      
-      // Défiler vers le bas après la fermeture du clavier
-      setTimeout(scrollToBottom, 300);
-    };
-    
-    // Sélectionner l'élément d'entrée
-    const inputElement = document.querySelector('.message-input-form input');
-    if (inputElement) {
-      inputElement.addEventListener('focus', handleFocus);
-      inputElement.addEventListener('blur', handleBlur);
-    }
-    
-    return () => {
-      if (inputElement) {
-        inputElement.removeEventListener('focus', handleFocus);
-        inputElement.removeEventListener('blur', handleBlur);
-      }
-    };
+    }, 300);
   };
-  
-  const cleanup = detectKeyboard();
-  return cleanup;
+
+  const handleBlur = () => {
+    document.body.classList.remove('keyboard-open');
+    setTimeout(scrollToBottom, 300);
+  };
+
+  if (input) {
+    input.addEventListener('focus', handleFocus);
+    input.addEventListener('blur', handleBlur);
+  }
+
+  return () => {
+    if (input) {
+      input.removeEventListener('focus', handleFocus);
+      input.removeEventListener('blur', handleBlur);
+    }
+  };
 }, [isMobile]);
+
 
   const sendMessageToClaude = async (message) => {
     try {
