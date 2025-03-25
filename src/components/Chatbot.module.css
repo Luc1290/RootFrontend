@@ -339,7 +339,7 @@
     /* Garder le défilement */
     overflow-y: auto;
     /* Marges intérieures */
-    padding: 0.2rem;
+    padding: 0.5rem 1rem;
     /* Réduire le padding en bas */
     padding-bottom: 5px;
     /* Scroll doux */
@@ -400,5 +400,23 @@
     border-radius: 20px;
     background-color: rgba(17, 22, 32, 0.85);
     border: 1px solid rgba(12, 227, 255, 0.4);
+  }
+
+  .message {
+    max-width: 85%; /* Déjà défini, mais on peut ajuster */
+    /* Ajouter une marge minimale par rapport aux bords */
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+  }
+  
+  /* Optionnellement, ajuster spécifiquement les messages utilisateur et bot */
+  .botMessage {
+    /* Distance du bord gauche */
+    margin-left: 0.3rem;
+  }
+  
+  .userMessage {
+    /* Distance du bord droit */
+    margin-right: 0.3rem;
   }
 }
