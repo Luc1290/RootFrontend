@@ -311,3 +311,56 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+
+
+  /* Responsive */
+  /* Styles pour les appareils mobiles */
+/* Les styles ci-dessous sont appliqués pour les appareils mobiles */
+  @media (max-width: 768px) {
+    .chatbotContainer {
+      padding: 0.5rem;
+      margin: 0;
+      max-width: 100%;
+      border-radius: 0;
+    }
+  
+    .messagesContainer {
+      padding: 0.5rem;
+      max-height: calc(100vh - 240px);
+    }
+  
+    .messageInputForm {
+      flex-direction: row;
+      padding: 0.5rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--darker-bg);
+      z-index: 10;
+    }
+  
+    body.keyboard-open .messageInputForm {
+      position: absolute;
+      bottom: 0;
+    }
+  
+    .messageInputForm input {
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      flex-grow: 1;
+    }
+  
+    .messageInputForm button {
+      height: 40px;
+      font-size: 1rem;
+      border-radius: 50%;
+      width: 44px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  }
+  

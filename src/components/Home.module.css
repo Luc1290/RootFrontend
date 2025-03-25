@@ -222,6 +222,54 @@
   justify-content: center;
 }
 
+/* Media queries pour les écrans plus petits */
+/* Adaptation pour les tablettes et les mobiles */
+@media (max-width: 768px) {
+  .featuresSection {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0 1rem;
+  }
+
+  .featureCard {
+    min-height: auto;
+    padding: 1.2rem 1rem;
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(12, 227, 255, 0.1);
+  }
+
+  .featureIcon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .featureTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .featureDescription {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .featureDescription {
+    font-size: 0.85rem;
+  }
+
+  .featureIcon {
+    font-size: 1.7rem;
+  }
+
+  .featureTitle {
+    font-size: 1rem;
+  }
+}
+
+
 /* Animation pour le glitch */
 @keyframes glitch-animation-1 {
   0% { transform: translateX(-2px) translateY(2px); }

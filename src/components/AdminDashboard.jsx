@@ -97,6 +97,40 @@ const AdminDashboard = () => {
     }
   }, [isTyping, messages]);
 
+  // Gestion du clavier virtuel mobile (comme dans Chatbot)
+  useEffect(() => {
+      if (!isMobile || !authenticated) return;
+  
+      const input = document.querySelector(`.${styles.messageInputForm} input`);
+      const initialHeight = window.innerHeight;
+  
+      const handleFocus = () => {
+        setTimeout(() => {
+          if (window.innerHeight < initialHeight * 0.8) {
+            document.body.classList.add('keyboard-open');
+          }
+        }, 300);
+      };
+  
+      const handleBlur = () => {
+        document.body.classList.remove('keyboard-open');
+        setTimeout(scrollToBottom, 300);
+      };
+  
+      if (input) {
+        input.addEventListener('focus', handleFocus);
+        input.addEventListener('blur', handleBlur);
+      }
+  
+      return () => {
+        if (input) {
+          input.removeEventListener('focus', handleFocus);
+          input.removeEventListener('blur', handleBlur);
+        }
+      };
+  }, [authenticated, isMobile]);
+  
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (inputMessage.trim() === '') return;
@@ -180,7 +214,7 @@ const AdminDashboard = () => {
       
       return () => window.removeEventListener('resize', adjustHeight);
     }
-  }, [authenticated, isMobile]); // 
+  }, [authenticated, isMobile]); 
 
   if (!authenticated) {
     return (

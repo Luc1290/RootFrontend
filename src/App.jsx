@@ -6,6 +6,7 @@ import About from './components/Projets';
 import AnimatedBackground from './components/AnimatedBackground';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
+import Navbar from './components/Navbar'; // tout en haut du fichier
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,18 +19,7 @@ function App() {
     <Router>
       <AnimatedBackground />
       <div className="app-container">
-        <header>
-          <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <nav className={`main-nav ${menuOpen ? 'open' : ''}`}>
-            <Link to="/" onClick={toggleMenu}>Accueil</Link>
-            <Link to="/chatbot" onClick={toggleMenu}>Chatbot</Link>
-            <Link to="/projets" onClick={toggleMenu}>Projet</Link>
-          </nav>
-        </header>
+        <Navbar menuOpen={menuOpen} toggleMenu={toggleMenu} />
 
         <main className="main-content">
           <Routes>
