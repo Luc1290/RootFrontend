@@ -72,7 +72,7 @@ useEffect(() => {
   const sendMessageToClaude = async (message) => {
     try {
       setIsError(false);
-      const response = await fetch('https://rootapi-production.up.railway.app/api/chat', {
+      const response = await fetch('https://rootbackend.fly.dev/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ useEffect(() => {
 
   const saveMessageToDB = async (msg) => {
     try {
-      await fetch('https://rootapi-production.up.railway.app/api/messages', {
+      await fetch('https://rootbackend.fly.dev/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(msg),

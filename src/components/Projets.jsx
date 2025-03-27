@@ -15,9 +15,9 @@ const About = () => {
         <li><strong>Front-end en React</strong> : composants .jsx pour une interface fluide, responsive et maintenable</li>
         <li><strong>Design global via app.css</strong> : simple, cohérent et responsive</li>
         <li><strong>Back-end en C# .NET</strong> : robuste, sécurisé, évolutif</li>
-        <li><strong>Base de données PostgreSQL</strong> : connectée à Railway : stockage structuré des messages pour mémoire future</li>
+        <li><strong>Base de données PostgreSQL</strong> : connectée à Fly.io : stockage structuré des messages pour mémoire future</li>
         <li><strong>Connexion API à Claude (Anthropic)</strong> : pas de traitement intermédiaire</li>
-        <li><strong>Hébergement décentralisé</strong> : Railway (Backend/DB/Frontend), domaine chez Gandi</li>
+        <li><strong>Hébergement décentralisé</strong> : Fly.io (Backend/DB/Frontend), domaine chez Gandi</li>
         <li><strong>Respect de la vie privée</strong> : pas de tracking, pas de revente de données</li>
       </ul>
 

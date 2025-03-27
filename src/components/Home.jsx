@@ -120,7 +120,7 @@ const Home = () => {
             <div className={styles.featureIcon}>🔐</div>
             <h3 className={styles.featureTitle}>Architecture Sécurisée</h3>
             <p className={styles.featureDescription}>
-              Hébergement décentralisé sur Railway, backend robuste et évolutif, avec respect total de la vie privée. Aucun tracking ni revente de données.
+              Hébergement décentralisé sur Fly.io, backend robuste et évolutif, avec respect total de la vie privée. Aucun tracking ni revente de données.
             </p>
           </div>
 
