@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import styles from "./Messagedb.module.css";
 
 export default function MessageDB() {
   const [token, setToken] = useState("");
@@ -34,43 +32,44 @@ export default function MessageDB() {
   };
 
   return (
-    <div className="p-4 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">MessageDB Viewer</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>MessageDB Viewer</h1>
 
-      <div className="flex gap-2 mb-4">
-        <Input
+      <div className={styles.controls}>
+        <input
           type="password"
           placeholder="X-Admin-Token"
           value={token}
           onChange={(e) => setToken(e.target.value)}
+          className={styles.input}
         />
-        <Button onClick={fetchMessages} disabled={loading || !token}>
+        <button onClick={fetchMessages} disabled={loading || !token} className={styles.button}>
           {loading ? "Chargement..." : "Afficher les messages"}
-        </Button>
+        </button>
       </div>
 
-      {error && <p className="text-red-500 mb-2">❌ {error}</p>}
+      {error && <p className={styles.error}>❌ {error}</p>}
 
       {messages.length > 0 && (
-        <div className="overflow-auto border rounded-xl">
-          <table className="min-w-full text-sm">
-            <thead className="bg-gray-100 text-left">
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
               <tr>
-                <th className="p-2">Sender</th>
-                <th className="p-2">Source</th>
-                <th className="p-2">Type</th>
-                <th className="p-2">Content</th>
-                <th className="p-2">Timestamp</th>
+                <th>Sender</th>
+                <th>Source</th>
+                <th>Type</th>
+                <th>Content</th>
+                <th>Timestamp</th>
               </tr>
             </thead>
             <tbody>
               {messages.map((msg) => (
-                <tr key={msg.id} className="border-t">
-                  <td className="p-2 whitespace-nowrap">{msg.sender}</td>
-                  <td className="p-2 whitespace-nowrap">{msg.source}</td>
-                  <td className="p-2 whitespace-nowrap">{msg.type}</td>
-                  <td className="p-2 whitespace-pre-wrap max-w-xs">{msg.content}</td>
-                  <td className="p-2 whitespace-nowrap">{new Date(msg.timestamp).toLocaleString()}</td>
+                <tr key={msg.id}>
+                  <td>{msg.sender}</td>
+                  <td>{msg.source}</td>
+                  <td>{msg.type}</td>
+                  <td>{msg.content}</td>
+                  <td>{new Date(msg.timestamp).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
