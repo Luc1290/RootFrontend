@@ -11,9 +11,9 @@ export default function MessageDB() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/messages", {
+      const response = await fetch("https://rootbackend.fly.dev/api/messages", {
         headers: {
-          "X-Admin-Token": token,
+          "ADMIN_API_TOKEN": token,
         },
       });
 
