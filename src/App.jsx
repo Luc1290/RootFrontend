@@ -7,6 +7,8 @@ import AnimatedBackground from './components/AnimatedBackground';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar'; // tout en haut du fichier
+import Messagedb from "./components/Messagedb";
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,6 +29,7 @@ function App() {
             <Route path="/chatbot" element={<Chatbot />} />
             <Route path="/projets" element={<About />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/messagedb" element={<Messagedb />} />
           </Routes>
         </main>
          <Footer />
