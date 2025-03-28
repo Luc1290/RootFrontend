@@ -68,7 +68,7 @@ export default function MessageDB() {
                   <td>{msg.sender}</td>
                   <td>{msg.source}</td>
                   <td>{msg.type}</td>
-                  <td>{msg.content}</td>
+                  <td>{typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content)}</td>
                   <td>{new Date(msg.timestamp).toLocaleString()}</td>
                 </tr>
               ))}

@@ -448,6 +448,24 @@
   scroll-margin-bottom: 1rem;
 }
 
+.dbLink {
+  margin-top: 0.75rem;
+  background-color: rgba(12, 227, 255, 0.2);
+  border: 1px solid rgba(12, 227, 255, 0.4);
+  color: var(--primary-color);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.dbLink:hover {
+  background-color: rgba(12, 227, 255, 0.3);
+  border-color: rgba(12, 227, 255, 0.6);
+}
+
 /* Media queries */
 /* Responsive pour les écrans de taille moyenne */
 
@@ -491,8 +509,7 @@
     max-height: calc(100vh - 240px);
   }
 }
-
-
+/* Responsive pour les petits écrans */
 /* Animations */
 @keyframes typing-animation {
   0%, 100% { transform: translateY(0); opacity: 0.5; }

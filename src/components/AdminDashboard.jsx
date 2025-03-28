@@ -223,9 +223,15 @@ const AdminDashboard = () => {
           <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
             <span className={styles.glitchText} data-text="Root:">Root:</span>
             <span className={styles.underscoreBlink}>_</span>
+            <span className={styles.adminTag}>ADMIN</span>
           </h1>
           <div className={styles.neonGlow}></div>
-        </div>
+          {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
+
+          {/* 🔗 Lien vers MessageDB */}
+          <a href="/admin/messagedb" className={styles.dbLink}>📂 MessageDB</a>
+       </div>
+
         <div className={styles.loginBox}>
           <h2>Accès Administrateur</h2>
           <input
