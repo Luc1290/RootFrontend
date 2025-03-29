@@ -68,7 +68,7 @@ useEffect(() => {
 
 
 
-  const sendMessageToClaude = async (message) => {
+const sendMessageToRoot = async (message) => {
     try {
       setIsError(false);
       const response = await fetch('https://rootbackend.fly.dev/api/chat', {
@@ -86,7 +86,7 @@ useEffect(() => {
       const data = await response.json();
       return data.reply;
     } catch (error) {
-      console.error('Erreur lors de la communication avec Claude:', error);
+      console.error('Erreur lors de la communication avec Root:', error);
       setIsError(true);
       return "Je rencontre des difficultés momentanées à accéder à mes systèmes principaux. Pourriez-vous réessayer dans un instant ?";
     }
@@ -165,7 +165,7 @@ useEffect(() => {
     };
     await saveMessageToDB(dbUser);
 
-    const botResponse = await sendMessageToClaude(inputMessage);
+    const botResponse = await sendMessageToRoot(inputMessage);
     
     const botMessage = {
       id: messages.length + 2,

@@ -74,7 +74,7 @@ const AdminDashboard = () => {
       const data = await response.json();
       return data.reply;
     } catch (error) {
-      console.error("Erreur Claude:", error);
+      console.error("Erreur Root:", error);
       setIsError(true);
       return "Problème de connexion au cerveau principal...";
     }

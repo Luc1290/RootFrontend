@@ -6,7 +6,7 @@ const About = () => {
     <div className={styles.aboutContainer}>
       <h2>ROOT — Plus qu'un assistant, un projet vivant</h2>
 
-      <p><strong>Root</strong> est un assistant conversationnel personnel, en ligne, évolutif. Développé de zéro en <strong>React (.jsx)</strong> pour le front-end, avec un back-end en <strong>C# .NET</strong>, il est connecté à l’IA Claude via API, et stocke les conversations dans une base de données <strong>PostgreSQL</strong>.</p>
+      <p><strong>Root</strong> est un assistant conversationnel personnel, en ligne, évolutif. Développé de zéro en <strong>React (.jsx)</strong> pour le front-end, avec un back-end en <strong>C# .NET</strong>, il est connecté à l’IA Groq via API, et stocke les conversations dans une base de données <strong>PostgreSQL</strong>.</p>
 
       <p>C’est un projet <strong>full stack</strong> codé à la main, sans outil no-code, avec une vision claire : construire, pas juste connecter.</p>
 
@@ -16,7 +16,7 @@ const About = () => {
         <li><strong>Design global via app.css</strong> : simple, cohérent et responsive</li>
         <li><strong>Back-end en C# .NET</strong> : robuste, sécurisé, évolutif</li>
         <li><strong>Base de données PostgreSQL</strong> : connectée à Fly.io : stockage structuré des messages pour mémoire future</li>
-        <li><strong>Connexion API à Claude (Anthropic)</strong> : pas de traitement intermédiaire</li>
+        <li><strong>Connexion API à Groq</strong> : pas de traitement intermédiaire</li>
         <li><strong>Hébergement décentralisé</strong> : Fly.io (Backend/DB/Frontend), domaine chez Gandi</li>
         <li><strong>Respect de la vie privée</strong> : pas de tracking, pas de revente de données</li>
       </ul>
@@ -28,7 +28,7 @@ const About = () => {
         <li>Stockage conversationnel PostgreSQL</li>
         <li>Interface publique et admin pour moi avec Logs des erreurs</li>
         <li>Backend sécurisé, prêt à évoluer</li>
-        <li>Connexion Claude optimisée</li>
+        <li>Connexion Groq optimisée</li>
         <li>Architecture découpée pour être maintenable et extensible</li>
       </ul>
 
@@ -45,7 +45,7 @@ const About = () => {
         <li>Reconnaissance de visages (API tiers)</li>
         <li>Reconnaissance de voix (API tiers)</li>
         <li>Analyse contextuelle (intention, émotion, signaux faibles)</li>
-        <li>Système multi-LLM (Claude, GPT, entrainement de son propre LLM…)</li>
+        <li>Système multi-LLM (Groq, entrainement de son propre LLM…)</li>
         <li>API publique pour intégration externe</li>
         <li>Interface publique enrichie (statistiques, personnalisation)</li>
         <li>Interface admin enrichie (statistiques, gestion des conversations)</li>
@@ -58,7 +58,7 @@ const About = () => {
         <li>Root est un projet 100 % indépendant, sans entreprise derrière, sans sponsor, sans financement.</li>
         <li>Tout est actuellement financé par moi-même :</li>
         <li>L’hébergement (backend, base de données, front-end)</li>
-        <li>Les appels à l’IA Claude, facturés à chaque message envoyé</li>
+        <li>Les appels à l’IA Groq, facturés à chaque message envoyé</li>
         <li>Le nom de domaine</li>
         <li>Le développement complet, fait sur mon temps personnel</li>
         <li>Votre utilisation est gratuite, mais chaque interaction a un coût réel.</li>
