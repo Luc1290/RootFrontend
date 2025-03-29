@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import styles from './Chatbot.module.css';
 
 
@@ -18,10 +18,9 @@ const Chatbot = () => {
 
   
   // Détection si l'appareil est mobile
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
  
 // Détection du clavier virtuel pour iOS et Android
-
 useEffect(() => {
   if (!isMobile) return;
 
@@ -167,9 +166,7 @@ useEffect(() => {
     await saveMessageToDB(dbUser);
 
     const botResponse = await sendMessageToClaude(inputMessage);
-    console.log("🔍 Root a répondu :", botResponse);
-
-
+    
     const botMessage = {
       id: messages.length + 2,
       text: botResponse,

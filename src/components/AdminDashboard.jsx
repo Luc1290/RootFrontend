@@ -17,17 +17,27 @@ const AdminDashboard = () => {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  // L'arrière-plan avec code est géré ailleurs
-
-  const CORRECT_PASSWORD = 'rootadmin';
-
-  const handleAuth = () => {
-    if (passwordInput === CORRECT_PASSWORD) {
-      setAuthenticated(true);
-    } else {
-      alert("Mot de passe incorrect. Accès refusé.");
+  // Fonction pour gérer l'authentification admin
+  const handleAuth = async () => {
+    try {
+      const res = await fetch('https://rootbackend.fly.dev/api/verify-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput })
+      });
+  
+      const result = await res.json();
+      if (result.success) {
+        setAuthenticated(true);
+      } else {
+        alert("Mot de passe incorrect. Accès refusé.");
+      }
+    } catch (err) {
+      console.error("Erreur de vérification admin :", err);
+      alert("Erreur de connexion.");
     }
   };
+  
 
   const saveMessageToDB = async (msg) => {
     try {
