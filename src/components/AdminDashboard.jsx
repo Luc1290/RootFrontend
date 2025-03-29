@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   const saveMessageToDB = async (msg) => {
     try {
-      await fetch('https://rootbackend.fly.dev/api/messages', {
+      await fetch('https://rootfrontend.fly.dev/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(msg),
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
         });
       formattedHistory.push({ role: 'user', content: newMessage });
 
-      const response = await fetch('https://rootbackend.fly.dev/api/chat', {
+      const response = await fetch('https://rootfrontend.fly.dev/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: JSON.stringify(formattedHistory) }),
