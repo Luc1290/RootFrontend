@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import ReactMarkdown from 'react-markdown';
 import styles from './Chatbot.module.css';
 
 
@@ -216,10 +217,7 @@ const sendMessageToRoot = async (message) => {
           >
             <div className={styles.messageContent}>
               {message.sender === 'bot' ? (
-                <div
-                  className="formatted-response"
-                  dangerouslySetInnerHTML={{ __html: message.text || '' }}
-                />
+                <ReactMarkdown>{message.text}</ReactMarkdown>
               ) : (
                 <p>{message.text}</p>
               )}

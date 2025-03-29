@@ -275,10 +275,7 @@ const AdminDashboard = () => {
           >
             <div className={styles.messageContent}>
               {m.sender === 'bot' ? (
-                <div
-                  className="formatted-response"
-                  dangerouslySetInnerHTML={{ __html: m.text || '' }}
-                />
+               <ReactMarkdown>{m.text}</ReactMarkdown>
               ) : (
                 <p>{m.text}</p>
               )}
