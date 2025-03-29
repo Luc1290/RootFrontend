@@ -227,10 +227,7 @@ const AdminDashboard = () => {
           </h1>
           <div className={styles.neonGlow}></div>
           {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
-
-          {/* 🔗 Lien vers MessageDB */}
-          <a href="/admin/messagedb" className={styles.dbLink}>📂 MessageDB</a>
-       </div>
+        </div>
 
         <div className={styles.loginBox}>
           <h2>Accès Administrateur</h2>
@@ -248,7 +245,8 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className={styles.chatbotContainer}>      
+    <div className={styles.chatbotContainer}>    
+    <a href="/messagedb" className={styles.dbLink}>📂 MessageDB</a>  
       <div className={styles.cyberTitle}>
         <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
           <span className={styles.glitchText} data-text="Root:">Root:</span>
