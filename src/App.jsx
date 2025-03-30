@@ -5,8 +5,11 @@ import Home from './components/Home';
 import Projets from './components/Projets';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
-import Navbar from './components/Navbar'; // tout en haut du fichier
+import Navbar from './components/Navbar'; 
 import Messagedb from "./components/Messagedb";
+import Confidentialite from './components/Confidentialite';
+import Conditions from './components/Conditions';
+
 
 
 function App() {
@@ -26,6 +29,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/chatbot" element={<Chatbot />} />
             <Route path="/projets" element={<Projets />} />
+            <Route path="/confidentialite" element={<Confidentialite />} />
+            <Route path="/conditions" element={<Conditions />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/messagedb" element={<Messagedb />} />
           </Routes>

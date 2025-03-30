@@ -34,7 +34,6 @@ const Navbar = () => {
         <Link to="/" onClick={() => setIsMenuOpen(false)}>Accueil</Link>
         <Link to="/chatbot" onClick={() => setIsMenuOpen(false)}>Chatbot</Link>
         <Link to="/projets" onClick={() => setIsMenuOpen(false)}>Projets</Link>
-        <Link to="/about" onClick={() => setIsMenuOpen(false)}>À propos</Link>
       </nav>
     </header>
   );
