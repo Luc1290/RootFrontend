@@ -216,11 +216,12 @@ const sendMessageToRoot = async (message) => {
             }`}
           >
             <div className={styles.messageContent}>
-              {message.sender === 'bot' ? (
-                <ReactMarkdown>{message.text}</ReactMarkdown>
-              ) : (
-                <p>{message.text}</p>
-              )}
+            {message.sender === 'bot' ? (
+              <ReactMarkdown>{message.text || ''}</ReactMarkdown>
+            ) : (
+              <p>{message.text || ''}</p>
+            )}
+
             </div>
           </div>
         ))}
