@@ -93,17 +93,7 @@ const sendMessageToRoot = async (message) => {
     }
   };
 
-  const saveMessageToDB = async (msg) => {
-    try {
-      await fetch('https://rootbackend.fly.dev/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(msg),
-      });
-    } catch (err) {
-      console.error("Erreur enregistrement message dans PostgreSQL:", err);
-    }
-  };
+  // Supprimé la fonction saveMessageToDB car le backend s'en charge déjà
 
   // Fonction de défilement améliorée pour mobile
   const scrollToBottom = () => {
@@ -157,14 +147,7 @@ const sendMessageToRoot = async (message) => {
     // Défiler immédiatement après l'envoi du message utilisateur
     scrollToBottom();
 
-    const dbUser = {
-      sender: 'user',
-      source: 'public',
-      content: inputMessage,
-      type: 'text',
-      attachmentUrl: null
-    };
-    await saveMessageToDB(dbUser);
+    // Supprimé l'appel à saveMessageToDB ici
 
     const botResponse = await sendMessageToRoot(inputMessage);
     
@@ -178,8 +161,7 @@ const sendMessageToRoot = async (message) => {
 
     setMessages(prev => [...prev, botMessage]);
 
-    const dbBot = { ...dbUser, sender: 'bot', content: botResponse };
-    await saveMessageToDB(dbBot);
+    // Supprimé l'appel à saveMessageToDB ici également
 
     setIsTyping(false);
     

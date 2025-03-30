@@ -38,7 +38,7 @@ export default function MessageDB() {
       <div className={styles.controls}>
         <input
           type="password"
-          placeholder="X-Admin-Token"
+          placeholder="mot de passe"
           value={token}
           onChange={(e) => setToken(e.target.value)}
           className={styles.input}

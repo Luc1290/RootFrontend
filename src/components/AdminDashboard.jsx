@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './AdminDashboard.module.css';
+import ReactMarkdown from 'react-markdown';
 
 const AdminDashboard = () => {
   // Détection si l'appareil est mobile
   const isMobile = window.innerWidth <= 768;
   
   const [authenticated, setAuthenticated] = useState(false);
-  const [passwordInput, setPasswordInput] = useState('');
+  const [tokenInput, setTokenInput] = useState(''); // Changé de passwordInput à tokenInput
   const [messages, setMessages] = useState([
     { id: 1, text: "Bienvenue Luc. Interface AGI Root:_ activée.", sender: 'bot', timestamp: new Date() }
   ]);
@@ -17,20 +18,21 @@ const AdminDashboard = () => {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  // Fonction pour gérer l'authentification admin
+  // Fonction modifiée pour gérer l'authentification admin avec token
   const handleAuth = async () => {
     try {
-      const res = await fetch('https://rootbackend.fly.dev/api/verify-admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: passwordInput })
+      // Utiliser la même méthode que MessageDB
+      const res = await fetch('https://rootbackend.fly.dev/api/messages', {
+        method: 'GET',
+        headers: { 
+          'ADMIN_API_TOKEN': tokenInput 
+        }
       });
   
-      const result = await res.json();
-      if (result.success) {
+      if (res.ok) {
         setAuthenticated(true);
       } else {
-        alert("Mot de passe incorrect. Accès refusé.");
+        alert("Token incorrect. Accès refusé.");
       }
     } catch (err) {
       console.error("Erreur de vérification admin :", err);
@@ -38,19 +40,6 @@ const AdminDashboard = () => {
     }
   };
   
-
-  const saveMessageToDB = async (msg) => {
-    try {
-      await fetch('https://rootbackend.fly.dev/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(msg),
-      });
-    } catch (err) {
-      console.error("Erreur enregistrement message dans PostgreSQL:", err);
-    }
-  };
-
   const sendMessageToAPI = async (newMessage) => {
     try {
       setIsError(false);
@@ -65,7 +54,10 @@ const AdminDashboard = () => {
 
       const response = await fetch('https://rootbackend.fly.dev/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'ADMIN_API_TOKEN': tokenInput // Ajout du token dans toutes les requêtes
+        },
         body: JSON.stringify({ message: JSON.stringify(formattedHistory) }),
       });
 
@@ -160,15 +152,6 @@ const AdminDashboard = () => {
     // Défiler immédiatement après l'envoi du message utilisateur
     scrollToBottom();
 
-    const dbUser = {
-      sender: 'user',
-      source: 'admin',
-      content: inputMessage,
-      type: 'text',
-      attachmentUrl: null
-    };
-    await saveMessageToDB(dbUser);
-
     const botReply = await sendMessageToAPI(inputMessage);
 
     const botMessage = {
@@ -180,9 +163,6 @@ const AdminDashboard = () => {
 
     setMessages(prev => [...prev, botMessage]);
     logEvent("BOT", botReply);
-
-    const dbBot = { ...dbUser, sender: 'bot', content: botReply };
-    await saveMessageToDB(dbBot);
 
     setIsTyping(false);
     
@@ -243,9 +223,9 @@ const AdminDashboard = () => {
           <h2>Accès Administrateur</h2>
           <input
             type="password"
-            value={passwordInput}
-            onChange={(e) => setPasswordInput(e.target.value)}
-            placeholder="Mot de passe"
+            value={tokenInput}
+            onChange={(e) => setTokenInput(e.target.value)}
+            placeholder="mot de passe"
             className={styles.passwordInput}
           />
           <button onClick={handleAuth} className={styles.loginBtn}>Entrer</button>
