@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%; /* Hauteur fixe qui évite le scroll */
+  height: 100%;
   padding: 0;
   margin: 0;
   position: relative;
@@ -17,114 +17,59 @@
   align-items: center;
   width: 100%;
   max-width: 1150px;
-  padding: 0.5rem 1rem; /* Ajouté du padding horizontal */
-  gap: 1rem; /* Augmenté l'espace vertical entre les éléments */
-  height: 100%; /* Prend toute la hauteur disponible */
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  height: 100%;
   justify-content: flex-start;
 }
 
-.cyberTitle {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.5rem 0 1rem; /* Augmenté la marge du bas */
-  perspective: 500px;
+.heroLogo {
+  width: 440px;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.4));
+  animation: fadeIn 1.5s ease forwards;
 }
 
-.glitchTitle {
-  font-size: 3rem; /* Légèrement plus grand */
-  font-weight: 800;
-  font-family: var(--font-mono);
-  letter-spacing: 1px;
-  color: var(--primary-color);
-  text-shadow: 0 0 5px rgba(12, 227, 255, 0.8),
-               0 0 10px rgba(12, 227, 255, 0.5),
-               0 0 15px rgba(12, 227, 255, 0.3);
-  animation: float 6s ease-in-out infinite;
-  margin: 0;
-}
-
-.glitchText {
-  position: relative;
-  display: inline-block;
-}
-
-.glitchText::before,
-.glitchText::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.glitchText::before {
-  color: rgba(255, 56, 100, 0.7);
-  animation: glitch-animation-1 3s infinite linear alternate-reverse;
-}
-
-.glitchText::after {
-  color: rgba(86, 3, 173, 0.7);
-  animation: glitch-animation-2 2s infinite linear alternate-reverse;
-}
-
-.underscoreBlink {
-  display: inline-block;
-  color: var(--primary-color);
-  font-weight: bold;
-  animation: blink 1s infinite;
-  margin-left: 3px;
-  font-size: 3rem; /* Assorti au titre */
-  text-shadow: 0 0 5px rgba(12, 227, 255, 0.8),
-               0 0 10px rgba(12, 227, 255, 0.5),
-               0 0 15px rgba(12, 227, 255, 0.3);
-}
-
-.neonGlow {
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg,
-              rgba(12, 227, 255, 0) 0%,
-              rgba(12, 227, 255, 0.8) 50%,
-              rgba(12, 227, 255, 0) 100%);
-  bottom: -5px;
-  left: 0;
-  filter: blur(2px);
-  animation: pulse-line 3s infinite;
-}
-
+/* Terminal redessiné pour correspondre à l'ambiance générale */
 .terminalDemo {
-  max-width: 600px; /* Augmenté légèrement */
+  max-width: 600px;
   width: 100%;
-  margin: 0.5rem 0 1rem; /* Augmenté les marges */
-  background-color: var(--darker-bg);
-  color: #0ff;
+  margin: 0.5rem 0 1rem;
+  background-color: rgba(10, 14, 23, 0.9); /* Fond plus sombre et cohérent */
+  color: var(--text-color, #d8e0e9); /* Couleur de texte principale */
   border-radius: 8px;
-  padding: 0.5rem 0.75rem; /* Plus de padding */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
-              0 0 10px rgba(12, 227, 255, 0.1); /* Glow effet */
-  border: 1px solid rgba(12, 227, 255, 0.3);
-  font-family: 'Courier New', monospace;
-  height: ; /* Légèrement plus grand */
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+              0 0 5px rgba(var(--primary-rgb, 17, 119, 194), 0.2); /* Ombre subtile */
+  border: 1px solid rgba(17, 22, 32, 0.7); /* Bordure plus subtile */
+  font-family: 'Consolas', 'Courier New', monospace;
+  border-radius: 10px;
   overflow-y: auto;
 }
 
 .terminalHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem; /* Augmenté */
+  margin-bottom: 0.5rem;
   padding-bottom: 0.2rem;
-  border-bottom: 1px solid rgba(12, 227, 255, 0.2);
+  border-bottom: 1px solid rgba(17, 22, 32, 0.7); /* Bordure plus subtile */
 }
 
 .terminalContent {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem; /* Augmenté */
+  gap: 0.3rem;
+}
+
+/* Style pour le prompt du terminal */
+.terminalContent :global(.terminal-prompt) {
+  color: var(--primary-color, #3498db) !important; /* Utilisez votre couleur primaire */
+}
+
+/* Style pour les réponses du terminal */
+.terminalContent :global(.terminal-response) {
+  color: var(--text-color, #d8e0e9) !important; /* Texte principal */
 }
 
 .chatInvitation {
@@ -132,19 +77,19 @@
   text-align: center;
   display: flex;
   justify-content: center;
-  margin: 0.5rem 0 1rem; /* Augmenté */
+  margin: 0.5rem 0 1rem;
   padding: 0;
 }
 
 .startChatBtn {
   display: inline-block;
-  padding: 0.5rem 1.5rem; /* Augmenté */
+  padding: 0.5rem 1.5rem;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   font-weight: bold;
   border-radius: var(--border-radius);
-  font-size: 1rem; /* Plus grand */
-  box-shadow: 0 4px 14px rgba(12, 227, 255, 0.3);
+  font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3); /* Ombre plus subtile */
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
@@ -155,7 +100,7 @@
 
 .startChatBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(12, 227, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(var(--primary-rgb, 17, 119, 194), 0.3); /* Ombre plus cohérente */
 }
 
 .featuresSection {
@@ -163,67 +108,67 @@
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
   max-width: 1100px;
-  margin: 0.5rem 0 2rem; /* Augmenté la marge en bas */
+  margin: 0.5rem 0 2rem;
   gap: 1rem;
 }
 
+/* Cartes de fonctionnalités harmonisées */
 .featureCard {
-  background-color: rgba(17, 22, 32, 0.7);
+  background-color: rgba(10, 14, 23, 0.8); /* Fond plus cohérent */
   border-radius: var(--border-radius);
-  padding: 1rem 0.8rem 1.2rem; /* Ajouté plus de padding en bas */
+  padding: 1rem 0.8rem 1.2rem;
   text-align: center;
   transition: all 0.3s ease;
-  border: 1px solid rgba(12, 227, 255, 0.2);
+  border: 1px solid rgba(17, 22, 32, 0.7); /* Bordure plus subtile */
   position: relative;
   overflow: hidden;
-  height: auto; /* Changé de 100% à auto pour s'adapter au contenu */
-  min-height: 180px; /* Hauteur minimale pour uniformité */
+  height: auto;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre plus subtile */
 }
 
 .featureCard:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(12, 227, 255, 0.15);
-  border-color: rgba(12, 227, 255, 0.4);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Ombre plus subtile */
+  border-color: var(--primary-color, #3498db); /* Bordure de la couleur primaire */
 }
 
 .featureCard h3 {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-color, #d8e0e9); /* Couleur de texte principale */
   margin: 0.25rem 0 0.5rem;
-  width: 100%; /* S'assurer que le titre prend toute la largeur */
+  width: 100%;
 }
 
 .featureIcon {
   font-size: 1.75rem;
   margin-bottom: 0.5rem;
-  color: var(--primary-color);
-  text-shadow: 0 0 8px rgba(12, 227, 255, 0.6);
+  color: var(--primary-color, #3498db); /* Couleur principale */
 }
 
 .featureTitle {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  width: 100%; /* S'assurer que le titre prend toute la largeur */
+  width: 100%;
+  color: var(--text-color, #d8e0e9); /* Couleur de texte principale */
 }
 
 .featureDescription {
   font-size: 0.85rem;
-  color: var(--secondary-text);
+  color: var(--secondary-text, #b0b0b0); /* Texte secondaire */
   line-height: 1.4;
-  margin: 0 0 0.5rem; /* Ajouté une marge en bas */
+  margin: 0 0 0.5rem;
   flex-grow: 1;
-  width: 100%; /* S'assurer que la description prend toute la largeur */
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 /* Media queries pour les écrans plus petits */
-/* Adaptation pour les tablettes et les mobiles */
 @media (max-width: 768px) {
   .featuresSection {
     grid-template-columns: 1fr;
@@ -235,7 +180,6 @@
     min-height: auto;
     padding: 1.2rem 1rem;
     border-radius: 16px;
-    box-shadow: 0 0 12px rgba(12, 227, 255, 0.1);
   }
 
   .featureIcon {
@@ -269,26 +213,13 @@
   }
 }
 
-
-/* Animation pour le glitch */
-@keyframes glitch-animation-1 {
-  0% { transform: translateX(-2px) translateY(2px); }
-  25% { transform: translateX(2px) translateY(-2px); }
-  50% { transform: translateX(-1px) translateY(1px); }
-  75% { transform: translateX(1px) translateY(-1px); }
-  100% { transform: translateX(0px) translateY(0px); }
-}
-
-@keyframes glitch-animation-2 {
-  0% { transform: translateX(2px) translateY(2px); }
-  25% { transform: translateX(-2px) translateY(-2px); }
-  50% { transform: translateX(1px) translateY(1px); }
-  75% { transform: translateX(-1px) translateY(-1px); }
-  100% { transform: translateX(0px) translateY(0px); }
-}
-
-/* Animation pour la ligne néon */
-@keyframes pulse-line {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

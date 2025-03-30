@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './AdminDashboard.module.css';
 import ReactMarkdown from 'react-markdown';
+import Logo from './Logo';
 
 const AdminDashboard = () => {
   // Détection si l'appareil est mobile
@@ -209,15 +210,11 @@ const AdminDashboard = () => {
   if (!authenticated) {
     return (
       <div className={styles.loginContainer}>
-        <div className={styles.cyberTitle}>
-          <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
-            <span className={styles.glitchText} data-text="Root:">Root:</span>
-            <span className={styles.underscoreBlink}>_</span>
-            <span className={styles.adminTag}>ADMIN</span>
-          </h1>
-          <div className={styles.neonGlow}></div>
+        <div className={styles.logoContainer}>
+          <Logo size="large" className={styles.loginLogo} />
+          <span className={styles.adminTag}>ADMIN</span>
           {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
-        </div>
+      </div>
 
         <div className={styles.loginBox}>
           <h2>Accès Administrateur</h2>
@@ -237,15 +234,11 @@ const AdminDashboard = () => {
   return (
     <div className={styles.chatbotContainer}>    
     <a href="/messagedb" className={styles.dbLink}>📂 MessageDB</a>  
-      <div className={styles.cyberTitle}>
-        <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
-          <span className={styles.glitchText} data-text="Root:">Root:</span>
-          <span className={styles.underscoreBlink}>_</span>
-          <span className={styles.adminTag}>ADMIN</span>
-        </h1>
-        <div className={styles.neonGlow}></div>
-        {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
-      </div>
+        <div className={styles.logoContainer}>
+           <Logo size="large" className={styles.dashboardLogo} />
+           <span className={styles.adminTag}>ADMIN</span>
+           {isError && <div className={styles.connectionError}>Erreur de connexion</div>}
+        </div>
 
       <div className={styles.messagesContainer} ref={messagesContainerRef}>
         {messages.map((m) => (

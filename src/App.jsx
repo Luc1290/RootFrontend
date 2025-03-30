@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Chatbot from './components/Chatbot';
 import Home from './components/Home';
-import About from './components/Projets';
-import AnimatedBackground from './components/AnimatedBackground';
+import Projets from './components/Projets';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar'; // tout en haut du fichier
@@ -19,15 +18,14 @@ function App() {
 
   return (
     <Router>
-      <AnimatedBackground />
-      <div className="app-container">
+       <div className="app-container">
         <Navbar menuOpen={menuOpen} toggleMenu={toggleMenu} />
 
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chatbot" element={<Chatbot />} />
-            <Route path="/projets" element={<About />} />
+            <Route path="/projets" element={<Projets />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/messagedb" element={<Messagedb />} />
           </Routes>

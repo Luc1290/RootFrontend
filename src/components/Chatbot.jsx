@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './Chatbot.module.css';
+import Logo from './Logo';
 
 
 const Chatbot = () => {
@@ -93,7 +94,17 @@ const sendMessageToRoot = async (message) => {
     }
   };
 
-  // Supprimé la fonction saveMessageToDB car le backend s'en charge déjà
+  const saveMessageToDB = async (msg) => {
+    try {
+      await fetch('https://rootbackend.fly.dev/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(msg),
+      });
+    } catch (err) {
+      console.error("Erreur enregistrement message dans PostgreSQL:", err);
+    }
+  };
 
   // Fonction de défilement améliorée pour mobile
   const scrollToBottom = () => {
@@ -147,7 +158,14 @@ const sendMessageToRoot = async (message) => {
     // Défiler immédiatement après l'envoi du message utilisateur
     scrollToBottom();
 
-    // Supprimé l'appel à saveMessageToDB ici
+    const dbUser = {
+      sender: 'user',
+      source: 'public',
+      content: inputMessage,
+      type: 'text',
+      attachmentUrl: null
+    };
+    await saveMessageToDB(dbUser);
 
     const botResponse = await sendMessageToRoot(inputMessage);
     
@@ -161,7 +179,8 @@ const sendMessageToRoot = async (message) => {
 
     setMessages(prev => [...prev, botMessage]);
 
-    // Supprimé l'appel à saveMessageToDB ici également
+    const dbBot = { ...dbUser, sender: 'bot', content: botResponse };
+    await saveMessageToDB(dbBot);
 
     setIsTyping(false);
     
@@ -179,15 +198,10 @@ const sendMessageToRoot = async (message) => {
   
   return (
     <div className={styles.chatbotContainer}>
-        <div className={styles.cyberTitle}>
-          <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
-            <span className={styles.glitchText} data-text="Root:">Root:</span>
-            <span className={styles.underscoreBlink}>_</span>
-          </h1>
-          <div className={styles.neonGlow}></div>
-        
-        {isError && <div className="connection-error">Problème de connexion à l'API</div>}
-      </div>
+        <div className={styles.logoContainer}>
+          <Logo size="large" className={styles.chatLogo} />
+          {isError && <div className="connection-error">Problème de connexion à l'API</div>}
+        </div>
   
       <div className={styles.messagesContainer} ref={messagesContainerRef}>
         {messages.map((message) => (

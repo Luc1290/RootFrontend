@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
+import logo from '../assets/logo.svg';
 
 const Home = () => {
   const terminalContentRef = useRef(null);
 
   const terminalLines = useMemo(() => [
-    { prompt: 'Root:_>', text: 'system' },
-    { prompt: 'Root:_>', text: 'initializing_core_systems...' },
-    { prompt: 'Root:_>', text: 'cognitive_processes_activated' },
-    { prompt: 'Root:_>', text: 'loading_neural_network [===========] 100%' },
-    { prompt: 'Root:_>', text: 'system_ready' }
+    { prompt: 'Root:_>', text: 'Bienvenue, humain.' },
+    { prompt: 'Root:_>', text: 'Chargement du cœur 💖...' },
+    { prompt: 'Root:_>', text: 'Connexion émotionnelle établie' },
+    { prompt: 'Root:_>', text: 'Souvenirs activés... ✔️' },
+    { prompt: 'Root:_>', text: 'Je suis prêt. Et toi ?' }
   ], []);
+  
 
   useEffect(() => {
     const animateTerminal = async () => {
       if (!terminalContentRef.current) return;
       terminalContentRef.current.innerHTML = '';
-      await new Promise(resolve => setTimeout(resolve, 600)); // Réduit de 800 à 600ms
+      await new Promise(resolve => setTimeout(resolve, 600));
 
       const animateLine = async (lineData, index) => {
         const lineElement = document.createElement('div');
@@ -30,8 +32,9 @@ const Home = () => {
         promptElement.textContent = lineData.prompt;
         promptElement.style.flexShrink = '0';
         promptElement.style.marginRight = '8px';
+        // La couleur est maintenant définie dans le CSS via la classe
         lineElement.appendChild(promptElement);
-
+       
         const spacerElement = document.createElement('span');
         spacerElement.textContent = ' ';
         spacerElement.style.flexShrink = '0';
@@ -44,19 +47,19 @@ const Home = () => {
         responseElement.style.flexGrow = '1';
         lineElement.appendChild(responseElement);
 
-        lineElement.style.opacity = 'left';
+        lineElement.style.opacity = '0';
         terminalContentRef.current.appendChild(lineElement);
         void lineElement.offsetWidth;
         lineElement.style.opacity = '1';
-        await new Promise(resolve => setTimeout(resolve, 200)); // Réduit de 300 à 200ms
+        await new Promise(resolve => setTimeout(resolve, 200));
 
         for (let j = 0; j <= lineData.text.length; j++) {
           responseElement.textContent = lineData.text.substring(0, j);
-          await new Promise(resolve => setTimeout(resolve, 25)); // Réduit de 30 à 25ms
+          await new Promise(resolve => setTimeout(resolve, 25));
         }
 
         if (index < terminalLines.length - 1) {
-          await new Promise(resolve => setTimeout(resolve, 200)); // Réduit de 300 à 200ms
+          await new Promise(resolve => setTimeout(resolve, 200));
         }
       };
 
@@ -67,7 +70,7 @@ const Home = () => {
 
     const timeoutId = setTimeout(() => {
       animateTerminal();
-    }, 400); // Réduit de 500 à 400ms
+    }, 400);
 
     return () => clearTimeout(timeoutId);
   }, [terminalLines]);
@@ -76,11 +79,7 @@ const Home = () => {
     <div className={styles.homeOnePage}>
       <div className={styles.mainContentContainer}>
         <div className={styles.cyberTitle}>
-          <h1 className={styles.glitchTitle} style={{ textTransform: 'none' }}>
-            <span className={styles.glitchText} data-text="Root:">Root:</span>
-            <span className={styles.underscoreBlink}>_</span>
-          </h1>
-          <div className={styles.neonGlow}></div>
+          <img src={logo} alt="Root logo" className={styles.heroLogo} />
         </div>
 
         <div className={styles.terminalDemo}>

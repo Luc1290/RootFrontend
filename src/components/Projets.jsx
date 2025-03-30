@@ -1,79 +1,98 @@
 import React from 'react';
 import styles from './Projets.module.css';
+import Logo from './Logo';
 
-const About = () => {
+// Composant de carte de projet avec emoji au lieu d'image
+const ProjectCard = ({ project }) => {
   return (
-    <div className={styles.aboutContainer}>
-      <h2>ROOT — Plus qu'un assistant, un projet vivant</h2>
-
-      <p><strong>Root</strong> est un assistant conversationnel personnel, en ligne, évolutif. Développé de zéro en <strong>React (.jsx)</strong> pour le front-end, avec un back-end en <strong>C# .NET</strong>, il est connecté à l’IA Groq via API, et stocke les conversations dans une base de données <strong>PostgreSQL</strong>.</p>
-
-      <p>C’est un projet <strong>full stack</strong> codé à la main, sans outil no-code, avec une vision claire : construire, pas juste connecter.</p>
-
-      <h2>Pourquoi Root est différent ?</h2>
-      <ul>
-        <li><strong>Front-end en React</strong> : composants .jsx pour une interface fluide, responsive et maintenable</li>
-        <li><strong>Design global via app.css</strong> : simple, cohérent et responsive</li>
-        <li><strong>Back-end en C# .NET</strong> : robuste, sécurisé, évolutif</li>
-        <li><strong>Base de données PostgreSQL</strong> : connectée à Fly.io : stockage structuré des messages pour mémoire future</li>
-        <li><strong>Connexion API à Groq</strong> : pas de traitement intermédiaire</li>
-        <li><strong>Hébergement décentralisé</strong> : Fly.io (Backend/DB/Frontend), domaine chez Gandi</li>
-        <li><strong>Respect de la vie privée</strong> : pas de tracking, pas de revente de données</li>
-      </ul>
-
-      <h2>Ce que Root fait aujourd’hui</h2>
-      <ul>
-        <li>Chat IA fluide, responsive</li>
-        <li>Indépendant : développé de A à Z sans outil préfabriqué, avec un contrôle total sur l’architecture, le code, la gestion des données.</li>
-        <li>Stockage conversationnel PostgreSQL</li>
-        <li>Interface publique et admin pour moi avec Logs des erreurs</li>
-        <li>Backend sécurisé, prêt à évoluer</li>
-        <li>Connexion Groq optimisée</li>
-        <li>Architecture découpée pour être maintenable et extensible</li>
-      </ul>
-
-      <h2>Ce que Root vise demain</h2>
-      <ul>
-        <li>Mémoire longue dynamique (via PostgreSQL) avec classification des sujets</li>
-        <li>Apprentissage actif (feedback utilisateur)</li>
-        <li>Reconnaissance d’entités nommées (NER)</li>
-        <li>Reconnaissance d’intentions (NLU)</li>
-        <li>Reconnaissance d’émotions (NLU)</li>
-        <li>Reconnaissance de contexte (NLG)</li>
-        <li>Reconnaissance de tonalité (NLG)</li>
-        <li>Reconnaissance de langage (NLG)</li>
-        <li>Reconnaissance de visages (API tiers)</li>
-        <li>Reconnaissance de voix (API tiers)</li>
-        <li>Analyse contextuelle (intention, émotion, signaux faibles)</li>
-        <li>Système multi-LLM (Groq, entrainement de son propre LLM…)</li>
-        <li>API publique pour intégration externe</li>
-        <li>Interface publique enrichie (statistiques, personnalisation)</li>
-        <li>Interface admin enrichie (statistiques, gestion des conversations)</li>
-        <li>Modules évolutifs connectés à différents services</li>
-        <li>Persistance par utilisateur (token d’identification à venir)</li>
-      </ul>
-
-      <h2>Un projet personnel, soutenu par vous</h2>
-        <ul>
-        <li>Root est un projet 100 % indépendant, sans entreprise derrière, sans sponsor, sans financement.</li>
-        <li>Tout est actuellement financé par moi-même :</li>
-        <li>L’hébergement (backend, base de données, front-end)</li>
-        <li>Les appels à l’IA Groq, facturés à chaque message envoyé</li>
-        <li>Le nom de domaine</li>
-        <li>Le développement complet, fait sur mon temps personnel</li>
-        <li>Votre utilisation est gratuite, mais chaque interaction a un coût réel.</li>
-        <li>Si vous appréciez l’expérience, si vous croyez dans ce projet ou si vous voulez l’aider à grandir, vous pouvez m’aider à le soutenir.</li>
-        </ul>
-
-        <a className={styles.donateButton} href="https://tonlienversdons.fr" target="_blank" rel="noopener noreferrer">
-        → Soutenir Root
-      </a>
-      <br />
-      <a className={styles.donateButton} href="mailto:RootIA1290@gmail.com" target="_blank" rel="noopener noreferrer">
-        → Contactez moi pour plus d'informations
-      </a>
+    <div className={styles.projectCard}>
+      <div className={styles.emojiContainer}>
+        <div className={styles.emoji} aria-hidden="true">
+          {project.emoji}
+        </div>
+      </div>
+      <div className={styles.projectContent}>
+        <h3 className={styles.projectTitle}>{project.title}</h3>
+        <p className={styles.projectDescription}>{project.description}</p>
+        <div className={styles.projectTags}>
+          {project.tags.map((tag, index) => (
+            <span key={index} className={styles.projectTag}>{tag}</span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default About;
+const Projets = () => {
+  // Données des projets avec emojis au lieu d'images
+  const projects = [
+    {
+      id: 1,
+      title: "Root:_ Core",
+      description: "Système d'intelligence artificielle avancé basé sur l'architecture de transformers. Optimisé pour le traitement du langage naturel et la compréhension contextuelle.",
+      emoji: "🧠", // Cerveau pour l'IA
+      tags: ["AI", "NLP", "Transformers"]
+    },
+    {
+      id: 2,
+      title: "ChatRoot Interface",
+      description: "Interface conversationnelle permettant d'interagir avec Root:_ via une interface simple et intuitive. Compatible avec les appareils mobiles et de bureau.",
+      emoji: "💬", // Bulle de dialogue pour le chat
+      tags: ["UI/UX", "React", "Responsive"]
+    },
+    {
+      id: 3,
+      title: "API Root",
+      description: "API permettant d'intégrer les capacités de Root:_ dans des applications tierces. Documentation complète et exemples d'intégration disponibles.",
+      emoji: "🔌", // Prise électrique pour l'API/connexion
+      tags: ["API", "Documentation", "Integration"]
+    },
+    {
+      id: 4,
+      title: "Root:_ Assistant",
+      description: "Extension de navigateur offrant un accès rapide à Root:_ directement depuis votre navigateur. Recherche contextuelle et suggestions intelligentes.",
+      emoji: "🔍", // Loupe pour la recherche/assistant
+      tags: ["Extension", "Chrome", "Firefox"]
+    }
+  ];
+
+  return (
+    <div className={styles.aboutContainer}>
+      <h2>Nos Projets</h2>
+      <p>
+        Chez Root:_, nous développons des technologies d'intelligence artificielle avancées visant à repousser les limites de l'interaction homme-machine. Découvrez nos projets principaux ci-dessous.
+      </p>
+
+      <div className={styles.projectGrid}>
+        {projects.map(project => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
+
+      <h2>Contribuer</h2>
+      <p>
+        Root:_ est un projet open-source qui dépend de la contribution de développeurs passionnés. Si vous souhaitez participer au développement, consultez notre dépôt GitHub ou faites un don pour soutenir le projet.
+      </p>
+      <a href="/donate" className={styles.donateButton}>Soutenir le projet</a>
+
+      <h2>Technologies</h2>
+      <p>
+        Nos projets sont développés avec les technologies les plus avancées dans le domaine de l'intelligence artificielle et du développement web:
+      </p>
+      <ul>
+        <li>Modèles de langage basés sur l'architecture Transformer</li>
+        <li>React et Next.js pour les interfaces utilisateur</li>
+        <li>APIs REST et GraphQL</li>
+        <li>Python et TensorFlow pour l'apprentissage automatique</li>
+        <li>Déploiement sur infrastructures cloud scalables</li>
+      </ul>
+
+      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+        <Logo size="medium" />
+      </div>
+    </div>
+  );
+};
+
+export default Projets;

@@ -1,76 +1,110 @@
 .navigationSection {
-    text-align: left;
-    margin-left: 0;
-  }
-  
-  .contactSection {
-    text-align: right;
-    margin-right: 0;
-  }.footer {
-    background-color: #0a0e17;
-    color: #a0a0a0;
-    padding: 0.75rem 0 0.5rem 0;
-    margin-top: 1.5rem;
-    border-top: 1px solid #1e2738;
-  }
-  
-  .footerContent {
-    display: flex;
+  text-align: left;
+  margin-left: 0;
+}
+
+.contactSection {
+  text-align: right;
+  margin-right: 0;
+}
+
+.footer {
+  /* Utilisation des variables CSS pour une cohérence avec le reste du site */
+  background-color: var(--darker-bg, #0a0e17);
+  color: var(--secondary-text, #a0a0a0);
+  padding: 0.75rem 0 0.5rem 0;
+  margin-top: 1.5rem;
+  /* Bordure plus subtile */
+  border-top: 1px solid rgba(17, 22, 32, 0.5);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.footerSection {
+  margin: 0 1.5rem 0.5rem 1.5rem;
+  min-width: 100px;
+}
+
+.footerSection h4 {
+  color: var(--text-color, #ffffff);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(17, 22, 32, 0.5);
+  padding-bottom: 0.3rem;
+}
+
+.footerSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerSection li {
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.footerSection a {
+  color: var(--secondary-text, #a0a0a0);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footerSection a:hover {
+  color: var(--primary-color, #00bcd4);
+  text-decoration: none;
+}
+
+.footerBottom {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(17, 22, 32, 0.5);
+  font-size: 0.75rem;
+  color: var(--secondary-text, #707070);
+}
+
+/* Ajout du logo dans le footer */
+.footerLogo {
+  margin-bottom: 1rem;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.footerLogo:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footerLinks {
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  
- .footerLinks {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
+    gap: 1.5rem;
   }
   
   .footerSection {
-    margin: 0 1.5rem 0.5rem 1.5rem;
-    min-width: 100px;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    width: 100%;
   }
   
-  .footerSection h4 {
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #1e2738;
-    padding-bottom: 0.3rem;
-  }
-  
-  .footerSection ul {
-    list-style: none;
-    padding: 0;
+  .navigationSection, .contactSection {
+    text-align: center;
     margin: 0;
   }
-  
-  .footerSection li {
-    margin-bottom: 0.25rem;
-    font-size: 0.85rem;
-  }
-  
-  .footerSection a {
-    color: #a0a0a0;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .footerSection a:hover {
-    color: #00c6ff;
-    text-decoration: none;
-  }
-  
-  .footerBottom {
-    text-align: center;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid #1e2738;
-    font-size: 0.75rem;
-    color: #707070;
-  }
-  
+}
