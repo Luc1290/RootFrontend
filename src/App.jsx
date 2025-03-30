@@ -9,7 +9,7 @@ import Navbar from './components/Navbar';
 import Messagedb from "./components/Messagedb";
 import Confidentialite from './components/Confidentialite';
 import Conditions from './components/Conditions';
-
+import Login from './components/Login';
 
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
             <Route path="/conditions" element={<Conditions />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/messagedb" element={<Messagedb />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
          <Footer />
