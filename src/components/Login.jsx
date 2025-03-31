@@ -1,7 +1,7 @@
 import styles from './Login.module.css';
 
 export default function Login() {
-  const backendUrl = "https://www.rootai.fr"; // Fixé en prod uniquement
+  const backendUrl = "https://api.rootai.fr";
 
   const handleLogin = () => {
     window.location.href = `${backendUrl}/api/auth/google-login`;
