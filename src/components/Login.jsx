@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import styles from './Login.module.css'; 
+import styles from './Login.module.css';
 
 export default function Login() {
   const backendUrl = "https://api.rootai.fr";
@@ -12,7 +12,27 @@ export default function Login() {
     window.location.href = `${backendUrl}/api/auth/google-login`;
   };
 
-  // Nettoyer l’URL s’il n’y a plus d’erreur
+  // ✅ 1. Redirection automatique si l'utilisateur est déjà connecté
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(`${backendUrl}/api/me`, {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log("✅ Utilisateur connecté :", data);
+          navigate("/chatbot"); // rediriger automatiquement
+        }
+      } catch {
+        console.log("Pas encore connecté.");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  // ✅ 2. Nettoyer l'URL si pas d’erreur
   useEffect(() => {
     if (!error && window.location.search) {
       navigate('/login', { replace: true });
