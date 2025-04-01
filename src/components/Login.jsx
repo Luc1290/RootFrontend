@@ -5,22 +5,27 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch(`${backendUrl}/api/auth/google-login`, {
+      const response = await fetch(`${backendUrl}/api/auth/google-login-url`, {
         method: "GET",
-        credentials: "include",
-        redirect: "manual" // ← hyper important
+        credentials: "include"
       });
-
-      const redirectUrl = res.headers.get("Location");
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      } else {
-        console.error("Pas de redirection reçue !");
+  
+      if (!response.ok) {
+        throw new Error(`Erreur API : ${response.status}`);
       }
-    } catch (err) {
-      console.error("Erreur de login :", err);
+  
+      const data = await response.json();
+  
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Aucune URL reçue depuis le backend !");
+      }
+    } catch (error) {
+      console.error("Erreur de login Google :", error.message || error);
     }
   };
+  
 
   return (
     <div className={styles.loginContainer}>
@@ -34,3 +39,5 @@ export default function Login() {
     </div>
   );
 }
+
+
