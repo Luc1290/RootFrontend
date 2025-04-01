@@ -3,29 +3,9 @@ import styles from './Login.module.css';
 export default function Login() {
   const backendUrl = "https://api.rootai.fr";
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch(`${backendUrl}/api/auth/google-login-url`, {
-        method: "GET",
-        credentials: "include"
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Erreur API : ${response.status}`);
-      }
-  
-      const data = await response.json();
-  
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        console.error("Aucune URL reçue depuis le backend !");
-      }
-    } catch (error) {
-      console.error("Erreur de login Google :", error.message || error);
-    }
+  const handleLogin = () => {
+    window.location.href = `${backendUrl}/api/auth/google-login`;
   };
-  
 
   return (
     <div className={styles.loginContainer}>
@@ -39,5 +19,3 @@ export default function Login() {
     </div>
   );
 }
-
-
