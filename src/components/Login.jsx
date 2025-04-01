@@ -4,7 +4,15 @@ export default function Login() {
   const backendUrl = "https://api.rootai.fr";
 
   const handleLogin = () => {
-    window.location.href = `${backendUrl}/api/auth/google-login`;
+    fetch(`${backendUrl}/api/auth/google-login`, {
+      method: "GET",
+      credentials: "include"
+    })
+    .then(res => {
+      if (res.redirected) {
+        window.location.href = res.url;
+      }
+    }); 
   };
 
   return (
