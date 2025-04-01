@@ -36,7 +36,6 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/messagedb" element={<Messagedb />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/auth/callback" element={<GoogleCallback />} />
           </Routes>
         </main>
          <Footer />
