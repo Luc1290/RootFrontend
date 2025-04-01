@@ -10,6 +10,8 @@ import Messagedb from "./components/Messagedb";
 import Confidentialite from './components/Confidentialite';
 import Conditions from './components/Conditions';
 import Login from './components/Login';
+import GoogleCallback from './components/GoogleCallback';
+
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/messagedb" element={<Messagedb />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth/callback" element={<GoogleCallback />} />
           </Routes>
         </main>
          <Footer />
