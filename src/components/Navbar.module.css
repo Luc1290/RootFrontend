@@ -86,18 +86,17 @@
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3)); /* Ombre plus subtile */
 }
 
-.logoutBtn {
-  all: unset;
-  display: inline-block;
+.navButton {
+  all: unset; /* Reset le style natif du <button> */
   color: var(--text-color);
   font-weight: 500;
   padding: 0.5rem 0.8rem;
   border-radius: var(--border-radius);
-  transition: all 0.3s;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
-.logoutBtn:hover {
+.navButton:hover {
   color: var(--primary-color);
   background-color: rgba(17, 22, 32, 0.7);
 }
