@@ -38,7 +38,10 @@ const Navbar = () => {
           !isAuthenticated ? (
             <Link to="/login" onClick={() => setIsMenuOpen(false)}>Se connecter</Link>
           ) : (
-            <button onClick={handleLogout} className={styles.logoutBtn}>Se déconnecter</button>
+            <button onClick={handleLogout} className={styles.navButton}>
+              Se déconnecter
+            </button>
+
           )
         )}
       </nav>
