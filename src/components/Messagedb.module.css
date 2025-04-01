@@ -51,3 +51,19 @@
     border-top: 1px solid #ddd;
   }
   
+  .logoutBtn {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+  }
+  
+  .logoutBtn:hover {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+  }
+  
