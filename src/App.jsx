@@ -10,7 +10,7 @@ import Messagedb from "./components/Messagedb";
 import Confidentialite from './components/Confidentialite';
 import Conditions from './components/Conditions';
 import Login from './components/Login';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/AuthProvider';
 
 function App() {
   return (

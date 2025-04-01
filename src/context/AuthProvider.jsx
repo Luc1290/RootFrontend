@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContextInstance';
+import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isReady, setIsReady] = useState(false); // Pour éviter les flickers
+  const [isReady, setIsReady] = useState(false);
 
   const checkAuth = async () => {
     try {
       const res = await fetch("https://api.rootai.fr/api/me", {
         credentials: "include"
       });
-      if (res.ok) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
+      setIsAuthenticated(res.ok);
     } catch {
       setIsAuthenticated(false);
     } finally {
