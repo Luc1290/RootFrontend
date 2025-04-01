@@ -3,8 +3,23 @@ import styles from './Login.module.css';
 export default function Login() {
   const backendUrl = "https://api.rootai.fr";
 
-  const handleLogin = () => {
-    window.location.href = `${backendUrl}/api/auth/google-login`;
+  const handleLogin = async () => {
+    try {
+      const res = await fetch(`${backendUrl}/api/auth/google-login`, {
+        method: "GET",
+        credentials: "include",
+        redirect: "manual" // ← hyper important
+      });
+
+      const redirectUrl = res.headers.get("Location");
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        console.error("Pas de redirection reçue !");
+      }
+    } catch (err) {
+      console.error("Erreur de login :", err);
+    }
   };
 
   return (
