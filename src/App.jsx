@@ -10,7 +10,6 @@ import Messagedb from "./components/Messagedb";
 import Confidentialite from './components/Confidentialite';
 import Conditions from './components/Conditions';
 import Login from './components/Login';
-import GoogleCallback from './components/GoogleCallback';
 
 
 
