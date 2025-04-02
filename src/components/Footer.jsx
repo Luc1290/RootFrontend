@@ -47,7 +47,7 @@ const Footer = () => {
             <h4>Contact</h4>
             <ul>
               <li>
-                <a href="mailto:rootai1290@gmail.com">Email</a>
+                <a href="mailto:rootia1290@gmail.com">Email</a>
               </li>
               <li>
                 <a
