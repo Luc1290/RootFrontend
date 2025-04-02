@@ -1,21 +1,15 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import Logo from './Logo';
 import { useAuth } from '../context/useAuth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { isAuthenticated, isReady, logout } = useAuth();
-  const navigate = useNavigate();
+  const { isAuthenticated, isReady } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
   };
 
   return (
@@ -38,10 +32,7 @@ const Navbar = () => {
           !isAuthenticated ? (
             <Link to="/login" onClick={() => setIsMenuOpen(false)}>Se connecter</Link>
           ) : (
-            <button onClick={handleLogout} className={styles.navButton}>
-              Se déconnecter
-            </button>
-
+            <Link to="/profile" onClick={() => setIsMenuOpen(false)}>Profil</Link>
           )
         )}
       </nav>
