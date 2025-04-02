@@ -9,30 +9,34 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
+    // ✅ Déclenchement unique du flow OAuth (pas au montage, mais au clic)
     window.location.href = `${backendUrl}/api/auth/google-login`;
   };
 
-  // ✅ 1. Redirection automatique si l'utilisateur est déjà connecté
+  // ✅ Redirection si déjà connecté (appel /api/me une seule fois sans challenge OAuth)
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await fetch(`${backendUrl}/api/me`, {
           credentials: "include",
         });
+
         if (res.ok) {
           const data = await res.json();
-          console.log("✅ Utilisateur connecté :", data);
-          navigate("/chatbot"); // rediriger automatiquement
+          console.log("✅ Utilisateur déjà connecté :", data);
+          navigate("/chatbot");
+        } else {
+          console.log("Utilisateur non connecté.");
         }
-      } catch {
-        console.log("Pas encore connecté.");
+      } catch (err) {
+        console.log("Erreur lors de la vérif d'auth :", err);
       }
     };
 
     checkAuth();
   }, [navigate]);
 
-  // ✅ 2. Nettoyer l'URL si pas d’erreur
+  // ✅ Nettoyage de l’URL si aucun paramètre d’erreur
   useEffect(() => {
     if (!error && window.location.search) {
       navigate('/login', { replace: true });
@@ -43,14 +47,16 @@ export default function Login() {
     <div className={styles.loginContainer}>
       <div className={styles.card}>
         <h2>Se connecter</h2>
+
         {error && (
           <div className={styles.errorMessage}>
             {error === 'The oauth state was missing or invalid'
-              ? 'Erreur de session OAuth. Veuillez réessayer.'
+              ? 'Oups... Problème de session. Essaie à nouveau 🤖'
               : error}
           </div>
         )}
-        <p>Connecte-toi avec ton compte Google pour commencer l'expérience.</p>
+
+        <p>Connecte-toi avec ton compte Google pour commencer l'expérience Root.</p>
         <button onClick={handleLogin} className={styles.loginBtn}>
           Se connecter avec Google
         </button>
