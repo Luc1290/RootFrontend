@@ -10,13 +10,16 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch("https://api.rootai.fr/api/me", {
         credentials: "include"
       });
+      console.log("🔍 Status de /api/me :", res.status);
       setIsAuthenticated(res.ok);
-    } catch {
+    } catch (err) {
+      console.error("❌ Erreur lors du fetch /api/me :", err);
       setIsAuthenticated(false);
     } finally {
       setIsReady(true);
     }
   };
+  
 
   const logout = async () => {
     try {

@@ -8,7 +8,7 @@ const Profile = () => {
 
   useEffect(() => {
     // Récupération des infos du profil
-    fetch("https://api.rootai.fr/api/Me", { credentials: "include" })
+    fetch("https://api.rootai.fr/api/me", { credentials: "include" })
       .then(res => {
         if (res.ok) return res.json();
         throw new Error("Non authentifié");
