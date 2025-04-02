@@ -7,18 +7,16 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Récupération des infos du profil
     fetch("https://api.rootai.fr/api/me", { credentials: "include" })
       .then(res => {
         if (res.ok) return res.json();
         throw new Error("Non authentifié");
       })
       .then(data => {
-        console.log("Données reçues:", data); // Debug
-        // Création d'un objet utilisateur cohérent
+        console.log("Données reçues:", data); // ✅ pour debug
         const user = {
-          name: data.Name,
-          email: data.Claims && data.Claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]
+          name: data.user?.name,
+          email: data.user?.email
         };
         setUserData(user);
       })
@@ -34,7 +32,7 @@ const Profile = () => {
         method: "POST",
         credentials: "include"
       });
-      navigate("/"); // ou rediriger vers /login si tu préfères
+      navigate("/");
     } catch (error) {
       console.error("Erreur lors de la déconnexion", error);
     }
