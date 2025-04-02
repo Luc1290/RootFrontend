@@ -8,17 +8,22 @@ const Profile = () => {
 
   useEffect(() => {
     // Récupération des infos du profil
-    fetch("https://api.rootai.fr/api/me", { credentials: "include" })
+    fetch("https://api.rootai.fr/api/Me", { credentials: "include" })
       .then(res => {
         if (res.ok) return res.json();
         throw new Error("Non authentifié");
       })
       .then(data => {
-        // On s'attend à recevoir { user: { name, email } } ou une structure similaire
-        setUserData(data.user || { name: data.Name, email: data.email });
+        console.log("Données reçues:", data); // Debug
+        // Création d'un objet utilisateur cohérent
+        const user = {
+          name: data.Name,
+          email: data.Claims && data.Claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]
+        };
+        setUserData(user);
       })
       .catch(err => {
-        console.error(err);
+        console.error("Erreur d'authentification:", err);
         navigate("/login");
       });
   }, [navigate]);
@@ -41,7 +46,7 @@ const Profile = () => {
     <div className={styles.profileContainer}>
       <div className={styles.card}>
         <h2>Profil</h2>
-        <p><strong>Nom :</strong> {userData.name}</p>
+        <p><strong>Nom :</strong> {userData.name || "Non disponible"}</p>
         <p><strong>Email :</strong> {userData.email || "Non disponible"}</p>
         <button onClick={handleLogout} className={styles.logoutBtn}>Se déconnecter</button>
       </div>
