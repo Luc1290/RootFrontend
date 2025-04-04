@@ -73,7 +73,7 @@ useEffect(() => {
 const sendMessageToRoot = async (message) => {
     try {
       setIsError(false);
-      const response = await fetch('https://rootbackend.fly.dev/api/chat', {
+      const response = await fetch('https://rootbackend.fly.dev/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -53,7 +53,7 @@ const AdminDashboard = () => {
         });
       formattedHistory.push({ role: 'user', content: newMessage });
 
-      const response = await fetch('https://rootbackend.fly.dev/api/chat', {
+      const response = await fetch('https://rootbackend.fly.dev/api/messages', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
