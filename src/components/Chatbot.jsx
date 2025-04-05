@@ -68,17 +68,24 @@ useEffect(() => {
 }, [isMobile]);
 
 
-
-
+// FONCTION CORRIGÉE: Utilise maintenant le même format que saveMessageToDB
 const sendMessageToRoot = async (message) => {
     try {
       setIsError(false);
+      const requestPayload = {
+        content: message,
+        sender: 'user',
+        source: 'public',
+        type: 'text',
+        attachmentUrl: null
+      };
+      
       const response = await fetch('https://rootbackend.fly.dev/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify(requestPayload),
       });
 
       if (!response.ok) {
@@ -86,7 +93,7 @@ const sendMessageToRoot = async (message) => {
       }
 
       const data = await response.json();
-      return data.reply;
+      return data.content; // Changé de data.reply à data.content pour correspondre au format de réponse
     } catch (error) {
       console.error('Erreur lors de la communication avec Root:', error);
       setIsError(true);
@@ -94,17 +101,8 @@ const sendMessageToRoot = async (message) => {
     }
   };
 
-  const saveMessageToDB = async (msg) => {
-    try {
-      await fetch('https://rootbackend.fly.dev/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(msg),
-      });
-    } catch (err) {
-      console.error("Erreur enregistrement message dans PostgreSQL:", err);
-    }
-  };
+  // Nous n'avons plus besoin de cette fonction car sendMessageToRoot gère 
+// désormais l'envoi des messages au format correct
 
   // Fonction de défilement améliorée pour mobile
   const scrollToBottom = () => {
@@ -158,15 +156,7 @@ const sendMessageToRoot = async (message) => {
     // Défiler immédiatement après l'envoi du message utilisateur
     scrollToBottom();
 
-    const dbUser = {
-      sender: 'user',
-      source: 'public',
-      content: inputMessage,
-      type: 'text',
-      attachmentUrl: null
-    };
-    await saveMessageToDB(dbUser);
-
+    // Envoyer le message au backend avec la fonction corrigée
     const botResponse = await sendMessageToRoot(inputMessage);
     
     const botMessage = {
@@ -178,10 +168,6 @@ const sendMessageToRoot = async (message) => {
     console.log("🔍 Root a répondu :", botResponse);
 
     setMessages(prev => [...prev, botMessage]);
-
-    const dbBot = { ...dbUser, sender: 'bot', content: botResponse };
-    await saveMessageToDB(dbBot);
-
     setIsTyping(false);
     
     // Défiler à nouveau après réception de la réponse
