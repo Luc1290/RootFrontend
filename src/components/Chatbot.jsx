@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './Chatbot.module.css';
 import Logo from './Logo';
-
+import DOMPurify from 'dompurify';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
@@ -199,10 +199,13 @@ const sendMessageToRoot = async (message) => {
           >
             <div className={styles.messageContent}>
             {message.sender === 'bot' ? (
-              <ReactMarkdown>{message.text || ''}</ReactMarkdown>
+              <ReactMarkdown>
+                {DOMPurify.sanitize(message.text || '')}
+              </ReactMarkdown>
             ) : (
               <p>{message.text || ''}</p>
             )}
+
 
             </div>
           </div>
