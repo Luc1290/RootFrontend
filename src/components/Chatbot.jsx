@@ -16,8 +16,6 @@ const Chatbot = () => {
   // Référence pour la zone des messages
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
-
-
   
   // Détection si l'appareil est mobile
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
@@ -101,10 +99,7 @@ const sendMessageToRoot = async (message) => {
     }
   };
 
-  // Nous n'avons plus besoin de cette fonction car sendMessageToRoot gère 
-// désormais l'envoi des messages au format correct
-
-  // Fonction de défilement améliorée pour mobile
+   // Fonction de défilement améliorée pour mobile
   const scrollToBottom = () => {
     // Assurez-vous que le défilement se produit après le rendu
     setTimeout(() => {

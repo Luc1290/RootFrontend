@@ -6,7 +6,7 @@ import { useAuth } from '../context/useAuth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { isAuthenticated, isReady } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,13 +28,13 @@ const Navbar = () => {
         <Link to="/" onClick={() => setIsMenuOpen(false)}>Accueil</Link>
         <Link to="/chatbot" onClick={() => setIsMenuOpen(false)}>Chatbot</Link>
         <Link to="/projets" onClick={() => setIsMenuOpen(false)}>Projets</Link>
-        {isReady && (
+        {!isLoading && (  // Utilisez !isLoading au lieu de isReady
           !isAuthenticated ? (
             <Link to="/login" onClick={() => setIsMenuOpen(false)}>Se connecter</Link>
           ) : (
             <Link to="/profile" onClick={() => setIsMenuOpen(false)}>Profil</Link>
-          )
-        )}
+         )
+      )}
       </nav>
     </header>
   );

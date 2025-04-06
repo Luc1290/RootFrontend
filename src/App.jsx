@@ -11,7 +11,7 @@ import Confidentialite from './components/Confidentialite';
 import Conditions from './components/Conditions';
 import Login from './components/Login';
 import Profile from './components/Profile';
-import { AuthProvider } from './context/AuthProvider';
+import AuthProvider from './context/AuthProvider';
 
 function App() {
   return (
